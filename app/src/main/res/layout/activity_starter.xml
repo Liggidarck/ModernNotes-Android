@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StarterActivity"
+    android:background="@mipmap/start_page_final">
+
+    <RelativeLayout
+        android:id="@+id/lauout_fist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="270dp" >
+
+        <TextView
+            android:id="@+id/text_hello_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hello_text"
+            android:textSize="75sp"
+            android:textColor="@android:color/black"
+            android:layout_marginStart="18dp" />
+
+        <TextView
+            android:id="@+id/text_registr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register_your_account_text"
+            android:textSize="18sp"
+            android:layout_marginTop="-5dp"
+            android:layout_below="@+id/text_hello_start"
+            android:textColor="@android:color/black"
+            android:layout_marginStart="20dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/username_layout_start_page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_registr"
+            android:layout_marginTop="15sp"
+            android:layout_marginRight="20sp"
+            android:layout_marginLeft="20sp"
+            app:errorEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/username_text_start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="@string/enter_your_name_text"
+                android:inputType="textCapWords"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lauout_fist"
+        android:layout_marginTop="50dp">
+
+        <ImageView
+            android:id="@+id/sign_in_btn_1"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:src="@drawable/sign_in_button"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sing_in_text"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

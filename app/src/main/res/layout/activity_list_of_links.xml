@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ListOfLinksActivity" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/empty_link_layout">
+
+        <ImageView
+            android:id="@+id/empty_image_link"
+            android:layout_centerInParent="true"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:src="@drawable/empty_green_new" />
+
+        <TextView
+            android:id="@+id/empty_text_links"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:layout_centerHorizontal="true"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:layout_below="@id/empty_image_link"
+            android:text="@string/now_it_is_empty_add_something_here_text"/>
+
+    </RelativeLayout>
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar_list_of_links"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:title="@string/list_of_links"
+        app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary" />
+
+    <ListView
+        android:id="@+id/list_of_links"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_list_of_links" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_baseline_add"
+        app:tint="@color/colorWhite"
+        app:borderWidth="0dp" />
+
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adViewLinks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-8796490674446763/7698333563">
+    </com.google.android.gms.ads.AdView>
+
+
+</RelativeLayout>

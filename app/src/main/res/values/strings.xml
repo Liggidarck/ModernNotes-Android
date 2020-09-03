@@ -1,0 +1,93 @@
+<resources>
+    <string name="app_name">Gradient Notes Free</string>
+
+    <string name="long_shortcut_note">Add note</string>
+    <string name="long_shortcut_add_link">Add link</string>
+    <string name="long_shortcut_add_password">Add password</string>
+    <string name="short_shortcut_note">Add note</string>
+    <string name="short_shortcut_add_link">Add link</string>
+    <string name="short_shortcut_add_password">Add password</string>
+    <string name="short_shortcut_generate_password">Generate password</string>
+    <string name="long_shortcut_generate_password">Generate password</string>
+
+    <string name="hello_header">Hi</string>
+    <string name="header_change_text">Here you can change the text</string>
+
+    <string name="notebook_text">Notebook</string>
+    <string name="links_text">Links</string>
+    <string name="password_text">Passwords</string>
+    <string name="generator_text">Generator</string>
+
+    <string name="settings">Settings</string>
+
+    <string name="basic_settings">Basic settings</string>
+    <string name="you_name">You name</string>
+    <string name="edit_you_name">Edit you name</string>
+    <string name="change_your_name">You can change your name here</string>
+    <string name="welcome_text">Welcome text</string>
+    <string name="change_the_greeting_text">Here you can change the greeting text</string>
+    <string name="enter_new_text">Enter new text</string>
+    <string name="Number_of_lines">Number of lines in pinned note on home screen</string>
+    <string name="change_the_number_of_lines">Here you can change the number of lines in top note</string>
+
+    <string name="customization_text">Customization</string>
+    <string name="theme_app">Theme app</string>
+    <string name="choose_a_theme_for_application">Here you can choose a theme for the application</string>
+    <string name="activate_add_button">Activate Add button</string>
+    <string name="button_on_home_screen">Show Add button on home screen</string>
+    <string name="Add_button_color">Add button color</string>
+    <string name="change_color_button_add">Here you can change the color of the button add</string>
+
+    <string name="pressing_button">Pressing the button</string>
+    <string name="change_actions_you_click_button">Here you can change the actions when you click on the button</string>
+
+    <string name="generator_passwords">Generator passwords</string>
+    <string name="list_of_links">List of Links</string>
+
+    <string name="error_empty_note">Attach a note first</string>
+    <string name="error_empty_top_note">Blank notes are not attached</string>
+    <string name="error_empty_field">This field cannot be empty</string>
+
+    <string name="noname_link">No name link</string>
+
+    <string name="username_copied">Username copied!</string>
+
+    <string name="pinned_done_text">Note pinned to home screen</string>
+
+    <string name="noname_note">A note without a name</string>
+    <string name="blank_note">Blank note</string>
+
+    <string name="empty_note_dont_save">Empty notes are not saved</string>
+
+    <string name="generate_password_to_copy">Generate password to copy</string>
+
+    <string name="password_copied">Password copied</string>
+
+    <string name="error_max">Invalid value. Max 128</string>
+    <string name="default_name_top_note">Name note</string>
+    <string name="default_text_top_note">The notes that you marked will be displayed here.</string>
+    <string name="top_note_text">TOP NOTE</string>
+    <string name="now_it_is_empty_add_something_here_text">Now it is empty. Add something here.</string>
+    <string name="title_text">Title</string>
+    <string name="text_note">Text</string>
+    <string name="themes_text">Themes</string>
+    <string name="delete_text">Delete</string>
+    <string name="link">Link</string>
+    <string name="name_for_link">Name for link</string>
+    <string name="note_for_link">Note for link</string>
+    <string name="web_address">Web-address</string>
+    <string name="e_mail_or_username">E-mail or username</string>
+    <string name="password">Password</string>
+    <string name="generate_me">Generate me!</string>
+    <string name="password_length">Password length</string>
+    <string name="special_symbols">Special symbols</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="save_text">Save</string>
+    <string name="hello_text">Hello</string>
+    <string name="register_your_account_text">Register your account</string>
+    <string name="enter_your_name_text">Enter your name</string>
+    <string name="sing_in_text">SING IN</string>
+
+    <string name="upgrade_to_pro">Upgrade to Pro</string>
+    <string name="completely_disable_ads_by_purchasing_the_pro_version">Completely disable ads by purchasing the pro version!</string>
+</resources>

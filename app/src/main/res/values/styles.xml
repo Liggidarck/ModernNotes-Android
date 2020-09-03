@@ -1,0 +1,83 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Orange" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="BlueTheme" parent="Theme.MaterialComponents.Light.NoActionBar" >
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="colorPrimary">@color/colorBluePrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkBlue</item>
+        <item name="colorAccent">@color/colorAccentBlue</item>
+    </style>
+
+    <style name="GreenTheme" parent="Theme.MaterialComponents.Light.NoActionBar" >
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="colorPrimary">@color/colorGreenPrimary</item>
+        <item name="colorPrimaryDark">@color/colorGreenPrimaryDark</item>
+        <item name="colorAccent">@color/colorGreenPrimary</item>
+    </style>
+
+    <style name="RedTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="colorPrimary">@color/colorRedPrimary</item>
+        <item name="colorPrimaryDark">@color/colorRedPrimaryDark</item>
+        <item name="colorAccent">@color/colorRedPrimary</item>
+    </style>
+
+    <style name="FioletTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="colorPrimary">@color/colorFioletPrimary</item>
+        <item name="colorPrimaryDark">@color/colorFioletPrimaryDark</item>
+        <item name="colorAccent">@color/colorFioletPrimary</item>
+    </style>
+
+    <style name="FioletThemeStartPage" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="colorPrimary">@color/colorFioletPrimary</item>
+        <item name="colorPrimaryDark">@color/colorFioletPrimaryDark</item>
+        <item name="colorAccent">@color/colorFioletPrimary</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="OrangeThemeSettings" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="BlueThemeSettings" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="colorPrimary">@color/colorBluePrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkBlue</item>
+        <item name="colorAccent">@color/colorAccentBlue</item>
+    </style>
+
+    <style name="GreenThemeSettings" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="colorPrimary">@color/colorGreenPrimary</item>
+        <item name="colorPrimaryDark">@color/colorGreenPrimaryDark</item>
+        <item name="colorAccent">@color/colorGreenPrimary</item>
+    </style>
+
+    <style name="RedThemeSettings" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="colorPrimary">@color/colorRedPrimary</item>
+        <item name="colorPrimaryDark">@color/colorRedPrimaryDark</item>
+        <item name="colorAccent">@color/colorRedPrimary</item>
+    </style>
+
+
+    <style name="FioletThemeSettings" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="colorPrimary">@color/colorFioletPrimary</item>
+        <item name="colorPrimaryDark">@color/colorFioletPrimaryDark</item>
+        <item name="colorAccent">@color/colorFioletPrimary</item>
+    </style>
+
+</resources>

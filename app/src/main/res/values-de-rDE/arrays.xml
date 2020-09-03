@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="kolichestvo_strok_top_note" >
+        <item>2 Zeilen</item>
+        <item>3 Zeilen</item>
+        <item>5 Zeilen</item>
+        <item>10 Zeilen</item>
+    </string-array>
+
+    <string-array name="kolichestvo_strok_top_note_values">
+        <item>2</item>
+        <item>3</item>
+        <item>5</item>
+        <item>10</item>
+    </string-array>
+
+    <string-array name="color_fab_add">
+        <item>rot</item>
+        <item>Orange</item>
+        <item>Grün</item>
+        <item>Blau</item>
+        <item>Violett</item>
+    </string-array>
+
+    <string-array name="color_fab_add_values">
+        <item>Red</item>
+        <item>Orange</item>
+        <item>Green</item>
+        <item>Blue</item>
+        <item>Fiolet</item>
+    </string-array>
+
+    <string-array name="fab_on_click">
+        <item>Notiz hinzufügen</item>
+        <item>Link hinzufügen</item>
+        <item>Passwort hinzufügen</item>
+    </string-array>
+
+    <string-array name="fab_on_click_values">
+        <item>note</item>
+        <item>link</item>
+        <item>password</item>
+    </string-array>
+
+    <string-array name="theme_app">
+        <item>Orange</item>
+        <item>Blau</item>
+        <item>Grün</item>
+        <item>rot</item>
+        <item>Lila</item>
+    </string-array>
+
+    <string-array name="theme_app_val">
+        <item>Orange</item>
+        <item>Blue</item>
+        <item>Green</item>
+        <item>Red</item>
+        <item>Fiolet</item>
+    </string-array>
+
+</resources>
