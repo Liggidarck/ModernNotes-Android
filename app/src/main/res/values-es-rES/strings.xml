@@ -71,6 +71,8 @@
     <string name="enter_your_name_text">por favor, escriba su nombre</string>
     <string name="sing_in_text">ENTRAR</string>
 
+    <string name="exit_toast">Haz clic de nuevo para salir</string>
+
     <string name="upgrade_to_pro">Actualizar a Pro</string>
     <string name="completely_disable_ads_by_purchasing_the_pro_version">Desactiva completamente los anuncios comprando la versión pro!</string>
 </resources>

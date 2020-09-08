@@ -70,6 +70,9 @@
     <string name="register_your_account_text">Cadastre sua conta</string>
     <string name="enter_your_name_text">Por favor, insira seu nome</string>
     <string name="sing_in_text">ENTRAR</string>
+
+    <string name="exit_toast">clique novamente para sair</string>
+
     <string name="upgrade_to_pro">Atualize para o Pro</string>
     <string name="completely_disable_ads_by_purchasing_the_pro_version">Desative completamente os anúncios comprando a versão profissional!</string>
 </resources>

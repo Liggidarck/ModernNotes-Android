@@ -88,6 +88,8 @@
     <string name="enter_your_name_text">Enter your name</string>
     <string name="sing_in_text">SING IN</string>
 
+    <string name="exit_toast">Click again to exit</string>
+
     <string name="upgrade_to_pro">Upgrade to Pro</string>
     <string name="completely_disable_ads_by_purchasing_the_pro_version">Completely disable ads by purchasing the pro version!</string>
 </resources>

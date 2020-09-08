@@ -293,8 +293,8 @@ public class MainActivity extends AppCompatActivity {
         String top_note = sharedPreferencesSS.getString("note", note_top_def);
         String name_top_note = sharedPreferencesSS.getString("name_note", name_note_def);
 
-        Log.e(TAG, name_note_def+ " - полученные OnCreate");
-        Log.e(TAG, note_top_def+ " - полученные OnCreate");
+        Log.wtf(TAG, name_note_def+ " - полученные OnCreate");
+        Log.wtf(TAG, note_top_def+ " - полученные OnCreate");
 
         text_topNote.setText(top_note);
         text_topNote_name.setText(name_top_note);
@@ -306,10 +306,10 @@ public class MainActivity extends AppCompatActivity {
         long t = System.currentTimeMillis();
         if (t - backPressedTime > 2000) {    // 2 secs
             backPressedTime = t;
-            Toast.makeText(this, "Нажмите еще раз для выхода",
+            Toast.makeText(this, getString(R.string.exit_toast),
                     Toast.LENGTH_SHORT).show();
         } else
-            System.exit(0);
+            finish();
 
     }
 }

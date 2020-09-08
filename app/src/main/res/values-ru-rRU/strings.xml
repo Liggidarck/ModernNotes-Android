@@ -70,6 +70,9 @@
     <string name="register_your_account_text">Зарегистрируй свой аккаунт</string>
     <string name="enter_your_name_text">Введи свое имя</string>
     <string name="sing_in_text">ВОЙТИ</string>
+
+    <string name="exit_toast">Нажмите еще раз для выхода</string>
+
     <string name="upgrade_to_pro">Перейти на Pro</string>
     <string name="completely_disable_ads_by_purchasing_the_pro_version">Полностью отключите рекламу, купив про версию!</string>
 </resources>

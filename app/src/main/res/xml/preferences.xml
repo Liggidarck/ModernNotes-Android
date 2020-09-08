@@ -32,6 +32,12 @@
             android:title="@string/Number_of_lines"
             android:summary="@string/change_the_number_of_lines"/>
 
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="vikluchit_pri_text"
+            android:title="Про версия"
+            android:summary="ТУт можно выключить отрисовку про"/>
+
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/customization_text">
 
