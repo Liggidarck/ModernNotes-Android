@@ -73,6 +73,9 @@
 
     <string name="exit_toast">Нажмите еще раз для выхода</string>
 
+    <string name="show_ads_pro_version">Показать рекламу Pro версии</string>
+    <string name="disable_pro_version_ads">Отключить рекламу Pro версии</string>
+
     <string name="upgrade_to_pro">Перейти на Pro</string>
     <string name="completely_disable_ads_by_purchasing_the_pro_version">Полностью отключите рекламу, купив про версию!</string>
 </resources>

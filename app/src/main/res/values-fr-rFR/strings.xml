@@ -73,6 +73,9 @@
 
     <string name="exit_toast">Cliquez à nouveau pour quitter</string>
 
+    <string name="show_ads_pro_version">Afficher les annonces version Pro</string>
+    <string name="disable_pro_version_ads">Désactiver les annonces de la version professionnelle</string>
+
     <string name="upgrade_to_pro">Passer à Pro</string>
     <string name="completely_disable_ads_by_purchasing_the_pro_version">Désactivez complètement les publicités en achetant la version pro!</string>
 </resources>

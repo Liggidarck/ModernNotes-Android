@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="gradient.notes.gradientnotesfree">
+    package="com.gradient.free">
 
     <application
         android:allowBackup="true"
@@ -14,17 +14,17 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8796490674446763~7636955518" />
 
-        <activity android:name=".TopNoteActivity"  android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".StarterActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".PasswordsListsActivity" />
-        <activity android:name=".NotebookActivity" />
-        <activity android:name=".ListOfLinksActivity" />
-        <activity android:name=".GeneratorPasswordActivity" />
-        <activity android:name=".AddPasswordActivity" android:windowSoftInputMode="adjustResize"  />
-        <activity android:name=".AddNoteActivity" />
-        <activity android:name=".AddLinkActivity"  />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.gradient.free.TopNoteActivity"  android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.gradient.free.StarterActivity" />
+        <activity android:name="com.gradient.free.SettingsActivity" />
+        <activity android:name="com.gradient.free.PasswordsListsActivity" />
+        <activity android:name="com.gradient.free.NotebookActivity" />
+        <activity android:name="com.gradient.free.ListOfLinksActivity" />
+        <activity android:name="com.gradient.free.GeneratorPasswordActivity" />
+        <activity android:name="com.gradient.free.AddPasswordActivity" android:windowSoftInputMode="adjustResize"  />
+        <activity android:name="com.gradient.free.AddNoteActivity" />
+        <activity android:name="com.gradient.free.AddLinkActivity"  />
+        <activity android:name="com.gradient.free.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

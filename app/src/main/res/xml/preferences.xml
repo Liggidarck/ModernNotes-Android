@@ -33,10 +33,10 @@
             android:summary="@string/change_the_number_of_lines"/>
 
         <SwitchPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="vikluchit_pri_text"
-            android:title="Про версия"
-            android:summary="ТУт можно выключить отрисовку про"/>
+            android:title="Show ads Pro version"
+            android:summary="Disable pro version ads"/>
 
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/customization_text">
