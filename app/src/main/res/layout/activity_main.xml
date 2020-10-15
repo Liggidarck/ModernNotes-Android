@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutHeader"
@@ -202,7 +202,7 @@
                     android:background="@drawable/white_rectangel_background"
                     android:clickable="true"
                     android:elevation="3dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="22dp"
 
                     android:focusable="true"
                     android:foreground="?android:attr/selectableItemBackground"
@@ -239,7 +239,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/white_rectangel_background"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="22dp"
                     android:clickable="true"
                     android:elevation="3dp"
                     android:focusable="true"

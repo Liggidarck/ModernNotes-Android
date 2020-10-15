@@ -32,14 +32,13 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout notebook, listOfLinks, passwordsList, generator;
     EditText textHeader;
-    ConstraintLayout topNote, goToPro;
+    ConstraintLayout topNote;
     TextView text_topNote, text_topNote_name, textUserName, text_TOP_NOTE;
 
     FloatingActionButton fab_add;
 
     private static final String TAG = "MainActivity";
     private AdView mAdView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
         if(theme_app.equals("Blue"))
             setTheme(R.style.BlueTheme);
 
+        if(theme_app.equals("AquaBlue"))
+            setTheme(R.style.AquaBlueTheme);
+
         if(theme_app.equals("Green"))
             setTheme(R.style.GreenTheme);
 
@@ -61,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
 
         if(theme_app.equals("Fiolet"))
             setTheme(R.style.FioletTheme);
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -86,22 +87,26 @@ public class MainActivity extends AppCompatActivity {
         text_topNote  = findViewById(R.id.text_topNote);
         text_topNote_name = findViewById(R.id.text_name_note);
         ConstraintLayout header = findViewById(R.id.layoutHeader);
-        //goToPro = findViewById(R.id.layout_card_free);
 
         String name_user = sharedPreferences.getString("full_name", "empty_user_name");
         String text_header = sharedPreferences.getString("nizniy_text_header", "");
-        String kilichestvo_strok_top_note = sharedPreferences.getString("kilichestvo_strok_top_note", "3");
+        String number_of_lines_top_note = sharedPreferences.getString("number_of_lines_top_note", "3");
         String color_fab_add = sharedPreferences.getString("color_fab_add", "Orange");
         String on_click_fab = sharedPreferences.getString("fab_on_click_val", "note");
-        boolean pro_otris = sharedPreferences.getBoolean("vikluchit_pri_text", true);
+        boolean ad_pro_version = sharedPreferences.getBoolean("vikluchit_pri_text", true);
         boolean fab_enabled = sharedPreferences.getBoolean("fab_enabled", false);
 
-        assert kilichestvo_strok_top_note != null;
-        int killichestvo_strok_top_note_int = Integer.parseInt(kilichestvo_strok_top_note);
-
+        assert number_of_lines_top_note != null;
         assert name_user != null;
         assert color_fab_add != null;
         assert on_click_fab != null;
+
+        if(number_of_lines_top_note.equals("infinity")){
+            Log.i(TAG, "Top notes lines - infinity");
+        } else {
+            int killichestvo_strok_top_note_int = Integer.parseInt(number_of_lines_top_note);
+            text_topNote.setMaxLines(killichestvo_strok_top_note_int);
+        }
 
         //Это запуск первой стартовой активити
         if(name_user.equals("empty_user_name"))
@@ -116,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
         LoadTopNote();
 
-        if(!pro_otris)
+        if(ad_pro_version)
             getSupportFragmentManager().beginTransaction().replace(R.id.layout_card_free, new FragmentPro()).commit();
 
         if(theme_app.equals("Orange")) {
@@ -129,6 +134,12 @@ public class MainActivity extends AppCompatActivity {
             header.setBackground(ContextCompat.getDrawable(this, R.drawable.header_back_blue));
             text_TOP_NOTE.setTextColor(Color.parseColor("#6a6cfc"));
             topNote.setBackground(ContextCompat.getDrawable(this, R.drawable.top_note_back_blue));
+        }
+
+        if(theme_app.equals("AquaBlue")) {
+            header.setBackground(ContextCompat.getDrawable(this, R.drawable.header_back_aqua_blue));
+            text_TOP_NOTE.setTextColor(Color.parseColor("#14d5ff"));
+            topNote.setBackground(ContextCompat.getDrawable(this, R.drawable.top_note_back_aqua_blue));
         }
 
         if(theme_app.equals("Green")) {
@@ -263,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i(TAG, name_user + " - имя пользователя");
         Log.i(TAG, text_header + " - текст header");
-        Log.i(TAG, kilichestvo_strok_top_note + " - колличество строк в TOP NOTE");
+        Log.i(TAG, number_of_lines_top_note + " - колличество строк в TOP NOTE");
         Log.i(TAG, color_fab_add + " - Цвет кнопки добавить");
         Log.i(TAG, on_click_fab + " - OnClick кнопки добавить");
         Log.i(TAG, theme_app + " - тема приложения");
@@ -277,8 +288,8 @@ public class MainActivity extends AppCompatActivity {
         String top_note = sharedPreferencesSS.getString("note", note_top_def);
         String name_top_note = sharedPreferencesSS.getString("name_note", name_note_def);
 
-        Log.wtf(TAG, name_note_def+ " - полученные OnCreate");
-        Log.wtf(TAG, note_top_def+ " - полученные OnCreate");
+        Log.i(TAG, name_note_def+ " - полученные OnCreate");
+        Log.i(TAG, note_top_def+ " - полученные OnCreate");
 
         text_topNote.setText(top_note);
         text_topNote_name.setText(name_top_note);

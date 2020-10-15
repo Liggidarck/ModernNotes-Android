@@ -1,13 +1,5 @@
 <resources>
     <string name="app_name">Gradient Notes Free</string>
-    <string name="short_shortcut_note">Nueva nota</string>
-    <string name="short_shortcut_add_link">Enlace nuevo</string>
-    <string name="short_shortcut_add_password">Nueva contraseña</string>
-    <string name="short_shortcut_generate_password">Crea una contraseña</string>
-    <string name="long_shortcut_note">Añadir la nota</string>
-    <string name="long_shortcut_add_link">Enlace nuevo</string>
-    <string name="long_shortcut_add_password">Nueva contraseña</string>
-    <string name="long_shortcut_generate_password">Crea una contraseña</string>
     <string name="hello_header">Hola</string>
     <string name="header_change_text">Este texto se puede cambiar</string>
     <string name="notebook_text">Cuaderno</string>

@@ -29,19 +29,19 @@ public class SettingsActivity extends AppCompatActivity {
 
         assert theme_app != null;
         if(theme_app.equals("Orange"))
-            setTheme(R.style.OrangeThemeSettings);
+            setTheme(R.style.Orange);
 
         if(theme_app.equals("Blue"))
-            setTheme(R.style.BlueThemeSettings);
+            setTheme(R.style.BlueTheme);
 
         if(theme_app.equals("Green"))
-            setTheme(R.style.GreenThemeSettings);
+            setTheme(R.style.GreenTheme);
 
         if(theme_app.equals("Red"))
-            setTheme(R.style.RedThemeSettings);
+            setTheme(R.style.RedTheme);
 
         if(theme_app.equals("Fiolet"))
-            setTheme(R.style.FioletThemeSettings);
+            setTheme(R.style.FioletTheme);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);

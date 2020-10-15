@@ -6,6 +6,7 @@
         <item>3 lignes</item>
         <item>5 lignes</item>
         <item>10 lignes</item>
+        <item>Sans restrictions</item>
     </string-array>
 
     <string-array name="kolichestvo_strok_top_note_values">
@@ -13,6 +14,7 @@
         <item>3</item>
         <item>5</item>
         <item>10</item>
+        <item>infinity</item>
     </string-array>
 
     <string-array name="color_fab_add">
@@ -46,6 +48,7 @@
     <string-array name="theme_app">
         <item>Orange</item>
         <item>Bleu</item>
+        <item>Bleu clair</item>
         <item>vert</item>
         <item>rouge</item>
         <item>Violet</item>
@@ -54,6 +57,7 @@
     <string-array name="theme_app_val">
         <item>Orange</item>
         <item>Blue</item>
+        <item>AquaBlue</item>
         <item>Green</item>
         <item>Red</item>
         <item>Fiolet</item>

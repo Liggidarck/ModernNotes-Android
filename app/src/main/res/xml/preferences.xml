@@ -10,12 +10,10 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/you_name"
-            android:dialogMessage="@string/edit_you_name"
             android:inputType="textCapWords"
             android:summary="@string/change_your_name"/>
 
         <EditTextPreference
-            android:defaultValue="This text you can change"
             android:key="nizniy_text_header"
             android:selectAllOnFocus="true"
             android:singleLine="true"
@@ -35,8 +33,8 @@
         <SwitchPreference
             android:defaultValue="true"
             android:key="vikluchit_pri_text"
-            android:title="Show ads Pro version"
-            android:summary="Disable pro version ads"/>
+            android:title="@string/show_ads_pro_version"
+            android:summary="@string/disable_pro_version_ads"/>
 
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/customization_text">

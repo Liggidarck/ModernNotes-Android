@@ -1,13 +1,5 @@
 <resources>
     <string name="app_name">Gradient Notes Free</string>
-    <string name="short_shortcut_note">Новая заметка</string>
-    <string name="short_shortcut_add_link">Новая ссылка</string>
-    <string name="short_shortcut_add_password">Новый пароль</string>
-    <string name="short_shortcut_generate_password">Создать пароль</string>
-    <string name="long_shortcut_note">Добавить заметку</string>
-    <string name="long_shortcut_add_link">Новая ссылка</string>
-    <string name="long_shortcut_add_password">Новый пароль</string>
-    <string name="long_shortcut_generate_password">Создать пароль</string>
     <string name="hello_header">Привет</string>
     <string name="header_change_text">Этот текст можно поменять</string>
     <string name="notebook_text">Блокнот</string>

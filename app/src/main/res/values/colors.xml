@@ -11,6 +11,10 @@
     <color name="colorPrimaryDarkBlue">#6466fa</color>
     <color name="colorAccentBlue">#6a6cfc</color>
 
+    <color name="colorAquaBluePrimary">#6dd5ed</color>
+    <color name="colorPrimaryDarkAquaBlue">#02b8e0</color>
+    <color name="colorAccentAquaBlue">#6dd5ed</color>
+
     <color name="colorGreenPrimary">#2ecc71</color>
     <color name="colorGreenPrimaryDark">#28b865</color>
 
