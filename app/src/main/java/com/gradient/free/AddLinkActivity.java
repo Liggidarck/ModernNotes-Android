@@ -12,11 +12,13 @@ import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,6 +27,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -44,10 +47,13 @@ public class AddLinkActivity extends AppCompatActivity {
     TextInputLayout name_link_layoutBOX, link_layputBOX;
     EditText link_noteBOX;
 
-    MaterialToolbar toolbar;
+    MaterialToolbar toolbar, toolbarDark;
 
     View theme;
     String checkThemeLink = "Default";
+
+    private static final String TAG = "addLink";
+
 
     LinksDatabase sqlHelper;
     SQLiteDatabase db;
@@ -65,8 +71,14 @@ public class AddLinkActivity extends AppCompatActivity {
         if(theme_app.equals("Orange"))
             setTheme(R.style.Orange);
 
+        if(theme_app.equals("Dark"))
+            setTheme(R.style.DarckTheme);
+
         if(theme_app.equals("Blue"))
             setTheme(R.style.BlueTheme);
+
+        if(theme_app.equals("AquaBlue"))
+            setTheme(R.style.AquaBlueTheme);
 
         if(theme_app.equals("Green"))
             setTheme(R.style.GreenTheme);
@@ -93,13 +105,27 @@ public class AddLinkActivity extends AppCompatActivity {
         mAdView.loadAd(adRequest);
 
         toolbar = findViewById(R.id.topAppBar_add_link);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goHome_link();
-            }
-        });
+        toolbarDark = findViewById(R.id.topAppBar_add_link_dark);
+
+        if(theme_app.equals("Dark")){
+            setSupportActionBar(toolbarDark);
+            toolbarDark.setVisibility(View.VISIBLE);
+            toolbarDark.setNavigationIcon(R.drawable.ic_white_baseline_arrow_back_24);
+            toolbarDark.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) { goHome_link();
+                }
+            });
+        } else {
+            setSupportActionBar(toolbar);
+            toolbar.setVisibility(View.VISIBLE);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    goHome_link();
+                }
+            });
+        }
 
         nameLinkBox = findViewById(R.id.name_link_edit_text);
         linkBox = findViewById(R.id.link_edit_text);
@@ -181,13 +207,12 @@ public class AddLinkActivity extends AppCompatActivity {
             checkThemeLink = userCursor.getString(4);
 
             if(checkThemeLink.equals("Default")){
-                theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
-                toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
-            }
-
-            if(checkThemeLink.equals("Darcker")){
-                theme.setBackgroundColor(Color.parseColor("#303030"));
-                toolbar.setBackgroundColor(Color.parseColor("#303030"));
+                if(theme_app.equals("Dark"))
+                    Log.i(TAG, "Ничего не делаем!");
+                else {
+                    theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
+                    toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
+                }
             }
 
             if(checkThemeLink.equals("Red")){
@@ -230,8 +255,6 @@ public class AddLinkActivity extends AppCompatActivity {
                 toolbar.setBackgroundColor(Color.parseColor("#ff9cbe"));
             }
 
-
-
             userCursor.close();
         } else
             delButton.setVisibility(View.GONE);
@@ -253,6 +276,17 @@ public class AddLinkActivity extends AppCompatActivity {
         if(theme_app.equals("Blue")) {
             saveLink.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blue_color_fab)));
             delButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blue_color_fab)));
+        }
+
+        if(theme_app.equals("Dark")) {
+            toolbar.setNavigationIcon(R.drawable.ic_white_baseline_arrow_back_24);
+            saveLink.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.black_color_fab)));
+            delButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.black_color_fab)));
+        }
+
+        if(theme_app.equals("AquaBlue")) {
+            saveLink.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blueaqua_color_fab)));
+            delButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blueaqua_color_fab)));
         }
 
         if(theme_app.equals("Green")) {
@@ -335,12 +369,21 @@ public class AddLinkActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ListOfLinksActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String theme_app = sharedPreferences.getString("theme_app", "Fiolet");
+
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_theme, menu);
+
+        if(theme_app.equals("Dark"))
+            inflater.inflate(R.menu.menu_empty, menu);
+        else
+            inflater.inflate(R.menu.menu_theme, menu);
 
         return true;
     }
@@ -368,6 +411,10 @@ public class AddLinkActivity extends AppCompatActivity {
             }
         });
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        final String theme_app_check = sharedPreferences.getString("theme_app", "Fiolet");
+
+
         ImageView default_th, darker, reed, light_yello, yello, greeen, bluue, aqqua_blue, fiiolet, piink;
         ImageView check_default, check_darcker, check_red, check_yellow, chek_light_yellow, check_green, check_blue, check_aqua_blue, check_fiolet, chek_pink;
 
@@ -392,6 +439,15 @@ public class AddLinkActivity extends AppCompatActivity {
         chek_pink = dialog.findViewById(R.id.check_pink);
 
         theme = findViewById(R.id.theme_link);
+        TextView text_default_theme = dialog.findViewById(R.id.text_default_theme);
+
+        Drawable dark_image = getResources().getDrawable(R.drawable.dark_default);
+
+        if(theme_app_check.equals("Dark")) {
+            default_th.setImageDrawable(dark_image);
+            text_default_theme.setTextColor(Color.WHITE);
+            done.setTextColor(Color.WHITE);
+        }
 
         if(checkThemeLink.equals("Default"))
             check_default.setVisibility(View.VISIBLE);
@@ -424,8 +480,13 @@ public class AddLinkActivity extends AppCompatActivity {
         default_th.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
-                toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
+                Log.i(TAG, theme_app_check + " проверка в теме");
+                if(theme_app_check.equals("Dark")) {
+                    recreate();
+                } else {
+                    theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
+                    toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
+                }
                 checkThemeLink = "Default";
                 dialog.dismiss();
             }
@@ -516,4 +577,9 @@ public class AddLinkActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 }

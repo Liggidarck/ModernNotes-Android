@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Gradient Notes Free</string>
+    <string name="app_name">Заметки</string>
     <string name="hello_header">Привет</string>
     <string name="header_change_text">Этот текст можно поменять</string>
     <string name="notebook_text">Блокнот</string>

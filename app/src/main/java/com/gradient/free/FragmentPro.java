@@ -34,6 +34,9 @@ public class FragmentPro extends Fragment {
         if(theme_app.equals("Orange"))
             pro_layl.setBackground(ContextCompat.getDrawable(FragmentPro.this.getActivity(), R.drawable.top_note_background_orange));
 
+        if(theme_app.equals("Dark"))
+            pro_layl.setBackground(ContextCompat.getDrawable(FragmentPro.this.getActivity(), R.drawable.top_note_back_dark));
+
         if(theme_app.equals("Blue"))
             pro_layl.setBackground(ContextCompat.getDrawable(FragmentPro.this.getActivity(), R.drawable.top_note_back_blue));
 

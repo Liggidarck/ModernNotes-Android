@@ -22,7 +22,7 @@
         <activity android:name="com.gradient.free.ListOfLinksActivity" />
         <activity android:name="com.gradient.free.GeneratorPasswordActivity" />
         <activity android:name="com.gradient.free.AddPasswordActivity" android:windowSoftInputMode="adjustResize"  />
-        <activity android:name="com.gradient.free.AddNoteActivity" />
+        <activity android:name="com.gradient.free.AddNoteActivity" android:windowSoftInputMode="adjustResize" />
         <activity android:name="com.gradient.free.AddLinkActivity"  />
         <activity android:name="com.gradient.free.MainActivity">
             <intent-filter>

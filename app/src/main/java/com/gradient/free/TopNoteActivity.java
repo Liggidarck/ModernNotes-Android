@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -22,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -30,7 +32,7 @@ import com.google.android.material.snackbar.Snackbar;
 public class TopNoteActivity extends AppCompatActivity {
 
     EditText name_note_top, note_top;
-    MaterialToolbar toolbar;
+    MaterialToolbar toolbar, toolbarDark;
     private static final String TAG = "TopNoteActivity";
 
     View theme;
@@ -48,6 +50,12 @@ public class TopNoteActivity extends AppCompatActivity {
         if(theme_app.equals("Blue"))
             setTheme(R.style.BlueTheme);
 
+        if(theme_app.equals("Dark"))
+            setTheme(R.style.DarckTheme);
+
+        if(theme_app.equals("AquaBlue"))
+            setTheme(R.style.AquaBlueTheme);
+
         if(theme_app.equals("Green"))
             setTheme(R.style.GreenTheme);
 
@@ -62,14 +70,30 @@ public class TopNoteActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         toolbar = findViewById(R.id.topAppBar_note_top);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goHome();            }
-        });
-        theme = findViewById(R.id.theme_top_note);
+        toolbarDark = findViewById(R.id.topAppBar_note_top_dark);
 
+        if(theme_app.equals("Dark")){
+            setSupportActionBar(toolbarDark);
+            toolbarDark.setVisibility(View.VISIBLE);
+            toolbarDark.setNavigationIcon(R.drawable.ic_white_baseline_arrow_back_24);
+            toolbarDark.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    goHome();
+                }
+            });
+        } else {
+            setSupportActionBar(toolbar);
+            toolbar.setVisibility(View.VISIBLE);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    goHome();
+                }
+            });
+        }
+
+        theme = findViewById(R.id.theme_top_note);
         name_note_top = findViewById(R.id.name_note_top);
         note_top = findViewById(R.id.note_text_top);
         Log.i(TAG, checkThemeTopNote + "До получения данных");
@@ -86,6 +110,11 @@ public class TopNoteActivity extends AppCompatActivity {
 
         if(theme_app.equals("Orange"))
             save.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange_color_fab))); //#f59619
+
+        if(theme_app.equals("Dark")) {
+            toolbar.setNavigationIcon(R.drawable.ic_white_baseline_arrow_back_24);
+            save.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.black_color_fab)));
+        }
 
         if(theme_app.equals("Blue"))
             save.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blue_color_fab)));
@@ -111,15 +140,18 @@ public class TopNoteActivity extends AppCompatActivity {
         checkThemeTopNote = sharedPreferencesSS.getString("theme_top_note", "Default");
         Log.i(TAG, checkThemeTopNote + " Полученные данные");
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String theme_app = sharedPreferences.getString("theme_app", "Fiolet");
+
+
         assert checkThemeTopNote != null;
         if(checkThemeTopNote.equals("Default")){
-            theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
-            toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
-        }
-
-        if(checkThemeTopNote.equals("Darcker")){
-            theme.setBackgroundColor(Color.parseColor("#303030"));
-            toolbar.setBackgroundColor(Color.parseColor("#303030"));
+            if(theme_app.equals("Dark"))
+                Log.i(TAG, "Ничего не делаем!");
+            else {
+                theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
+                toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
+            }
         }
 
         if(checkThemeTopNote.equals("Red")){
@@ -219,12 +251,20 @@ public class TopNoteActivity extends AppCompatActivity {
 
     public void goHome() {
         startActivity(new Intent(TopNoteActivity.this, MainActivity.class));
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String theme_app = sharedPreferences.getString("theme_app", "Fiolet");
+
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_top_note, menu);
+
+        if(theme_app.equals("Dark"))
+            inflater.inflate(R.menu.menu_top_note_dark, menu);
+        else
+            inflater.inflate(R.menu.menu_top_note, menu);
 
         return true;
 
@@ -268,6 +308,10 @@ public class TopNoteActivity extends AppCompatActivity {
             }
         });
 
+        SharedPreferences sharedPreferences_theme = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        final String theme_app_check = sharedPreferences_theme.getString("theme_app", "Fiolet");
+
+
         ImageView default_th, reed, light_yello, yello, greeen, bluue, aqqua_blue, fiiolet, piink;
         ImageView check_default, check_red, check_yellow, chek_light_yellow, check_green, check_blue, check_aqua_blue, check_fiolet, chek_pink;
 
@@ -291,6 +335,15 @@ public class TopNoteActivity extends AppCompatActivity {
         check_aqua_blue = dialog.findViewById(R.id.check_aqua_blue);
         check_fiolet = dialog.findViewById(R.id.check_fiolet);
         chek_pink = dialog.findViewById(R.id.check_pink);
+
+        TextView text_default_theme = dialog.findViewById(R.id.text_default_theme);
+        Drawable dark_image = getResources().getDrawable(R.drawable.dark_default);
+
+        if(theme_app_check.equals("Dark")) {
+            default_th.setImageDrawable(dark_image);
+            text_default_theme.setTextColor(Color.WHITE);
+            done.setTextColor(Color.WHITE);
+        }
 
         if(checkThemeTopNote.equals("Default"))
             check_default.setVisibility(View.VISIBLE);
@@ -322,6 +375,7 @@ public class TopNoteActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("top", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
+
 
         default_th.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -435,5 +489,7 @@ public class TopNoteActivity extends AppCompatActivity {
 
         dialog.show();
     }
+
+
 
 }

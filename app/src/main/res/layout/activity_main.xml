@@ -119,49 +119,52 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/layout_card_free">
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/layoutNote"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="22dp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/white_rectangel_background"
                     android:clickable="true"
                     android:elevation="3dp"
                     android:focusable="true"
                     android:foreground="?android:attr/selectableItemBackground"
+                    android:background="@drawable/white_rectangel_background"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="10dp"
                     app:layout_constraintDimensionRatio="H,1:1"
-
                     app:layout_constraintEnd_toStartOf="@id/layoutLinks"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
+                        android:id="@+id/notebook_image"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_margin="8dp"
+                        android:layout_centerHorizontal="true"
                         android:contentDescription="@string/app_name"
                         android:padding="8dp"
                         android:src="@drawable/notebook" />
 
                     <TextView
+                        android:id="@+id/notebook_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        android:layout_below="@+id/notebook_image"
                         android:text="@string/notebook_text"
                         android:textColor="@android:color/black"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
-                </LinearLayout>
+                </RelativeLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/layoutLinks"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="22dp"
                     android:background="@drawable/white_rectangel_background"
                     android:clickable="true"
                     android:elevation="3dp"
@@ -177,23 +180,27 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
+                        android:id="@+id/links_image"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_margin="8dp"
+                        android:layout_centerHorizontal="true"
                         android:contentDescription="@string/app_name"
                         android:padding="8dp"
                         android:src="@drawable/link" />
 
                     <TextView
+                        android:id="@+id/links_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/links_text"
                         android:textColor="@android:color/black"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_below="@+id/links_image"/>
 
-                </LinearLayout>
+                </RelativeLayout>
 
                 <LinearLayout
                     android:id="@+id/layoutPasswords"
@@ -224,6 +231,7 @@
                         android:src="@drawable/folder" />
 
                     <TextView
+                        android:id="@+id/password_tex"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -262,6 +270,7 @@
                         android:src="@drawable/password_gener" />
 
                     <TextView
+                        android:id="@+id/generatoe_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"

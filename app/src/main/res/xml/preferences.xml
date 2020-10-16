@@ -48,6 +48,12 @@
             android:summary="@string/choose_a_theme_for_application" />
 
         <SwitchPreference
+            android:defaultValue="true"
+            android:key="save_button_note"
+            android:title="Активировать кнопку сохранить в заметках"
+            android:summary="Активация кнопки сохранить в заметках"/>
+
+        <SwitchPreference
             android:defaultValue="false"
             android:key="fab_enabled"
             android:title="@string/activate_add_button"

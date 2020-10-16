@@ -43,6 +43,20 @@
         <item name="colorAccent">@color/colorFioletPrimary</item>
     </style>
 
+    <style name="DarckTheme" parent="Theme.MaterialComponents.NoActionBar" >
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="colorPrimary">@color/dark_primary</item>
+        <item name="colorPrimaryDark">@color/dark_primaryDark</item>
+        <item name="colorAccent">@color/dark_primary</item>
+    </style>
+
+    <style name="DarckThemeSettings" parent="Theme.MaterialComponents.NoActionBar" >
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="colorPrimary">@color/colorWhite</item>
+        <item name="colorPrimaryDark">@color/dark_primaryDark</item>
+        <item name="colorAccent">@color/colorWhite</item>
+    </style>
+
     <style name="FioletThemeStartPage" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:fontFamily">@font/google_sans_medium</item>
         <item name="colorPrimary">@color/colorFioletPrimary</item>

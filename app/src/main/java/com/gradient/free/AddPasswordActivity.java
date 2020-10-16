@@ -15,6 +15,7 @@ import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -28,6 +29,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -49,7 +51,7 @@ public class AddPasswordActivity extends AppCompatActivity {
 
     FloatingActionButton delButton, saveButton;
 
-    MaterialToolbar toolbar;
+    MaterialToolbar toolbar, toolbarDark;
 
     View theme;
     String checkThemePassword = "Default";
@@ -75,6 +77,12 @@ public class AddPasswordActivity extends AppCompatActivity {
         if(theme_app.equals("Blue"))
             setTheme(R.style.BlueTheme);
 
+        if(theme_app.equals("Dark"))
+            setTheme(R.style.DarckTheme);
+
+        if(theme_app.equals("AquaBlue"))
+            setTheme(R.style.AquaBlueTheme);
+
         if(theme_app.equals("Green"))
             setTheme(R.style.GreenTheme);
 
@@ -98,8 +106,6 @@ public class AddPasswordActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-
-        //Тут все findViewById
         theme = findViewById(R.id.theme_pass);
 
         webAdress = findViewById(R.id.web_address);
@@ -113,15 +119,26 @@ public class AddPasswordActivity extends AppCompatActivity {
         saveButton = findViewById(R.id.add_password);
         delButton = findViewById(R.id.del_password);
         toolbar = findViewById(R.id.toolbar_add_password);
+        toolbarDark = findViewById(R.id.toolbar_add_password_dark);
 
-
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goHome_password();
-            }
-        });
+        if(theme_app.equals("Dark")){
+            setSupportActionBar(toolbarDark);
+            toolbarDark.setNavigationIcon(R.drawable.ic_white_baseline_arrow_back_24);
+            toolbarDark.setVisibility(View.VISIBLE);
+            toolbarDark.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) { goHome_password();
+                }
+            });
+        } else {
+            setSupportActionBar(toolbar);
+            toolbar.setVisibility(View.VISIBLE);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) { goHome_password();
+                }
+            });
+        }
 
         //Это запуск первой активити (страртовой).
         String name_user = sharedPreferences.getString("full_name", "empty_user_name");
@@ -148,13 +165,12 @@ public class AddPasswordActivity extends AppCompatActivity {
             checkThemePassword = userCursor.getString(4);
 
             if(checkThemePassword.equals("Default")){
-                theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
-                toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
-            }
-
-            if(checkThemePassword.equals("Darcker")){
-                theme.setBackgroundColor(Color.parseColor("#303030"));
-                toolbar.setBackgroundColor(Color.parseColor("#303030"));
+                if(theme_app.equals("Dark"))
+                    Log.i(TAG, "Ничего не делаем!");
+                else {
+                    theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
+                    toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
+                }
             }
 
             if(checkThemePassword.equals("Red")){
@@ -312,6 +328,16 @@ public class AddPasswordActivity extends AppCompatActivity {
             delButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blue_color_fab)));
         }
 
+        if(theme_app.equals("Dark")) {
+            saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.black_color_fab)));
+            delButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.black_color_fab)));
+        }
+
+        if(theme_app.equals("AquaBlue")) {
+            saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blueaqua_color_fab)));
+            delButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blueaqua_color_fab)));
+        }
+
         if(theme_app.equals("Green")) {
             saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green_color_fab)));
             delButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green_color_fab)));
@@ -357,6 +383,7 @@ public class AddPasswordActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PasswordsListsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     public void showDialogEditThemePassword() {
@@ -372,6 +399,10 @@ public class AddPasswordActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        final String theme_app_check = sharedPreferences.getString("theme_app", "Fiolet");
+
 
         ImageView default_th, reed, light_yello, yello, greeen, bluue, aqqua_blue, fiiolet, piink;
         ImageView check_default,  check_red, check_yellow, chek_light_yellow, check_green, check_blue, check_aqua_blue, check_fiolet, chek_pink;
@@ -395,6 +426,16 @@ public class AddPasswordActivity extends AppCompatActivity {
         check_aqua_blue = dialog.findViewById(R.id.check_aqua_blue);
         check_fiolet = dialog.findViewById(R.id.check_fiolet);
         chek_pink = dialog.findViewById(R.id.check_pink);
+
+        TextView text_default_theme = dialog.findViewById(R.id.text_default_theme);
+
+        Drawable dark_image = getResources().getDrawable(R.drawable.dark_default);
+
+        if(theme_app_check.equals("Dark")) {
+            default_th.setImageDrawable(dark_image);
+            text_default_theme.setTextColor(Color.WHITE);
+            done.setTextColor(Color.WHITE);
+        }
 
         if(checkThemePassword.equals("Default"))
             check_default.setVisibility(View.VISIBLE);
@@ -429,6 +470,8 @@ public class AddPasswordActivity extends AppCompatActivity {
             public void onClick(View view) {
                 theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
                 toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
+
+
                 checkThemePassword = "Default";
                 dialog.dismiss();
             }
@@ -439,6 +482,7 @@ public class AddPasswordActivity extends AppCompatActivity {
             public void onClick(View view) {
                 theme.setBackgroundColor(Color.parseColor("#ff9e9e"));
                 toolbar.setBackgroundColor(Color.parseColor("#ff9e9e"));
+
                 checkThemePassword = "Red";
                 dialog.dismiss();
             }
@@ -515,14 +559,20 @@ public class AddPasswordActivity extends AppCompatActivity {
         });
 
 
-
         dialog.show();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String theme_app = sharedPreferences.getString("theme_app", "Fiolet");
+
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_theme, menu);
+
+        if(theme_app.equals("Dark"))
+            inflater.inflate(R.menu.menu_empty, menu);
+        else
+            inflater.inflate(R.menu.menu_theme, menu);
 
         return true;
     }
@@ -578,4 +628,9 @@ public class AddPasswordActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 }

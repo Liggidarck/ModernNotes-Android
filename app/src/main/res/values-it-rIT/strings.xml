@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Gradient Notes Free</string>
+    <string name="app_name">Appunti</string>
     <string name="hello_header">Ciao</string>
     <string name="header_change_text">Questo testo può essere modificato</string>
     <string name="notebook_text">Taccuino</string>

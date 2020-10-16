@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.ads.AdRequest;
@@ -22,17 +25,25 @@ public class SettingsActivity extends AppCompatActivity {
 
     private AdView mAdView;
 
+    private static final String TAG = "settings";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         String theme_app = sharedPreferences.getString("theme_app", "Fiolet");
-
         assert theme_app != null;
         if(theme_app.equals("Orange"))
             setTheme(R.style.Orange);
 
         if(theme_app.equals("Blue"))
             setTheme(R.style.BlueTheme);
+
+        if(theme_app.equals("Dark"))
+            setTheme(R.style.DarckThemeSettings);
+
+        if(theme_app.equals("AquaBlue"))
+            setTheme(R.style.AquaBlueTheme);
 
         if(theme_app.equals("Green"))
             setTheme(R.style.GreenTheme);
@@ -42,7 +53,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         if(theme_app.equals("Fiolet"))
             setTheme(R.style.FioletTheme);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -62,10 +72,15 @@ public class SettingsActivity extends AppCompatActivity {
         MaterialToolbar toolbar = findViewById(R.id.toolbar_settings);
         setSupportActionBar(toolbar);
 
+
+        if(theme_app.equals("Dark"))
+            toolbar.setBackgroundColor(Color.parseColor("#4C4C4C"));
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(SettingsActivity.this, MainActivity.class));
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
     }
@@ -75,12 +90,24 @@ public class SettingsActivity extends AppCompatActivity {
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
+
+            final Preference mster = findPreference("theme_app");
+            mster.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    getActivity().recreate();
+
+                    return true;
+                }
+            });
+
         }
     }
 
     @Override
     public void onBackPressed() {
         startActivity(new Intent(SettingsActivity.this, MainActivity.class));
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
 }

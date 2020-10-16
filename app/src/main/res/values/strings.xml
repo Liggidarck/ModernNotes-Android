@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Gradient Notes Free</string>
+    <string name="app_name">Notes</string>
 
     <string name="hello_header">Hi</string>
     <string name="header_change_text">Here you can change the text</string>

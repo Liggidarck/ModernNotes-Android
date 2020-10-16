@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
@@ -18,6 +20,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
@@ -57,6 +60,12 @@ public class GeneratorPasswordActivity extends AppCompatActivity {
         if(theme_app.equals("Blue"))
             setTheme(R.style.BlueTheme);
 
+        if(theme_app.equals("Dark"))
+            setTheme(R.style.DarckTheme);
+
+        if(theme_app.equals("AquaBlue"))
+            setTheme(R.style.AquaBlueTheme);
+
         if(theme_app.equals("Green"))
             setTheme(R.style.GreenTheme);
 
@@ -81,8 +90,6 @@ public class GeneratorPasswordActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-
-
         refresh = findViewById(R.id.generate_password);
         PasswordText = findViewById(R.id.password_text);
         PasswordLength = findViewById(R.id.lengthPassword);
@@ -98,10 +105,14 @@ public class GeneratorPasswordActivity extends AppCompatActivity {
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar_generator);
         setSupportActionBar(toolbar);
+
+        toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(GeneratorPasswordActivity.this, MainActivity.class));
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
 
@@ -118,6 +129,23 @@ public class GeneratorPasswordActivity extends AppCompatActivity {
         if(theme_app.equals("Blue")){
             refresh.setBackground(ContextCompat.getDrawable(this, R.drawable.for_buttons_blue));
             copy.setBackground(ContextCompat.getDrawable(this, R.drawable.for_buttons_blue));
+        }
+
+        if(theme_app.equals("Dark")){
+            Drawable white_line = getResources().getDrawable(R.drawable.line_white);
+
+            ImageView line = findViewById(R.id.password_line);
+            line.setImageDrawable(white_line);
+
+            toolbar.setNavigationIcon(R.drawable.ic_white_baseline_arrow_back_24);
+            PasswordText.setTextColor(Color.WHITE);
+            refresh.setBackground(ContextCompat.getDrawable(this, R.drawable.for_buttons_dark));
+            copy.setBackground(ContextCompat.getDrawable(this, R.drawable.for_buttons_dark));
+        }
+
+        if(theme_app.equals("AquaBlue")){
+            refresh.setBackground(ContextCompat.getDrawable(this, R.drawable.for_buttons_aqua_blue));
+            copy.setBackground(ContextCompat.getDrawable(this, R.drawable.for_buttons_aqua_blue));
         }
 
         if(theme_app.equals("Green")){
@@ -239,5 +267,11 @@ public class GeneratorPasswordActivity extends AppCompatActivity {
             clipboard.setPrimaryClip(clip);
             Snackbar.make(view, getText(R.string.password_copied), Snackbar.LENGTH_SHORT).setAction("done", null).show();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

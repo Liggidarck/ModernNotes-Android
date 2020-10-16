@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +31,10 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
-    LinearLayout notebook, listOfLinks, passwordsList, generator;
+
+    RelativeLayout notebook, listOfLinks;
+
+    LinearLayout passwordsList, generator;
     EditText textHeader;
     ConstraintLayout topNote;
     TextView text_topNote, text_topNote_name, textUserName, text_TOP_NOTE;
@@ -46,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
         String theme_app = sharedPreferences.getString("theme_app", "Fiolet");
 
         assert theme_app != null;
+        if(theme_app.equals("Dark"))
+            setTheme(R.style.DarckTheme);
+
         if(theme_app.equals("Orange"))
             setTheme(R.style.Orange);
 
@@ -88,6 +95,12 @@ public class MainActivity extends AppCompatActivity {
         text_topNote_name = findViewById(R.id.text_name_note);
         ConstraintLayout header = findViewById(R.id.layoutHeader);
 
+        notebook = findViewById(R.id.layoutNote);
+        listOfLinks = findViewById(R.id.layoutLinks);
+        passwordsList = findViewById(R.id.layoutPasswords);
+        generator = findViewById(R.id.layoutGenerator);
+
+
         String name_user = sharedPreferences.getString("full_name", "empty_user_name");
         String text_header = sharedPreferences.getString("nizniy_text_header", "");
         String number_of_lines_top_note = sharedPreferences.getString("number_of_lines_top_note", "3");
@@ -121,8 +134,33 @@ public class MainActivity extends AppCompatActivity {
 
         LoadTopNote();
 
+        TextView notebook_text = findViewById(R.id.notebook_text);
+        TextView links_text = findViewById(R.id.links_text);
+        TextView password_tex = findViewById(R.id.password_tex);
+        TextView generatoe_text = findViewById(R.id.generatoe_text);
+
         if(ad_pro_version)
             getSupportFragmentManager().beginTransaction().replace(R.id.layout_card_free, new FragmentPro()).commit();
+
+        if(theme_app.equals("Dark")) {
+            header.setBackground(ContextCompat.getDrawable(this, R.drawable.header_background_dark));
+            text_TOP_NOTE.setTextColor(Color.parseColor("#636363"));
+            topNote.setBackground(ContextCompat.getDrawable(this, R.drawable.top_note_back_dark));
+
+            notebook.setBackground(ContextCompat.getDrawable(this, R.drawable.black_rectangel_background));
+            notebook_text.setTextColor(Color.parseColor("#FFFFFF"));
+
+            listOfLinks.setBackground(ContextCompat.getDrawable(this, R.drawable.black_rectangel_background));
+            links_text.setTextColor(Color.parseColor("#FFFFFF"));
+
+            passwordsList.setBackground(ContextCompat.getDrawable(this, R.drawable.black_rectangel_background));
+            password_tex.setTextColor(Color.parseColor("#FFFFFF"));
+
+            generator.setBackground(ContextCompat.getDrawable(this, R.drawable.black_rectangel_background));
+            generatoe_text.setTextColor(Color.parseColor("#FFFFFF"));
+
+            textHeader.setHintTextColor(Color.BLACK);
+        }
 
         if(theme_app.equals("Orange")) {
             header.setBackground(ContextCompat.getDrawable(this, R.drawable.header_background_orange));
@@ -217,38 +255,39 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
-        notebook = findViewById(R.id.layoutNote);
         notebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, NotebookActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
-        listOfLinks = findViewById(R.id.layoutLinks);
         listOfLinks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, ListOfLinksActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
-        passwordsList = findViewById(R.id.layoutPasswords);
         passwordsList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, PasswordsListsActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
-        generator = findViewById(R.id.layoutGenerator);
         generator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, GeneratorPasswordActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -266,8 +305,10 @@ public class MainActivity extends AppCompatActivity {
                 assert empty_name_top_note != null;
                 if(empty_name_top_note.equals(name_note_def) && empty_note.equals(note_top_def))
                     Snackbar.make(view, getText(R.string.error_empty_note), Snackbar.LENGTH_SHORT).setAction("error", null).show();
-                else
+                else {
                     startActivity(new Intent(MainActivity.this, TopNoteActivity.class));
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
 
             }
         });
@@ -295,16 +336,9 @@ public class MainActivity extends AppCompatActivity {
         text_topNote_name.setText(name_top_note);
     }
 
-    private long backPressedTime = 0;
     @Override
     public void onBackPressed() {
-        long t = System.currentTimeMillis();
-        if (t - backPressedTime > 2000) {    // 2 secs
-            backPressedTime = t;
-            Toast.makeText(this, getString(R.string.exit_toast),
-                    Toast.LENGTH_SHORT).show();
-        } else
-            finish();
-
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }

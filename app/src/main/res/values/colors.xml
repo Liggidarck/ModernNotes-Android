@@ -25,11 +25,17 @@
     <color name="colorFioletPrimaryDark">#a6267d</color>
 
     <color name="colorWhite">#FFFFFF</color>
+    
+    <color name="dark_primary">#4C4C4C</color>
+    <color name="dark_primaryDark">#1c1c1c</color>
+
 
     <color name="red_color_fab">#e74c3c</color>
+    <color name="black_color_fab">#737373</color>
     <color name="orange_color_fab">#d35400</color>
     <color name="green_color_fab">#2ecc71</color>
     <color name="blue_color_fab">#6a89cc</color>
+    <color name="blueaqua_color_fab">#03d3fc</color>
     <color name="fiolet_color_fab">#a6267d</color>
 
 </resources>

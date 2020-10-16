@@ -2,6 +2,7 @@ package com.gradient.free;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.Dialog;
 import android.content.ContentValues;
@@ -10,9 +11,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -24,6 +27,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -36,11 +40,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class AddNoteActivity extends AppCompatActivity {
 
-    MaterialToolbar toolbar;
+    MaterialToolbar toolbar, toolbarDark;
 
     EditText nameBox;
     EditText noteBox;
-    FloatingActionButton del_button;
+    FloatingActionButton del_button, save_button;
 
     NotesDatabase sqlHelper;
     SQLiteDatabase db;
@@ -59,12 +63,20 @@ public class AddNoteActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         String theme_app = sharedPreferences.getString("theme_app", "Fiolet");
 
+        Log.e(TAG, theme_app+" Global Theme");
+
         assert theme_app != null;
         if(theme_app.equals("Orange"))
             setTheme(R.style.Orange);
 
+        if(theme_app.equals("Dark"))
+            setTheme(R.style.DarckTheme);
+
         if(theme_app.equals("Blue"))
             setTheme(R.style.BlueTheme);
+
+        if(theme_app.equals("AquaBlue"))
+            setTheme(R.style.AquaBlueTheme);
 
         if(theme_app.equals("Green"))
             setTheme(R.style.GreenTheme);
@@ -89,49 +101,98 @@ public class AddNoteActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        Log.i(TAG, checkTheme+" В самом начале OnCreate");
+        Log.e(TAG, checkTheme+" В самом начале OnCreate");
 
         toolbar = findViewById(R.id.topAppBar_add_note_darck_buttns);
-        setSupportActionBar(toolbar);
+        toolbarDark = findViewById(R.id.topAppBar_add_note_dark);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                save();
-            }
-        });
+        if(theme_app.equals("Dark")){
+            setSupportActionBar(toolbarDark);
+            toolbarDark.setVisibility(View.VISIBLE);
+            toolbarDark.setNavigationIcon(R.drawable.ic_white_baseline_arrow_back_24);
+            toolbarDark.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    save();
+                }
+            });
+        } else {
+            setSupportActionBar(toolbar);
+            toolbar.setVisibility(View.VISIBLE);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    save();
+                }
+            });
+        }
 
         nameBox = findViewById(R.id.name_note);
         noteBox = findViewById(R.id.note_text);
 
         del_button = findViewById(R.id.fab_del);
+        save_button = findViewById(R.id.fab_save_note);
+
         del_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 delete();
             }
         });
+        save_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                save();
+            }
+        });
+
+        boolean save_btn_activ = sharedPreferences.getBoolean("save_button_note", true);
+
+        if(!save_btn_activ)
+            save_button.setVisibility(View.GONE);
+
+        Log.i(TAG, save_btn_activ + " активация кнопки");
 
         String name_user = sharedPreferences.getString("full_name", "empty_user_name");
-
         assert name_user != null;
         if(name_user.equals("empty_user_name"))
             startActivity(new Intent(AddNoteActivity.this, StarterActivity.class));
 
-        if(theme_app.equals("Orange"))
+        if(theme_app.equals("Orange")) {
             del_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange_color_fab)));
+            save_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange_color_fab)));
+        }
 
-        if(theme_app.equals("Blue"))
+        if(theme_app.equals("Dark")) {
+            del_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.black_color_fab)));
+            save_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.black_color_fab)));
+        }
+
+        if(theme_app.equals("Blue")) {
             del_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blue_color_fab)));
+            save_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blue_color_fab)));
+        }
 
-        if(theme_app.equals("Green"))
+        if(theme_app.equals("AquaBlue")) {
+            del_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blueaqua_color_fab)));
+            save_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blueaqua_color_fab)));
+        }
+
+        if(theme_app.equals("Green")) {
             del_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green_color_fab)));
+            save_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green_color_fab)));
+        }
 
-        if(theme_app.equals("Red"))
+        if(theme_app.equals("Red")) {
             del_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.red_color_fab)));
+            save_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.red_color_fab)));
+        }
 
-        if(theme_app.equals("Fiolet"))
+        if(theme_app.equals("Fiolet")) {
             del_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fiolet_color_fab)));
+            save_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fiolet_color_fab)));
+        }
+
 
         sqlHelper = new NotesDatabase(this);
         db = sqlHelper.getWritableDatabase();
@@ -153,16 +214,15 @@ public class AddNoteActivity extends AppCompatActivity {
             nameBox.setText(userCursor.getString(1));
             noteBox.setText(userCursor.getString(2));
             checkTheme = userCursor.getString(3);
-            Log.i(TAG, checkTheme+" Когда получил значение");
+            Log.e(TAG, checkTheme+" Когда получил значение");
 
             if(checkTheme.equals("Default")){
-                theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
-                toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
-            }
-
-            if(checkTheme.equals("Darcker")){
-                theme.setBackgroundColor(Color.parseColor("#303030"));
-                toolbar.setBackgroundColor(Color.parseColor("#303030"));
+                if(theme_app.equals("Dark"))
+                    Log.i(TAG, "Ничего не делаем!");
+                else {
+                    theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
+                    toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
+                }
             }
 
             if(checkTheme.equals("Red")){
@@ -245,6 +305,8 @@ public class AddNoteActivity extends AppCompatActivity {
         Intent intent = new Intent(this, NotebookActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
     }
 
     public boolean validateNameNote() {
@@ -256,6 +318,8 @@ public class AddNoteActivity extends AppCompatActivity {
             Intent intent = new Intent(this, NotebookActivity.class);
             intent.putExtra("empty", empty);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
             return false;
         } else {
             return true;
@@ -275,6 +339,11 @@ public class AddNoteActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+
+        TextView text_default_theme = dialog.findViewById(R.id.text_default_theme);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        final String theme_app_check = sharedPreferences.getString("theme_app", "Fiolet");
 
         ImageView default_th, reed, light_yello, yello, greeen, bluue, aqqua_blue, fiiolet, piink;
         ImageView check_default, check_red, check_yellow, chek_light_yellow, check_green, check_blue, check_aqua_blue, check_fiolet, chek_pink;
@@ -300,9 +369,17 @@ public class AddNoteActivity extends AppCompatActivity {
         chek_pink = dialog.findViewById(R.id.check_pink);
 
         theme = findViewById(R.id.theme_view);
+        Drawable image = getResources().getDrawable(R.drawable.dark_default);
 
-        if(checkTheme.equals("Default"))
+        if(theme_app_check.equals("Dark")) {
+            default_th.setImageDrawable(image);
+            text_default_theme.setTextColor(Color.WHITE);
+            done.setTextColor(Color.WHITE);
+        }
+
+        if(checkTheme.equals("Default")) {
             check_default.setVisibility(View.VISIBLE);
+        }
 
         if(checkTheme.equals("Red"))
             check_red.setVisibility(View.VISIBLE);
@@ -332,8 +409,14 @@ public class AddNoteActivity extends AppCompatActivity {
         default_th.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
-                toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
+                Log.i(TAG, theme_app_check + " проверка в теме");
+                if(theme_app_check.equals("Dark")) {
+                    recreate();
+                } else {
+                    theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
+                    toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
+                }
+
                 checkTheme = "Default";
                 dialog.dismiss();
             }
@@ -429,8 +512,15 @@ public class AddNoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String theme_app = sharedPreferences.getString("theme_app", "Fiolet");
+
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.add_note_darck, menu);
+
+        if(theme_app.equals("Dark"))
+            inflater.inflate(R.menu.menu_top_note_only, menu);
+        else
+            inflater.inflate(R.menu.add_note_darck, menu);
 
         return true;
     }
@@ -445,10 +535,10 @@ public class AddNoteActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
 
             if(name_top_note.isEmpty() && top_note.isEmpty()) {
-                Log.i(TAG, "Полностью пустая заметка");
+                Log.e(TAG, "Полностью пустая заметка");
                 Toast.makeText(getApplicationContext(), getText(R.string.error_empty_top_note), Toast.LENGTH_SHORT).show();
             } else {
-                Log.i(TAG, "Нормальная заметка");
+                Log.e(TAG, "Нормальная заметка");
                 Toast.makeText(getApplicationContext(), getText(R.string.pinned_done_text), Toast.LENGTH_SHORT).show();
 
                 editor.putString("note", top_note);
@@ -459,7 +549,7 @@ public class AddNoteActivity extends AppCompatActivity {
             }
 
             if(name_top_note.isEmpty() && top_note.length() > 0) {
-                Log.i(TAG, "Имя пустое а заметка нет");
+                Log.e(TAG, "Имя пустое а заметка нет");
 
                 String nameEmpty = getString(R.string.noname_note);
 
@@ -471,7 +561,7 @@ public class AddNoteActivity extends AppCompatActivity {
             }
 
             if(name_top_note.length() > 0 && top_note.isEmpty()) {
-                Log.i(TAG, "Заметка пустая а имя нет");
+                Log.e(TAG, "Заметка пустая а имя нет");
 
                 String noteEmpty = getString(R.string.blank_note);
 

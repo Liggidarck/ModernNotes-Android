@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">टिप्पणियाँ</string>
+    <string name="hello_header">नमस्ते</string>
+    <string name="header_change_text">इस पाठ को बदला जा सकता है</string>
+    <string name="notebook_text">स्मरण पुस्तक</string>
+    <string name="links_text">लिंक</string>
+    <string name="password_text">पासवर्डों</string>
+    <string name="generator_text">जनक</string>
+    <string name="settings">सेटिंग्स</string>
+    <string name="basic_settings">मुख्य</string>
+    <string name="you_name">आपका नाम</string>
+    <string name="edit_you_name">नाम परिवर्तित करें</string>
+    <string name="change_your_name">यहां आप अपना नाम बदल सकते हैं</string>
+    <string name="welcome_text">आपका स्वागत है पाठ</string>
+    <string name="change_the_greeting_text">यहां आप स्वागत पाठ को बदल सकते हैं</string>
+    <string name="enter_new_text">एक पाठ दर्ज करें</string>
+    <string name="Number_of_lines">होम स्क्रीन पर पिन किए गए नोट में लाइनों की संख्या</string>
+    <string name="change_the_number_of_lines">यहां आप संलग्न नोट में लाइनों की संख्या को बदल सकते हैं</string>
+    <string name="customization_text">अनुकूलन</string>
+    <string name="theme_app">आवेदन विषय</string>
+    <string name="choose_a_theme_for_application">यहां आप आवेदन के लिए एक विषय का चयन कर सकते हैं</string>
+    <string name="activate_add_button">Add बटन को सक्रिय करें</string>
+    <string name="button_on_home_screen">होम स्क्रीन पर ऐड बटन प्रदर्शित करें</string>
+    <string name="Add_button_color">बटन का रंग जोड़ें</string>
+    <string name="change_color_button_add">यहां आप "ऐड" बटन का रंग बदल सकते हैं</string>
+    <string name="pressing_button">कुंजी दबाएं</string>
+    <string name="change_actions_you_click_button">जब आप बटन पर क्लिक करते हैं तो यहां आप क्रियाओं को बदल सकते हैं</string>
+    <string name="generator_passwords">पासवर्ड जनरेटर</string>
+    <string name="list_of_links">लिंक की सूची</string>
+    <string name="error_empty_note">सबसे पहले एक नोट जोड़ें</string>
+    <string name="error_empty_top_note">खाली नोट शामिल नहीं हैं</string>
+    <string name="error_empty_field">यह स्थान खाली नहीं रह सकता</string>
+    <string name="noname_link">बिना नाम का लिंक</string>
+    <string name="username_copied">उपयोगकर्ता नाम की प्रतिलिपि बनाई गई!</string>
+    <string name="pinned_done_text">एक नोट को होम स्क्रीन पर पिन किया जाता है </string>
+    <string name="noname_note">बिना नाम वाला एक नोट</string>
+    <string name="blank_note">खाली नोट</string>
+    <string name="empty_note_dont_save">खाली नोट सहेजे नहीं जाते</string>
+    <string name="generate_password_to_copy">कॉपी किया जाने वाला पासवर्ड जनरेट करें</string>
+    <string name="password_copied">पासवर्ड कॉपी किया गया</string>
+    <string name="error_max">गलत मूल्य। 128</string>
+    <string name="default_name_top_note">अपना नाम लिखो</string>
+    <string name="default_text_top_note">आपके द्वारा हाइलाइट किए गए नोट यहां प्रदर्शित किए गए हैं.</string>
+    <string name="top_note_text">शीर्ष नोट</string>
+    <string name="now_it_is_empty_add_something_here_text">अभी खाली है। यहाँ कुछ जोड़ें.</string>
+    <string name="title_text">शीर्षक</string>
+    <string name="text_note">टेक्स्ट</string>
+    <string name="themes_text">विषयों</string>
+    <string name="delete_text">स्पष्ट</string>
+    <string name="link">छोटा रास्ता</string>
+    <string name="name_for_link">लिंक नाम</string>
+    <string name="note_for_link">संदर्भ के लिए ध्यान दें</string>
+    <string name="web_address">वेबसाइट यू.आर. एल</string>
+    <string name="e_mail_or_username">ईमेल पता या उपयोगकर्ता नाम</string>
+    <string name="password">कुंजिका</string>
+    <string name="generate_me">मुझे पैदा करो!</string>
+    <string name="password_length">पारण शब्द लम्बाई</string>
+    <string name="special_symbols">विशेष प्रतीक</string>
+    <string name="cancel_text">रद्द करना</string>
+    <string name="save_text">को बचाने के</string>
+    <string name="hello_text">नमस्ते</string>
+    <string name="register_your_account_text">अपने खाते को पंजीकृत करें</string>
+    <string name="enter_your_name_text">अपना नाम दर्ज करें</string>
+    <string name="sing_in_text">प्रवेश करना</string>
+
+    <string name="exit_toast">बाहर निकलने के लिए फिर से क्लिक करें</string>
+
+    <string name="show_ads_pro_version">विज्ञापन प्रो संस्करण दिखाएं</string>
+    <string name="disable_pro_version_ads">प्रो संस्करण विज्ञापन अक्षम करें</string>
+
+    <string name="upgrade_to_pro">प्रो में अपग्रेड</string>
+    <string name="completely_disable_ads_by_purchasing_the_pro_version">प्रो संस्करण खरीदकर विज्ञापनों को पूरी तरह से निष्क्रिय कर दें!</string>
+
+</resources>

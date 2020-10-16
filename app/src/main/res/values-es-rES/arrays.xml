@@ -2,11 +2,11 @@
 <resources>
 
     <string-array name="kolichestvo_strok_top_note" >
-        <item>2 líneas</item>
-        <item>3 líneas</item>
-        <item>5 líneas</item>
-        <item>10 líneas</item>
-        <item>Sin restricciones</item>
+        <item>2 strings</item>
+        <item>3 strings</item>
+        <item>5 strings</item>
+        <item>10 strings</item>
+        <item>With no restrictions</item>
     </string-array>
 
     <string-array name="kolichestvo_strok_top_note_values">
@@ -18,11 +18,11 @@
     </string-array>
 
     <string-array name="color_fab_add">
-        <item>rojo</item>
-        <item>naranja</item>
-        <item>Verde</item>
-        <item>Azul</item>
-        <item>Violeta</item>
+        <item>Red</item>
+        <item>Orange</item>
+        <item>Green</item>
+        <item>Blue</item>
+        <item>Violet</item>
     </string-array>
 
     <string-array name="color_fab_add_values">
@@ -34,9 +34,9 @@
     </string-array>
 
     <string-array name="fab_on_click">
-        <item>Añadir la nota</item>
-        <item>Añadir enlace</item>
-        <item>Agregar contraseña</item>
+        <item>Add note</item>
+        <item>Add link</item>
+        <item>Add password</item>
     </string-array>
 
     <string-array name="fab_on_click_values">
@@ -46,15 +46,17 @@
     </string-array>
 
     <string-array name="theme_app">
-        <item>naranja</item>
-        <item>Azul</item>
-        <item>Azul claro</item>
-        <item>Verde</item>
-        <item>rojo</item>
-        <item>Púrpura</item>
+        <item>Dark</item>
+        <item>Orange</item>
+        <item>Blue</item>
+        <item>Aqua Blue</item>
+        <item>Green</item>
+        <item>Red</item>
+        <item>Violet</item>
     </string-array>
 
     <string-array name="theme_app_val">
+        <item>Dark</item>
         <item>Orange</item>
         <item>Blue</item>
         <item>AquaBlue</item>

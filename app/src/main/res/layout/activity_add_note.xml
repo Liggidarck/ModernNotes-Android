@@ -12,14 +12,25 @@
         android:layout_height="match_parent" />
 
     <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar_add_note_dark"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/ic_black_arrow_back_24"
+        app:title=" "
+        android:visibility="invisible"
+        app:menu="@menu/menu_top_note_only"
+        android:elevation="4dp"
+        style="@style/Widget.MaterialComponents.Toolbar.Surface" />
+
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar_add_note_darck_buttns"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationIcon="@drawable/ic_black_arrow_back_24"
         app:title=" "
-        android:background="#FFFFFF"
         app:menu="@menu/add_note_darck"
         android:elevation="4dp"
+        android:visibility="invisible"
         style="@style/Widget.MaterialComponents.Toolbar.Surface" />
 
     <View
@@ -66,12 +77,23 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_del"
+        android:id="@+id/fab_save_note"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="30sp"
+        android:layout_marginBottom="25sp"
+        app:srcCompat="@drawable/ic_baseline_done_white_24"
+        app:tint="@color/colorWhite" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_del"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="30sp"
         android:layout_marginBottom="25sp"
         app:srcCompat="@drawable/ic_baseline_delete_24"
         app:tint="@color/colorWhite" />

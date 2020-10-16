@@ -7,12 +7,23 @@
     tools:context=".AddLinkActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar_add_link_dark"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/ic_black_arrow_back_24"
+        app:title=" "
+        android:visibility="invisible"
+        android:elevation="4dp"
+        app:menu="@menu/menu_theme"
+        style="@style/Widget.MaterialComponents.Toolbar.Surface" />
+
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar_add_link"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationIcon="@drawable/ic_black_arrow_back_24"
         app:title=" "
-        android:background="#FFFFFF"
+        android:visibility="invisible"
         android:elevation="4dp"
         app:menu="@menu/menu_theme"
         style="@style/Widget.MaterialComponents.Toolbar.Surface" />

@@ -9,11 +9,13 @@ import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -46,6 +48,12 @@ public class PasswordsListsActivity extends AppCompatActivity {
         if(theme_app.equals("Blue"))
             setTheme(R.style.BlueTheme);
 
+        if(theme_app.equals("Dark"))
+            setTheme(R.style.DarckTheme);
+
+        if(theme_app.equals("AquaBlue"))
+            setTheme(R.style.AquaBlueTheme);
+
         if(theme_app.equals("Green"))
             setTheme(R.style.GreenTheme);
 
@@ -72,10 +80,13 @@ public class PasswordsListsActivity extends AppCompatActivity {
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar_passwords_list);
         setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(PasswordsListsActivity.this, MainActivity.class));
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
 
@@ -84,6 +95,7 @@ public class PasswordsListsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(PasswordsListsActivity.this, AddPasswordActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -92,6 +104,17 @@ public class PasswordsListsActivity extends AppCompatActivity {
 
         if(theme_app.equals("Blue"))
             add_password.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blue_color_fab)));
+
+        TextView empty_text_passwords = findViewById(R.id.empty_text_passwords);
+
+        if(theme_app.equals("Dark")) {
+            toolbar.setNavigationIcon(R.drawable.ic_white_baseline_arrow_back_24);
+            empty_text_passwords.setTextColor(Color.WHITE);
+            add_password.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.black_color_fab)));
+        }
+
+        if(theme_app.equals("AquaBlue"))
+            add_password.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blueaqua_color_fab)));
 
         if(theme_app.equals("Green"))
             add_password.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green_color_fab)));
@@ -111,6 +134,8 @@ public class PasswordsListsActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), AddPasswordActivity.class);
                 intent.putExtra("id", id);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
             }
         });
 
@@ -142,4 +167,9 @@ public class PasswordsListsActivity extends AppCompatActivity {
         userCursor.close();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 }
