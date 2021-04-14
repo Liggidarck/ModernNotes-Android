@@ -1,4 +1,4 @@
-package com.gradient.free;
+package com.george.modern_notes.notebook;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -13,7 +13,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -21,11 +20,12 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.george.modern_notes.MainActivity;
+import com.george.modern_notes.R;
+import com.george.modern_notes.database.NotesDatabase;
 
 import java.util.Objects;
 
@@ -39,9 +39,6 @@ public class NotebookActivity extends AppCompatActivity {
     Cursor userCursor;
     SimpleCursorAdapter userAdapter;
     ListView notesList;
-
-    private AdView mAdView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,16 +82,13 @@ public class NotebookActivity extends AppCompatActivity {
             }
         }
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
+        MobileAds.initialize(this, initializationStatus -> {
         });
 
         TextView empty_text = findViewById(R.id.empty_text);
 
 
-        mAdView = findViewById(R.id.adViewNotebook);
+        AdView mAdView = findViewById(R.id.adViewNotebook);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -102,23 +96,11 @@ public class NotebookActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(NotebookActivity.this, MainActivity.class));
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-            }
-        });
+        toolbar.setNavigationOnClickListener(view -> startActivity(new Intent(NotebookActivity.this, MainActivity.class)));
 
 
         add_note = findViewById(R.id.add_note);
-        add_note.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(NotebookActivity.this, AddNoteActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        });
+        add_note.setOnClickListener(view -> startActivity(new Intent(NotebookActivity.this, AddNoteActivity.class)));
 
         if(theme_app.equals("Orange"))
             add_note.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange_color_fab))); //#f59619
@@ -147,14 +129,10 @@ public class NotebookActivity extends AppCompatActivity {
 
         notesList = findViewById(R.id.notebook_list);
 
-        notesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), AddNoteActivity.class);
-                intent.putExtra("id", id);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
+        notesList.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(getApplicationContext(), AddNoteActivity.class);
+            intent.putExtra("id", id);
+            startActivity(intent);
         });
 
         databaseHelper = new NotesDatabase(getApplicationContext());
@@ -176,7 +154,6 @@ public class NotebookActivity extends AppCompatActivity {
 
         userAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2, userCursor, headers, new int[] {android.R.id.text1, android.R.id.text2}, 0);
         notesList.setAdapter(userAdapter);
-
     }
 
     @Override
@@ -188,7 +165,6 @@ public class NotebookActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(NotebookActivity.this, MainActivity.class));
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

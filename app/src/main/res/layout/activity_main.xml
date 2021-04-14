@@ -31,7 +31,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="15dp"
-            android:text="George"
             android:textColor="@color/colorWhite"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -46,7 +45,6 @@
             android:clickable="true"
             android:contentDescription="@string/app_name"
             android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_settings"
             app:tint="@color/colorWhite"
             app:layout_constraintBottom_toBottomOf="@id/textHello"
@@ -76,7 +74,8 @@
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
                 android:textColor="@color/colorAccent"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:inputType="none" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -102,199 +101,197 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutHeader">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <FrameLayout
                 android:id="@+id/layout_card_free"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/allElements"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/layout_card_free">
+                android:layout_height="wrap_content" >
 
-                <RelativeLayout
-                    android:id="@+id/layoutNote"
-                    android:layout_marginTop="22dp"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:elevation="3dp"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:background="@drawable/white_rectangel_background"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="10dp"
-                    app:layout_constraintDimensionRatio="H,1:1"
-                    app:layout_constraintEnd_toStartOf="@id/layoutLinks"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                <GridLayout
+                    android:id="@+id/allElements"
+                    android:columnCount="2"
+                    android:rowCount="3"
+                    android:alignmentMode="alignMargins"
+                    android:columnOrderPreserved="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
 
-                    <ImageView
-                        android:id="@+id/notebook_image"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_margin="8dp"
-                        android:layout_centerHorizontal="true"
-                        android:contentDescription="@string/app_name"
-                        android:padding="8dp"
-                        android:src="@drawable/notebook" />
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/motebook_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        app:cardElevation="6dp"
+                        app:cardCornerRadius="10dp"
+                        android:layout_margin="12dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true">
 
-                    <TextView
-                        android:id="@+id/notebook_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_below="@+id/notebook_image"
-                        android:text="@string/notebook_text"
-                        android:textColor="@android:color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:padding="16dp"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" >
 
-                </RelativeLayout>
+                            <ImageView
+                                android:src="@drawable/notebook"
+                                android:layout_width="80dp"
+                                android:layout_height="100dp" />
 
-                <RelativeLayout
-                    android:id="@+id/layoutLinks"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
-                    android:background="@drawable/white_rectangel_background"
-                    android:clickable="true"
-                    android:elevation="3dp"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="10dp"
-                    app:layout_constraintDimensionRatio="H,1:1"
+                            <TextView
+                                android:id="@+id/notebook_text"
+                                android:layout_marginTop="10dp"
+                                android:text="@string/notebook_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"
+                                android:textSize="20sp"
+                                android:textStyle="bold"/>
 
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/layoutNote"
-                    app:layout_constraintTop_toTopOf="parent">
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
-                    <ImageView
-                        android:id="@+id/links_image"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_margin="8dp"
-                        android:layout_centerHorizontal="true"
-                        android:contentDescription="@string/app_name"
-                        android:padding="8dp"
-                        android:src="@drawable/link" />
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/link_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        app:cardElevation="6dp"
+                        app:cardCornerRadius="10dp"
+                        android:layout_margin="12dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true" >
 
-                    <TextView
-                        android:id="@+id/links_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/links_text"
-                        android:textColor="@android:color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:layout_below="@+id/links_image"/>
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:padding="16dp"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" >
 
-                </RelativeLayout>
+                            <ImageView
+                                android:src="@drawable/link"
+                                android:layout_width="80dp"
+                                android:layout_height="100dp" />
 
-                <LinearLayout
-                    android:id="@+id/layoutPasswords"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/white_rectangel_background"
-                    android:clickable="true"
-                    android:elevation="3dp"
-                    android:layout_marginTop="22dp"
+                            <TextView
+                                android:id="@+id/links_text"
+                                android:layout_marginTop="10dp"
+                                android:text="@string/link"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"
+                                android:textSize="20sp"
+                                android:textStyle="bold"/>
 
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="10dp"
-                    app:layout_constraintDimensionRatio="H,1:1"
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
-                    app:layout_constraintEnd_toStartOf="@id/layoutLinks"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/layoutNote">
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/password_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        app:cardElevation="6dp"
+                        app:cardCornerRadius="10dp"
+                        android:layout_margin="12dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true" >
 
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_margin="8dp"
-                        android:contentDescription="@string/app_name"
-                        android:padding="8dp"
-                        android:src="@drawable/folder" />
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:padding="16dp"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" >
 
-                    <TextView
-                        android:id="@+id/password_tex"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/password_text"
-                        android:textColor="@android:color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                            <ImageView
+                                android:src="@drawable/folder"
+                                android:layout_width="80dp"
+                                android:layout_height="100dp" />
 
-                </LinearLayout>
+                            <TextView
+                                android:id="@+id/password_tex"
+                                android:layout_marginTop="10dp"
+                                android:text="@string/password_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"
+                                android:textSize="20sp"
+                                android:textStyle="bold"/>
 
-                <LinearLayout
-                    android:id="@+id/layoutGenerator"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/white_rectangel_background"
-                    android:layout_marginTop="22dp"
-                    android:clickable="true"
-                    android:elevation="3dp"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="10dp"
-                    app:layout_constraintDimensionRatio="H,1:1"
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/layoutNote"
-                    app:layout_constraintTop_toBottomOf="@id/layoutLinks">
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/generator_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_columnWeight="1"
+                        android:layout_rowWeight="1"
+                        app:cardElevation="6dp"
+                        app:cardCornerRadius="10dp"
+                        android:layout_margin="12dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true" >
 
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_margin="8dp"
-                        android:contentDescription="@string/app_name"
-                        android:padding="8dp"
-                        android:src="@drawable/password_gener" />
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:padding="16dp"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" >
 
-                    <TextView
-                        android:id="@+id/generatoe_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/generator_text"
-                        android:textColor="@android:color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                            <ImageView
+                                android:src="@drawable/password_gener"
+                                android:layout_width="80dp"
+                                android:layout_height="100dp" />
 
-                </LinearLayout>
+                            <TextView
+                                android:id="@+id/generatoe_text"
+                                android:layout_marginTop="10dp"
+                                android:text="@string/generator_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"
+                                android:textSize="20sp"
+                                android:textStyle="bold"/>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </GridLayout>
+
+                <androidx.cardview.widget.CardView
                     android:id="@+id/layout_card_top"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:clickable="true"
-                    android:elevation="3dp"
-                    android:focusable="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
                     android:foreground="?android:attr/selectableItemBackground"
-                    android:padding="20dp"
+                    android:layout_below="@+id/allElements" >
 
-                    app:layout_constraintEnd_toEndOf="@id/layoutGenerator"
-                    app:layout_constraintStart_toStartOf="@id/layoutNote"
-                    app:layout_constraintTop_toBottomOf="@id/layoutPasswords">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp" >
 
                     <TextView
                         android:id="@+id/textNoteTop"
@@ -344,22 +341,23 @@
                         android:textSize="20sp"
                         app:layout_constraintTop_toBottomOf="@id/text_name_note" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
-                    app:layout_constraintEnd_toEndOf="@id/layout_card_top"
-                    app:layout_constraintTop_toBottomOf="@id/layout_card_top" />
+                    android:layout_below="@+id/layout_card_top"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </RelativeLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
     </ScrollView>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <com.google.android.gms.ads.AdView
             xmlns:ads="http://schemas.android.com/apk/res-auto"
             android:id="@+id/adViewMain"

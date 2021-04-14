@@ -1,4 +1,4 @@
-package com.gradient.free;
+package com.george.modern_notes.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,7 +8,7 @@ public class LinksDatabase extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "link.db"; // название бд
     private static final int SCHEMA = 1; // версия базы данных
-    static final String TABLE = "links"; // название таблицы в бд
+    public static final String TABLE = "links"; // название таблицы в бд
     // названия столбцов
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAME_LINK = "name";

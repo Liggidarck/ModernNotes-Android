@@ -16,6 +16,7 @@
     <item
         android:id="@+id/del"
         android:title="@string/delete_text"
-        app:showAsAction="withText" />
+        android:icon="@drawable/ic_baseline_delete_24"
+        app:showAsAction="ifRoom" />
 
 </menu>

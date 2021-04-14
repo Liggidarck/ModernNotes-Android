@@ -1,4 +1,4 @@
-package com.gradient.free;
+package com.george.modern_notes.passwords;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cursoradapter.widget.SimpleCursorAdapter;
@@ -13,7 +13,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,6 +23,9 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.george.modern_notes.MainActivity;
+import com.george.modern_notes.R;
+import com.george.modern_notes.database.PasswordsDatabase;
 
 public class PasswordsListsActivity extends AppCompatActivity {
 
@@ -32,8 +34,6 @@ public class PasswordsListsActivity extends AppCompatActivity {
     SQLiteDatabase db;
     Cursor userCursor;
     SimpleCursorAdapter userAdapter;
-
-    private AdView mAdView;
 
 
     @Override
@@ -67,13 +67,10 @@ public class PasswordsListsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_passwords_lists);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
+        MobileAds.initialize(this, initializationStatus -> {
         });
 
-        mAdView = findViewById(R.id.adView);
+        AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -82,22 +79,10 @@ public class PasswordsListsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(PasswordsListsActivity.this, MainActivity.class));
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-            }
-        });
+        toolbar.setNavigationOnClickListener(view -> startActivity(new Intent(PasswordsListsActivity.this, MainActivity.class)));
 
         FloatingActionButton add_password = findViewById(R.id.floatingActionButton_add_password);
-        add_password.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(PasswordsListsActivity.this, AddPasswordActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        });
+        add_password.setOnClickListener(view -> startActivity(new Intent(PasswordsListsActivity.this, AddPasswordActivity.class)));
 
         if(theme_app.equals("Orange"))
             add_password.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange_color_fab))); //#f59619
@@ -128,15 +113,10 @@ public class PasswordsListsActivity extends AppCompatActivity {
 
         pas_list = findViewById(R.id.list_passwords);
 
-        pas_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), AddPasswordActivity.class);
-                intent.putExtra("id", id);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
-            }
+        pas_list.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(getApplicationContext(), AddPasswordActivity.class);
+            intent.putExtra("id", id);
+            startActivity(intent);
         });
 
         databaseHelper = new PasswordsDatabase(getApplicationContext());
@@ -165,11 +145,5 @@ public class PasswordsListsActivity extends AppCompatActivity {
         super.onDestroy();
         db.close();
         userCursor.close();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

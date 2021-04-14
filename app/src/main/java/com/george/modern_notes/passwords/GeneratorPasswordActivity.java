@@ -1,4 +1,4 @@
-package com.gradient.free;
+package com.george.modern_notes.passwords;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -32,6 +32,9 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.george.modern_notes.MainActivity;
+import com.george.modern_notes.R;
+import com.george.modern_notes.common.StarterActivity;
 
 import java.util.Objects;
 import java.util.Random;
@@ -45,7 +48,6 @@ public class GeneratorPasswordActivity extends AppCompatActivity {
     private CheckBox symwals;
 
     int passwordLength = 16;
-    private AdView mAdView;
 
 
     @Override
@@ -80,13 +82,10 @@ public class GeneratorPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_generator_password);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
+        MobileAds.initialize(this, initializationStatus -> {
         });
 
-        mAdView = findViewById(R.id.adViewGenerator);
+        AdView mAdView = findViewById(R.id.adViewGenerator);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -108,13 +107,7 @@ public class GeneratorPasswordActivity extends AppCompatActivity {
 
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(GeneratorPasswordActivity.this, MainActivity.class));
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-            }
-        });
+        toolbar.setNavigationOnClickListener(view -> startActivity(new Intent(GeneratorPasswordActivity.this, MainActivity.class)));
 
         final Animation refresh_anim_set = AnimationUtils.loadAnimation(this, R.anim.refresh_anim);
         final Animation refresh_anim_err = AnimationUtils.loadAnimation(this, R.anim.ripple_anim);
@@ -182,48 +175,40 @@ public class GeneratorPasswordActivity extends AppCompatActivity {
         });
 
         //Для генератора паролей
-        refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String checkPasswordLength = Objects.requireNonNull(PasswordLength.getText()).toString();
-                if(symwals.isChecked()) {
-                    if(checkPasswordLength.isEmpty()) {
-                        passwordLenghtLAyoutl.setError(getString(R.string.error_empty_field));
-                        refresh.startAnimation(refresh_anim_err);
-                    }
-                    else if(Integer.parseInt(PasswordLength.getText().toString()) > 128 ) {
-                        passwordLenghtLAyoutl.setError(getString(R.string.error_max));
-                        refresh.startAnimation(refresh_anim_err);
-                    } else {
-                        refresh.startAnimation(refresh_anim_set);
-                        passwordLength = Integer.parseInt(PasswordLength.getText().toString());
-                        PasswordText.setText(getRandomPasswordSymwals(passwordLength));
-                        passwordLenghtLAyoutl.setError(null);
-                    }
+        refresh.setOnClickListener(v -> {
+            String checkPasswordLength = Objects.requireNonNull(PasswordLength.getText()).toString();
+            if(symwals.isChecked()) {
+                if(checkPasswordLength.isEmpty()) {
+                    passwordLenghtLAyoutl.setError(getString(R.string.error_empty_field));
+                    refresh.startAnimation(refresh_anim_err);
+                }
+                else if(Integer.parseInt(PasswordLength.getText().toString()) > 128 ) {
+                    passwordLenghtLAyoutl.setError(getString(R.string.error_max));
+                    refresh.startAnimation(refresh_anim_err);
                 } else {
-                    if(checkPasswordLength.isEmpty()) {
-                        passwordLenghtLAyoutl.setError(getString(R.string.error_empty_field));
-                        refresh.startAnimation(refresh_anim_err);
-                    }
-                    else if(Integer.parseInt(PasswordLength.getText().toString()) > 128) {
-                        passwordLenghtLAyoutl.setError(getString(R.string.error_max));
-                        refresh.startAnimation(refresh_anim_err);
-                    } else {
-                        refresh.startAnimation(refresh_anim_set);
-                        passwordLength = Integer.parseInt(PasswordLength.getText().toString());
-                        PasswordText.setText(getRandomPassword(passwordLength));
-                        passwordLenghtLAyoutl.setError(null);
-                    }
+                    refresh.startAnimation(refresh_anim_set);
+                    passwordLength = Integer.parseInt(PasswordLength.getText().toString());
+                    PasswordText.setText(getRandomPasswordSymwals(passwordLength));
+                    passwordLenghtLAyoutl.setError(null);
+                }
+            } else {
+                if(checkPasswordLength.isEmpty()) {
+                    passwordLenghtLAyoutl.setError(getString(R.string.error_empty_field));
+                    refresh.startAnimation(refresh_anim_err);
+                }
+                else if(Integer.parseInt(PasswordLength.getText().toString()) > 128) {
+                    passwordLenghtLAyoutl.setError(getString(R.string.error_max));
+                    refresh.startAnimation(refresh_anim_err);
+                } else {
+                    refresh.startAnimation(refresh_anim_set);
+                    passwordLength = Integer.parseInt(PasswordLength.getText().toString());
+                    PasswordText.setText(getRandomPassword(passwordLength));
+                    passwordLenghtLAyoutl.setError(null);
                 }
             }
         });
 
-        copy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                OnCopyBtnClick(view);
-            }
-        });
+        copy.setOnClickListener(view -> OnCopyBtnClick(view));
 
     }
 
@@ -267,11 +252,5 @@ public class GeneratorPasswordActivity extends AppCompatActivity {
             clipboard.setPrimaryClip(clip);
             Snackbar.make(view, getText(R.string.password_copied), Snackbar.LENGTH_SHORT).setAction("done", null).show();
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

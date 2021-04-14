@@ -1,4 +1,4 @@
-package com.gradient.free;
+package com.george.modern_notes;
 
 import org.junit.Test;
 

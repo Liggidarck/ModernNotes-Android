@@ -1,4 +1,4 @@
-package com.gradient.free;
+package com.george.modern_notes.notebook;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +28,8 @@ import android.widget.TextView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.george.modern_notes.MainActivity;
+import com.george.modern_notes.R;
 
 public class TopNoteActivity extends AppCompatActivity {
 
@@ -76,21 +78,11 @@ public class TopNoteActivity extends AppCompatActivity {
             setSupportActionBar(toolbarDark);
             toolbarDark.setVisibility(View.VISIBLE);
             toolbarDark.setNavigationIcon(R.drawable.ic_white_baseline_arrow_back_24);
-            toolbarDark.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    goHome();
-                }
-            });
+            toolbarDark.setNavigationOnClickListener(view -> goHome());
         } else {
             setSupportActionBar(toolbar);
             toolbar.setVisibility(View.VISIBLE);
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    goHome();
-                }
-            });
+            toolbar.setNavigationOnClickListener(view -> goHome());
         }
 
         theme = findViewById(R.id.theme_top_note);
@@ -101,12 +93,7 @@ public class TopNoteActivity extends AppCompatActivity {
         Log.i(TAG, checkThemeTopNote + "После получения данных");
 
         ExtendedFloatingActionButton save = findViewById(R.id.save_new_note);
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UpdateData();
-            }
-        });
+        save.setOnClickListener(view -> UpdateData());
 
         if(theme_app.equals("Orange"))
             save.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange_color_fab))); //#f59619
@@ -251,7 +238,6 @@ public class TopNoteActivity extends AppCompatActivity {
 
     public void goHome() {
         startActivity(new Intent(TopNoteActivity.this, MainActivity.class));
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     @Override
@@ -301,12 +287,7 @@ public class TopNoteActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.dialog_theme);
 
         Button done = dialog.findViewById(R.id.button_ok);
-        done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
+        done.setOnClickListener(view -> dialog.dismiss());
 
         SharedPreferences sharedPreferences_theme = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         final String theme_app_check = sharedPreferences_theme.getString("theme_app", "Fiolet");
@@ -377,112 +358,85 @@ public class TopNoteActivity extends AppCompatActivity {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
 
 
-        default_th.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
-                toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
-                checkThemeTopNote = "Default";
-                editor.putString("theme_top_note", checkThemeTopNote);
-                editor.apply();
-                dialog.dismiss();
-            }
+        default_th.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
+            toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
+            checkThemeTopNote = "Default";
+            editor.putString("theme_top_note", checkThemeTopNote);
+            editor.apply();
+            dialog.dismiss();
         });
 
-        reed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#ee7576"));
-                toolbar.setBackgroundColor(Color.parseColor("#ee7576"));
-                checkThemeTopNote = "Red";
-                editor.putString("theme_top_note", checkThemeTopNote);
-                editor.apply();
-                dialog.dismiss();
-            }
+        reed.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#ee7576"));
+            toolbar.setBackgroundColor(Color.parseColor("#ee7576"));
+            checkThemeTopNote = "Red";
+            editor.putString("theme_top_note", checkThemeTopNote);
+            editor.apply();
+            dialog.dismiss();
         });
 
-        light_yello.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#ffeaa7"));
-                toolbar.setBackgroundColor(Color.parseColor("#ffeaa7"));
-                checkThemeTopNote = "Light Yellow";
-                editor.putString("theme_top_note", checkThemeTopNote);
-                editor.apply();
-                dialog.dismiss();
-            }
+        light_yello.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#ffeaa7"));
+            toolbar.setBackgroundColor(Color.parseColor("#ffeaa7"));
+            checkThemeTopNote = "Light Yellow";
+            editor.putString("theme_top_note", checkThemeTopNote);
+            editor.apply();
+            dialog.dismiss();
         });
 
-        yello.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#fdcb6f"));
-                toolbar.setBackgroundColor(Color.parseColor("#fdcb6f"));
-                checkThemeTopNote = "Yellow";
-                editor.putString("theme_top_note", checkThemeTopNote);
-                editor.apply();
-                dialog.dismiss();
-            }
+        yello.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#fdcb6f"));
+            toolbar.setBackgroundColor(Color.parseColor("#fdcb6f"));
+            checkThemeTopNote = "Yellow";
+            editor.putString("theme_top_note", checkThemeTopNote);
+            editor.apply();
+            dialog.dismiss();
         });
 
-        greeen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#2dab61"));
-                toolbar.setBackgroundColor(Color.parseColor("#2dab61"));
-                checkThemeTopNote = "Green";
-                editor.putString("theme_top_note", checkThemeTopNote);
-                editor.apply();
-                dialog.dismiss();
-            }
+        greeen.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#2dab61"));
+            toolbar.setBackgroundColor(Color.parseColor("#2dab61"));
+            checkThemeTopNote = "Green";
+            editor.putString("theme_top_note", checkThemeTopNote);
+            editor.apply();
+            dialog.dismiss();
         });
 
-        bluue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#337dc0"));
-                toolbar.setBackgroundColor(Color.parseColor("#337dc0"));
-                checkThemeTopNote = "Blue";
-                editor.putString("theme_top_note", checkThemeTopNote);
-                editor.apply();
-                dialog.dismiss();
-            }
+        bluue.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#337dc0"));
+            toolbar.setBackgroundColor(Color.parseColor("#337dc0"));
+            checkThemeTopNote = "Blue";
+            editor.putString("theme_top_note", checkThemeTopNote);
+            editor.apply();
+            dialog.dismiss();
         });
 
-        aqqua_blue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#80b4e2"));
-                toolbar.setBackgroundColor(Color.parseColor("#80b4e2"));
-                checkThemeTopNote = "Aqua blue";
-                editor.putString("theme_top_note", checkThemeTopNote);
-                editor.apply();
-                dialog.dismiss();
-            }
+        aqqua_blue.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#80b4e2"));
+            toolbar.setBackgroundColor(Color.parseColor("#80b4e2"));
+            checkThemeTopNote = "Aqua blue";
+            editor.putString("theme_top_note", checkThemeTopNote);
+            editor.apply();
+            dialog.dismiss();
         });
 
-        fiiolet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#905aa1"));
-                toolbar.setBackgroundColor(Color.parseColor("#905aa1"));
-                checkThemeTopNote = "fiolet";
-                editor.putString("theme_top_note", checkThemeTopNote);
-                editor.apply();
-                dialog.dismiss();
-            }
+        fiiolet.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#905aa1"));
+            toolbar.setBackgroundColor(Color.parseColor("#905aa1"));
+            checkThemeTopNote = "fiolet";
+            editor.putString("theme_top_note", checkThemeTopNote);
+            editor.apply();
+            dialog.dismiss();
         });
 
-        piink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#e54591"));
-                toolbar.setBackgroundColor(Color.parseColor("#e54591"));
-                checkThemeTopNote = "pink";
-                editor.putString("theme_top_note", checkThemeTopNote);
-                editor.apply();
-                dialog.dismiss();
-            }
+        piink.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#e54591"));
+            toolbar.setBackgroundColor(Color.parseColor("#e54591"));
+            checkThemeTopNote = "pink";
+            editor.putString("theme_top_note", checkThemeTopNote);
+            editor.apply();
+            dialog.dismiss();
         });
 
         Log.i(TAG, checkThemeTopNote + " Внутри theme dialog");

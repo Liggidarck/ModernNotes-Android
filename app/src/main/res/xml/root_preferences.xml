@@ -1,46 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory
-        android:title="@string/basic_settings">
+    <PreferenceCategory android:title="@string/basic_settings">
 
         <EditTextPreference
-            android:defaultValue="empty_user_name"
+            android:defaultValue="Default value"
             android:key="full_name"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/you_name"
             android:inputType="textCapWords"
-            android:summary="@string/change_your_name" />
+            android:summary="@string/change_your_name"/>
 
         <EditTextPreference
-            android:key="nizniy_text_header"
+            android:defaultValue="Default value"
+            android:key="welcome_text_header"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/welcome_text"
             android:summary="@string/change_the_greeting_text"
             android:dialogTitle="@string/enter_new_text"
-            android:inputType="text"/>
+            android:inputType="text" />
 
         <ListPreference
-            android:defaultValue="3"
+            android:defaultValue="1"
             android:entries="@array/kolichestvo_strok_top_note"
             android:entryValues="@array/kolichestvo_strok_top_note_values"
-            android:key="kilichestvo_strok_top_note"
+            android:key="number_lines_top_note"
             android:title="@string/Number_of_lines"
             android:summary="@string/change_the_number_of_lines"/>
 
         <SwitchPreference
-            android:defaultValue="true"
-            android:key="vikluchit_pri_text"
+            android:defaultValue="false"
+            android:key="show_pro_ad"
             android:title="@string/show_ads_pro_version"
-            android:summary="@string/disable_pro_version_ads"/>
+            android:summary="@string/disable_pro_version_ads" />
 
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/customization_text">
+
+    <PreferenceCategory android:title="@string/customization_text" >
 
         <ListPreference
-            android:defaultValue="Fiolet"
+            android:defaultValue="1"
             android:entries="@array/theme_app"
             android:entryValues="@array/theme_app_val"
             android:key="theme_app"
@@ -48,7 +48,7 @@
             android:summary="@string/choose_a_theme_for_application" />
 
         <SwitchPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="save_button_note"
             android:title="Активировать кнопку сохранить в заметках"
             android:summary="Активация кнопки сохранить в заметках" />
@@ -60,7 +60,7 @@
             android:summary="@string/button_on_home_screen"/>
 
         <ListPreference
-            android:defaultValue="Orange"
+            android:defaultValue="1"
             android:entries="@array/color_fab_add"
             android:entryValues="@array/color_fab_add_values"
             android:key="color_fab_add"
@@ -69,16 +69,14 @@
             android:summary="@string/change_color_button_add"/>
 
         <ListPreference
-            android:defaultValue="note"
+            android:defaultValue="1"
             android:entries="@array/fab_on_click"
             android:entryValues="@array/fab_on_click_values"
-            android:dependency="fab_enabled"
             android:key="fab_on_click_val"
+            android:dependency="fab_enabled"
             android:title="@string/pressing_button"
-            android:summary="@string/change_actions_you_click_button"/>
-
+            android:summary="@string/change_actions_you_click_button" />
 
     </PreferenceCategory>
-
 
 </PreferenceScreen>

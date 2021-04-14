@@ -1,4 +1,4 @@
-package com.gradient.free;
+package com.george.modern_notes.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,16 +8,16 @@ public class PasswordsDatabase extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "passwords.db"; // название бд
     private static final int VERSION = 1; // версия базы данных
-    static final String TABLE = "users"; // название таблицы в бд
+    public static final String TABLE = "users"; // название таблицы в бд
 
     // названия столбцов таблицы
-    static final String ID = "_id";
-    static final String WEB = "name";
-    static final String PASSWORD = "code";
-    static final String NAME_ACCOUNT = "nameAcc";
-    static final String THEME_MODE_PASSWORDS = "them_pas";
+    public static final String ID = "_id";
+    public static final String WEB = "name";
+    public static final String PASSWORD = "code";
+    public static final String NAME_ACCOUNT = "nameAcc";
+    public static final String THEME_MODE_PASSWORDS = "them_pas";
 
-    PasswordsDatabase(Context context) { super(context, DATABASE_NAME, null, VERSION); }
+    public PasswordsDatabase(Context context) { super(context, DATABASE_NAME, null, VERSION); }
 
     @Override
     public void onCreate(SQLiteDatabase db) {

@@ -4,13 +4,13 @@
 
     <item
         android:id="@+id/nav_del"
-        android:title="Удалить"
+        android:title="@string/delete_text"
         android:icon="@drawable/ic_baseline_delete_24"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/edit_theme_top_note"
-        android:title="Темы"
+        android:title="@string/themes_text"
         app:showAsAction="never" />
 
 </menu>

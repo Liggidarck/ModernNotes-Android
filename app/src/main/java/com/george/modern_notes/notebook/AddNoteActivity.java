@@ -1,8 +1,7 @@
-package com.gradient.free;
+package com.george.modern_notes.notebook;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.app.Dialog;
 import android.content.ContentValues;
@@ -11,7 +10,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -30,13 +28,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.george.modern_notes.R;
+import com.george.modern_notes.common.StarterActivity;
+import com.george.modern_notes.database.NotesDatabase;
 
 public class AddNoteActivity extends AppCompatActivity {
 
@@ -44,7 +41,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
     EditText nameBox;
     EditText noteBox;
-    FloatingActionButton del_button, save_button;
+    FloatingActionButton save_button;
 
     NotesDatabase sqlHelper;
     SQLiteDatabase db;
@@ -55,8 +52,6 @@ public class AddNoteActivity extends AppCompatActivity {
 
     View theme;
     String checkTheme = "Default";
-
-    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,15 +86,12 @@ public class AddNoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_note);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
+        MobileAds.initialize(this, initializationStatus -> {
         });
 
-        mAdView = findViewById(R.id.adViewAddNote);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+//        mAdView = findViewById(R.id.adViewAddNote);
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        mAdView.loadAd(adRequest);
 
         Log.e(TAG, checkTheme+" В самом начале OnCreate");
 
@@ -110,41 +102,19 @@ public class AddNoteActivity extends AppCompatActivity {
             setSupportActionBar(toolbarDark);
             toolbarDark.setVisibility(View.VISIBLE);
             toolbarDark.setNavigationIcon(R.drawable.ic_white_baseline_arrow_back_24);
-            toolbarDark.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    save();
-                }
-            });
+            toolbarDark.setNavigationOnClickListener(view -> save());
         } else {
             setSupportActionBar(toolbar);
             toolbar.setVisibility(View.VISIBLE);
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    save();
-                }
-            });
+            toolbar.setNavigationOnClickListener(view -> save());
         }
 
         nameBox = findViewById(R.id.name_note);
         noteBox = findViewById(R.id.note_text);
 
-        del_button = findViewById(R.id.fab_del);
         save_button = findViewById(R.id.fab_save_note);
 
-        del_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                delete();
-            }
-        });
-        save_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                save();
-            }
-        });
+        save_button.setOnClickListener(v -> save());
 
         boolean save_btn_activ = sharedPreferences.getBoolean("save_button_note", true);
 
@@ -158,41 +128,26 @@ public class AddNoteActivity extends AppCompatActivity {
         if(name_user.equals("empty_user_name"))
             startActivity(new Intent(AddNoteActivity.this, StarterActivity.class));
 
-        if(theme_app.equals("Orange")) {
-            del_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange_color_fab)));
+        if(theme_app.equals("Orange"))
             save_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange_color_fab)));
-        }
 
-        if(theme_app.equals("Dark")) {
-            del_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.black_color_fab)));
+        if(theme_app.equals("Dark"))
             save_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.black_color_fab)));
-        }
 
-        if(theme_app.equals("Blue")) {
-            del_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blue_color_fab)));
+        if(theme_app.equals("Blue"))
             save_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blue_color_fab)));
-        }
 
-        if(theme_app.equals("AquaBlue")) {
-            del_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blueaqua_color_fab)));
+        if(theme_app.equals("AquaBlue"))
             save_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blueaqua_color_fab)));
-        }
 
-        if(theme_app.equals("Green")) {
-            del_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green_color_fab)));
+        if(theme_app.equals("Green"))
             save_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green_color_fab)));
-        }
 
-        if(theme_app.equals("Red")) {
-            del_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.red_color_fab)));
+        if(theme_app.equals("Red"))
             save_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.red_color_fab)));
-        }
 
-        if(theme_app.equals("Fiolet")) {
-            del_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fiolet_color_fab)));
+        if(theme_app.equals("Fiolet"))
             save_button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fiolet_color_fab)));
-        }
-
 
         sqlHelper = new NotesDatabase(this);
         db = sqlHelper.getWritableDatabase();
@@ -266,26 +221,19 @@ public class AddNoteActivity extends AppCompatActivity {
             }
 
             userCursor.close();
-        } else
-            del_button.setVisibility(View.GONE);
+        }
 
     }
 
     public void save() {
-        if(!validateNameNote()){
-            /*
-            Сюда нужно было впихнуть заглушку, а то не работало бы.
-             */
-
-            return;
-        } else {
+        if(validateNameNote()) {
             ContentValues cv = new ContentValues();
             cv.put(NotesDatabase.COLUMN_NAME_NOTE, nameBox.getText().toString());
             cv.put(NotesDatabase.COLUMN_NOTE, noteBox.getText().toString());
             cv.put(NotesDatabase.COLUMN_THEME, checkTheme);
 
             if (notesId > 0)
-                db.update(NotesDatabase.TABLE, cv, NotesDatabase.COLUMN_ID + "=" + String.valueOf(notesId), null);
+                db.update(NotesDatabase.TABLE, cv, NotesDatabase.COLUMN_ID + "=" + notesId, null);
             else
                 db.insert(NotesDatabase.TABLE, null, cv);
 
@@ -305,8 +253,6 @@ public class AddNoteActivity extends AppCompatActivity {
         Intent intent = new Intent(this, NotebookActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-
     }
 
     public boolean validateNameNote() {
@@ -318,8 +264,6 @@ public class AddNoteActivity extends AppCompatActivity {
             Intent intent = new Intent(this, NotebookActivity.class);
             intent.putExtra("empty", empty);
             startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-
             return false;
         } else {
             return true;
@@ -333,12 +277,7 @@ public class AddNoteActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.dialog_theme);
 
         Button done = dialog.findViewById(R.id.button_ok);
-        done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
+        done.setOnClickListener(view -> dialog.dismiss());
 
         TextView text_default_theme = dialog.findViewById(R.id.text_default_theme);
 
@@ -406,100 +345,73 @@ public class AddNoteActivity extends AppCompatActivity {
             chek_pink.setVisibility(View.VISIBLE);
 
 
-        default_th.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(TAG, theme_app_check + " проверка в теме");
-                if(theme_app_check.equals("Dark")) {
-                    recreate();
-                } else {
-                    theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
-                    toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
-                }
-
-                checkTheme = "Default";
-                dialog.dismiss();
+        default_th.setOnClickListener(view -> {
+            Log.i(TAG, theme_app_check + " проверка в теме");
+            if(theme_app_check.equals("Dark")) {
+                recreate();
+            } else {
+                theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
+                toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
             }
+
+            checkTheme = "Default";
+            dialog.dismiss();
         });
 
-        reed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#ff9e9e"));
-                toolbar.setBackgroundColor(Color.parseColor("#ff9e9e"));
-                checkTheme = "Red";
-                dialog.dismiss();
-            }
+        reed.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#ff9e9e"));
+            toolbar.setBackgroundColor(Color.parseColor("#ff9e9e"));
+            checkTheme = "Red";
+            dialog.dismiss();
         });
 
-        light_yello.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#ffeaa7"));
-                toolbar.setBackgroundColor(Color.parseColor("#ffeaa7"));
-                checkTheme = "Light Yellow";
-                dialog.dismiss();
-            }
+        light_yello.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#ffeaa7"));
+            toolbar.setBackgroundColor(Color.parseColor("#ffeaa7"));
+            checkTheme = "Light Yellow";
+            dialog.dismiss();
         });
 
-        yello.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#fdcb6f"));
-                toolbar.setBackgroundColor(Color.parseColor("#fdcb6f"));
-                checkTheme = "Yellow";
-                dialog.dismiss();
-            }
+        yello.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#fdcb6f"));
+            toolbar.setBackgroundColor(Color.parseColor("#fdcb6f"));
+            checkTheme = "Yellow";
+            dialog.dismiss();
         });
 
-        greeen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#a3ff9e"));
-                toolbar.setBackgroundColor(Color.parseColor("#a3ff9e"));
-                checkTheme = "Green";
-                dialog.dismiss();
-            }
+        greeen.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#a3ff9e"));
+            toolbar.setBackgroundColor(Color.parseColor("#a3ff9e"));
+            checkTheme = "Green";
+            dialog.dismiss();
         });
 
-        bluue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#9eb8ff"));
-                toolbar.setBackgroundColor(Color.parseColor("#9eb8ff"));
-                checkTheme = "Blue";
-                dialog.dismiss();
-            }
+        bluue.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#9eb8ff"));
+            toolbar.setBackgroundColor(Color.parseColor("#9eb8ff"));
+            checkTheme = "Blue";
+            dialog.dismiss();
         });
 
-        aqqua_blue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#74cdfc"));
-                toolbar.setBackgroundColor(Color.parseColor("#74cdfc"));
-                checkTheme = "Aqua blue";
-                dialog.dismiss();
-            }
+        aqqua_blue.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#74cdfc"));
+            toolbar.setBackgroundColor(Color.parseColor("#74cdfc"));
+            checkTheme = "Aqua blue";
+            dialog.dismiss();
         });
 
-        fiiolet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#e9a6ff"));
-                toolbar.setBackgroundColor(Color.parseColor("#e9a6ff"));
-                checkTheme = "fiolet";
-                dialog.dismiss();
-            }
+        fiiolet.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#e9a6ff"));
+            toolbar.setBackgroundColor(Color.parseColor("#e9a6ff"));
+            checkTheme = "fiolet";
+            dialog.dismiss();
         });
 
-        piink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#ff9cbe"));
-                toolbar.setBackgroundColor(Color.parseColor("#ff9cbe"));
-                checkTheme = "pink";
-                dialog.dismiss();
-            }
+        piink.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#ff9cbe"));
+            toolbar.setBackgroundColor(Color.parseColor("#ff9cbe"));
+            checkTheme = "pink";
+            dialog.dismiss();
         });
 
         dialog.show();

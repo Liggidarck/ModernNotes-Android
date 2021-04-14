@@ -1,4 +1,4 @@
-package com.gradient.free;
+package com.george.modern_notes.links;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,12 +32,13 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.george.modern_notes.R;
+import com.george.modern_notes.common.StarterActivity;
+import com.george.modern_notes.database.LinksDatabase;
 
 import java.util.Objects;
 
@@ -59,7 +60,6 @@ public class AddLinkActivity extends AppCompatActivity {
     SQLiteDatabase db;
     Cursor userCursor;
     long linkId =0;
-    private AdView mAdView;
 
 
     @Override
@@ -94,13 +94,10 @@ public class AddLinkActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
+        MobileAds.initialize(this, initializationStatus -> {
         });
 
-        mAdView = findViewById(R.id.adViewAddLink);
+        AdView mAdView = findViewById(R.id.adViewAddLink);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -111,20 +108,11 @@ public class AddLinkActivity extends AppCompatActivity {
             setSupportActionBar(toolbarDark);
             toolbarDark.setVisibility(View.VISIBLE);
             toolbarDark.setNavigationIcon(R.drawable.ic_white_baseline_arrow_back_24);
-            toolbarDark.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) { goHome_link();
-                }
-            });
+            toolbarDark.setNavigationOnClickListener(view -> goHome_link());
         } else {
             setSupportActionBar(toolbar);
             toolbar.setVisibility(View.VISIBLE);
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    goHome_link();
-                }
-            });
+            toolbar.setNavigationOnClickListener(view -> goHome_link());
         }
 
         nameLinkBox = findViewById(R.id.name_link_edit_text);
@@ -157,24 +145,19 @@ public class AddLinkActivity extends AppCompatActivity {
             }
         });
 
-        link_layputBOX.setEndIconOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!validateLink()) {
-                    return;
-                } else {
-                    String url = Objects.requireNonNull(link_layputBOX.getEditText()).getText().toString();
+        link_layputBOX.setEndIconOnClickListener(view -> {
+            if(validateLink()) {
+                String url = Objects.requireNonNull(link_layputBOX.getEditText()).getText().toString();
 
-                    if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("ftp://") )
-                        view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-                    else {
-                        String urlCheck = "http://" + url;
-                        view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlCheck)));
-                    }
-
+                if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("ftp://") )
+                    view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                else {
+                    String urlCheck = "http://" + url;
+                    view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlCheck)));
                 }
 
             }
+
         });
 
         sqlHelper = new LinksDatabase(this);
@@ -188,12 +171,7 @@ public class AddLinkActivity extends AppCompatActivity {
         theme = findViewById(R.id.theme_link);
 
         FloatingActionButton delButton = findViewById(R.id.del_link_fab);
-        delButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                delete_link();
-            }
-        });
+        delButton.setOnClickListener(view -> delete_link());
 
         if (linkId > 0) {
             userCursor = db.rawQuery("select * from " + LinksDatabase.TABLE + " where " +
@@ -261,12 +239,7 @@ public class AddLinkActivity extends AppCompatActivity {
 
 
         FloatingActionButton saveLink = findViewById(R.id.save_link_fab);
-        saveLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                save_link();
-            }
-        });
+        saveLink.setOnClickListener(view -> save_link());
 
         if(theme_app.equals("Orange")) {
             saveLink.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange_color_fab))); //#f59619
@@ -322,9 +295,8 @@ public class AddLinkActivity extends AppCompatActivity {
     public void save_link() {
         if(!validateLink()) {
             return;
-        } else if (Objects.requireNonNull(name_link_layoutBOX.getEditText()).getText().toString().equals("")) {
-
-            name_link_layoutBOX.getEditText().setText(getString(R.string.noname_link));
+        } else if (validateLink()) {
+            Objects.requireNonNull(name_link_layoutBOX.getEditText()).setText(getString(R.string.noname_link));
 
             ContentValues cv = new ContentValues();
             cv.put(LinksDatabase.COLUMN_NAME_LINK, Objects.requireNonNull(nameLinkBox.getText()).toString());
@@ -333,7 +305,7 @@ public class AddLinkActivity extends AppCompatActivity {
             cv.put(LinksDatabase.COLUMN_THEME_MODE_LINK, checkThemeLink);
 
             if (linkId > 0) {
-                db.update(LinksDatabase.TABLE, cv, LinksDatabase.COLUMN_ID + "=" + String.valueOf(linkId), null);
+                db.update(LinksDatabase.TABLE, cv, LinksDatabase.COLUMN_ID + "=" + linkId, null);
             } else {
                 db.insert(LinksDatabase.TABLE, null, cv);
             }
@@ -348,7 +320,7 @@ public class AddLinkActivity extends AppCompatActivity {
             cv.put(LinksDatabase.COLUMN_THEME_MODE_LINK, checkThemeLink);
 
             if (linkId > 0) {
-                db.update(LinksDatabase.TABLE, cv, LinksDatabase.COLUMN_ID + "=" + String.valueOf(linkId), null);
+                db.update(LinksDatabase.TABLE, cv, LinksDatabase.COLUMN_ID + "=" + linkId, null);
             } else {
                 db.insert(LinksDatabase.TABLE, null, cv);
             }
@@ -369,8 +341,6 @@ public class AddLinkActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ListOfLinksActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-
     }
 
     @Override
@@ -404,19 +374,14 @@ public class AddLinkActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.dialog_theme);
 
         Button done = dialog.findViewById(R.id.button_ok);
-        done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
+        done.setOnClickListener(view -> dialog.dismiss());
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         final String theme_app_check = sharedPreferences.getString("theme_app", "Fiolet");
 
 
-        ImageView default_th, darker, reed, light_yello, yello, greeen, bluue, aqqua_blue, fiiolet, piink;
-        ImageView check_default, check_darcker, check_red, check_yellow, chek_light_yellow, check_green, check_blue, check_aqua_blue, check_fiolet, chek_pink;
+        ImageView default_th, reed, light_yello, yello, greeen, bluue, aqqua_blue, fiiolet, piink;
+        ImageView check_default, check_red, check_yellow, chek_light_yellow, check_green, check_blue, check_aqua_blue, check_fiolet, chek_pink;
 
         default_th = dialog.findViewById(R.id.default_theme);
         reed = dialog.findViewById(R.id.red_theme);
@@ -477,109 +442,76 @@ public class AddLinkActivity extends AppCompatActivity {
             chek_pink.setVisibility(View.VISIBLE);
 
 
-        default_th.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(TAG, theme_app_check + " проверка в теме");
-                if(theme_app_check.equals("Dark")) {
-                    recreate();
-                } else {
-                    theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
-                    toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
-                }
-                checkThemeLink = "Default";
-                dialog.dismiss();
+        default_th.setOnClickListener(view -> {
+            Log.i(TAG, theme_app_check + " проверка в теме");
+            if(theme_app_check.equals("Dark")) {
+                recreate();
+            } else {
+                theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
+                toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
             }
+            checkThemeLink = "Default";
+            dialog.dismiss();
         });
 
-        reed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#ff9e9e"));
-                toolbar.setBackgroundColor(Color.parseColor("#ff9e9e"));
-                checkThemeLink = "Red";
-                dialog.dismiss();
-            }
+        reed.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#ff9e9e"));
+            toolbar.setBackgroundColor(Color.parseColor("#ff9e9e"));
+            checkThemeLink = "Red";
+            dialog.dismiss();
         });
 
-        light_yello.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#ffeaa7"));
-                toolbar.setBackgroundColor(Color.parseColor("#ffeaa7"));
-                checkThemeLink = "Light Yellow";
-                dialog.dismiss();
-            }
+        light_yello.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#ffeaa7"));
+            toolbar.setBackgroundColor(Color.parseColor("#ffeaa7"));
+            checkThemeLink = "Light Yellow";
+            dialog.dismiss();
         });
 
-        yello.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#fdcb6f"));
-                toolbar.setBackgroundColor(Color.parseColor("#fdcb6f"));
-                checkThemeLink = "Yellow";
-                dialog.dismiss();
-            }
+        yello.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#fdcb6f"));
+            toolbar.setBackgroundColor(Color.parseColor("#fdcb6f"));
+            checkThemeLink = "Yellow";
+            dialog.dismiss();
         });
 
-        greeen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#a3ff9e"));
-                toolbar.setBackgroundColor(Color.parseColor("#a3ff9e"));
-                checkThemeLink = "Green";
-                dialog.dismiss();
-            }
+        greeen.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#a3ff9e"));
+            toolbar.setBackgroundColor(Color.parseColor("#a3ff9e"));
+            checkThemeLink = "Green";
+            dialog.dismiss();
         });
 
-        bluue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#9eb8ff"));
-                toolbar.setBackgroundColor(Color.parseColor("#9eb8ff"));
-                checkThemeLink = "Blue";
-                dialog.dismiss();
-            }
+        bluue.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#9eb8ff"));
+            toolbar.setBackgroundColor(Color.parseColor("#9eb8ff"));
+            checkThemeLink = "Blue";
+            dialog.dismiss();
         });
 
-        aqqua_blue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#74cdfc"));
-                toolbar.setBackgroundColor(Color.parseColor("#74cdfc"));
-                checkThemeLink = "Aqua blue";
-                dialog.dismiss();
-            }
+        aqqua_blue.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#74cdfc"));
+            toolbar.setBackgroundColor(Color.parseColor("#74cdfc"));
+            checkThemeLink = "Aqua blue";
+            dialog.dismiss();
         });
 
-        fiiolet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#e9a6ff"));
-                toolbar.setBackgroundColor(Color.parseColor("#e9a6ff"));
-                checkThemeLink = "fiolet";
-                dialog.dismiss();
-            }
+        fiiolet.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#e9a6ff"));
+            toolbar.setBackgroundColor(Color.parseColor("#e9a6ff"));
+            checkThemeLink = "fiolet";
+            dialog.dismiss();
         });
 
-        piink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#ff9cbe"));
-                toolbar.setBackgroundColor(Color.parseColor("#ff9cbe"));
-                checkThemeLink = "pink";
-                dialog.dismiss();
-            }
+        piink.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#ff9cbe"));
+            toolbar.setBackgroundColor(Color.parseColor("#ff9cbe"));
+            checkThemeLink = "pink";
+            dialog.dismiss();
         });
 
 
 
         dialog.show();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

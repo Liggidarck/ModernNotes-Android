@@ -1,4 +1,4 @@
-package com.gradient.free;
+package com.george.modern_notes.passwords;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,20 +34,21 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.george.modern_notes.R;
+import com.george.modern_notes.common.StarterActivity;
+import com.george.modern_notes.database.PasswordsDatabase;
 
 import java.util.Objects;
 
 public class AddPasswordActivity extends AppCompatActivity {
 
-    TextInputEditText webAdress, PasswordText, nameText;
-    TextInputLayout webAdressLayout, passwordLayout, usernameLayout;
+    TextInputEditText webAddress, PasswordText, nameText;
+    TextInputLayout webAddressLayout, passwordLayout, usernameLayout;
 
     FloatingActionButton delButton, saveButton;
 
@@ -62,8 +63,6 @@ public class AddPasswordActivity extends AppCompatActivity {
     long PasswordId = 0;
 
     private static final String TAG = "addPass";
-
-    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,23 +95,20 @@ public class AddPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_password);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
+        MobileAds.initialize(this, initializationStatus -> {
         });
 
-        mAdView = findViewById(R.id.adViewAddPassword);
+        AdView mAdView = findViewById(R.id.adViewAddPassword);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
         theme = findViewById(R.id.theme_pass);
 
-        webAdress = findViewById(R.id.web_address);
+        webAddress = findViewById(R.id.web_address);
         nameText = findViewById(R.id.username);
         PasswordText =findViewById(R.id.password);
 
-        webAdressLayout = findViewById(R.id.web_address_layout);
+        webAddressLayout = findViewById(R.id.web_address_layout);
         passwordLayout = findViewById(R.id.password_layout);
         usernameLayout = findViewById(R.id.username_layout);
 
@@ -125,19 +121,11 @@ public class AddPasswordActivity extends AppCompatActivity {
             setSupportActionBar(toolbarDark);
             toolbarDark.setNavigationIcon(R.drawable.ic_white_baseline_arrow_back_24);
             toolbarDark.setVisibility(View.VISIBLE);
-            toolbarDark.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) { goHome_password();
-                }
-            });
+            toolbarDark.setNavigationOnClickListener(view -> goHome_password());
         } else {
             setSupportActionBar(toolbar);
             toolbar.setVisibility(View.VISIBLE);
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) { goHome_password();
-                }
-            });
+            toolbar.setNavigationOnClickListener(view -> goHome_password());
         }
 
         //Это запуск первой активити (страртовой).
@@ -161,7 +149,7 @@ public class AddPasswordActivity extends AppCompatActivity {
 
             nameText.setText(userCursor.getString(1));
             PasswordText.setText(userCursor.getString(2));
-            webAdress.setText(userCursor.getString(3));
+            webAddress.setText(userCursor.getString(3));
             checkThemePassword = userCursor.getString(4);
 
             if(checkThemePassword.equals("Default")){
@@ -213,64 +201,43 @@ public class AddPasswordActivity extends AppCompatActivity {
                 toolbar.setBackgroundColor(Color.parseColor("#ff9cbe"));
             }
 
-
             userCursor.close();
         } else
             delButton.setVisibility(View.GONE);
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                save_password();
-            }
-        });
-        delButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                delete_password();
-            }
-        });
+        saveButton.setOnClickListener(view -> save_password());
+        delButton.setOnClickListener(view -> delete_password());
 
-        webAdressLayout.setEndIconOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!valibateWeb()) {
-                    return;
-                } else {
-                    String url = Objects.requireNonNull(webAdressLayout.getEditText()).getText().toString();
+        webAddressLayout.setEndIconOnClickListener(v -> {
+            if(validateWeb()) {
+                String url = Objects.requireNonNull(webAddressLayout.getEditText()).getText().toString();
 
-                    if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("ftp://"))
-                        v.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-                    else {
-                        String urlCheck = "http://" + url;
-                        v.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlCheck)));
-                    }
-
+                if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("ftp://"))
+                    v.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                else {
+                    String urlCheck = "http://" + url;
+                    v.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlCheck)));
                 }
 
             }
+
         });
 
-        usernameLayout.setEndIconOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!validateUsername()){
-                    return;
-                } else {
-                    usernameLayout.setError(null);
-                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("", Objects.requireNonNull(usernameLayout.getEditText()).getText().toString());
-                    assert clipboard != null;
-                    clipboard.setPrimaryClip(clip);
-                    Snackbar.make(v, getString(R.string.username_copied), Snackbar.LENGTH_LONG).setAction("done", null).show();
-                }
+        usernameLayout.setEndIconOnClickListener(v -> {
+            if(validateUsername()){
+                usernameLayout.setError(null);
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("", Objects.requireNonNull(usernameLayout.getEditText()).getText().toString());
+                assert clipboard != null;
+                clipboard.setPrimaryClip(clip);
+                Snackbar.make(v, getString(R.string.username_copied), Snackbar.LENGTH_LONG).setAction("done", null).show();
             }
         });
 
-        Objects.requireNonNull(webAdressLayout.getEditText()).addTextChangedListener(new TextWatcher() {
+        Objects.requireNonNull(webAddressLayout.getEditText()).addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                webAdressLayout.setError(null);
+                webAddressLayout.setError(null);
             }
 
             @Override
@@ -356,17 +323,15 @@ public class AddPasswordActivity extends AppCompatActivity {
     }
 
     public void save_password() {
-        if(!validatePass() | !valibateWeb()) {
-            return;
-        } else {
+        if(validatePass() | validateWeb()) {
             ContentValues cv = new ContentValues();
             cv.put(PasswordsDatabase.WEB, Objects.requireNonNull(nameText.getText()).toString());
             cv.put(PasswordsDatabase.PASSWORD, Objects.requireNonNull(PasswordText.getText()).toString());
-            cv.put(PasswordsDatabase.NAME_ACCOUNT, Objects.requireNonNull(webAdress.getText()).toString());
+            cv.put(PasswordsDatabase.NAME_ACCOUNT, Objects.requireNonNull(webAddress.getText()).toString());
             cv.put(PasswordsDatabase.THEME_MODE_PASSWORDS, checkThemePassword);
 
             if (PasswordId > 0)
-                db.update(PasswordsDatabase.TABLE, cv, PasswordsDatabase.ID + "=" + String.valueOf(PasswordId), null);
+                db.update(PasswordsDatabase.TABLE, cv, PasswordsDatabase.ID + "=" + PasswordId, null);
             else
                 db.insert(PasswordsDatabase.TABLE, null, cv);
             goHome_password();
@@ -383,7 +348,6 @@ public class AddPasswordActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PasswordsListsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     public void showDialogEditThemePassword() {
@@ -393,12 +357,7 @@ public class AddPasswordActivity extends AppCompatActivity {
         Log.i(TAG, "Диалог вызван");
 
         Button done = dialog.findViewById(R.id.button_ok);
-        done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
+        done.setOnClickListener(view -> dialog.dismiss());
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         final String theme_app_check = sharedPreferences.getString("theme_app", "Fiolet");
@@ -465,99 +424,70 @@ public class AddPasswordActivity extends AppCompatActivity {
             chek_pink.setVisibility(View.VISIBLE);
 
 
-        default_th.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
-                toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
+        default_th.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
+            toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
 
-
-                checkThemePassword = "Default";
-                dialog.dismiss();
-            }
+            checkThemePassword = "Default";
+            dialog.dismiss();
         });
 
-        reed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#ff9e9e"));
-                toolbar.setBackgroundColor(Color.parseColor("#ff9e9e"));
+        reed.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#ff9e9e"));
+            toolbar.setBackgroundColor(Color.parseColor("#ff9e9e"));
 
-                checkThemePassword = "Red";
-                dialog.dismiss();
-            }
+            checkThemePassword = "Red";
+            dialog.dismiss();
         });
 
-        light_yello.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#ffeaa7"));
-                toolbar.setBackgroundColor(Color.parseColor("#ffeaa7"));
-                checkThemePassword = "Light Yellow";
-                dialog.dismiss();
-            }
+        light_yello.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#ffeaa7"));
+            toolbar.setBackgroundColor(Color.parseColor("#ffeaa7"));
+            checkThemePassword = "Light Yellow";
+            dialog.dismiss();
         });
 
-        yello.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#fdcb6f"));
-                toolbar.setBackgroundColor(Color.parseColor("#fdcb6f"));
-                checkThemePassword = "Yellow";
-                dialog.dismiss();
-            }
+        yello.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#fdcb6f"));
+            toolbar.setBackgroundColor(Color.parseColor("#fdcb6f"));
+            checkThemePassword = "Yellow";
+            dialog.dismiss();
         });
 
-        greeen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#a3ff9e"));
-                toolbar.setBackgroundColor(Color.parseColor("#a3ff9e"));
-                checkThemePassword = "Green";
-                dialog.dismiss();
-            }
+        greeen.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#a3ff9e"));
+            toolbar.setBackgroundColor(Color.parseColor("#a3ff9e"));
+            checkThemePassword = "Green";
+            dialog.dismiss();
         });
 
-        bluue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#9eb8ff"));
-                toolbar.setBackgroundColor(Color.parseColor("#9eb8ff"));
-                checkThemePassword = "Blue";
-                dialog.dismiss();
-            }
+        bluue.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#9eb8ff"));
+            toolbar.setBackgroundColor(Color.parseColor("#9eb8ff"));
+            checkThemePassword = "Blue";
+            dialog.dismiss();
         });
 
-        aqqua_blue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#74cdfc"));
-                toolbar.setBackgroundColor(Color.parseColor("#74cdfc"));
-                checkThemePassword = "Aqua blue";
-                dialog.dismiss();
-            }
+        aqqua_blue.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#74cdfc"));
+            toolbar.setBackgroundColor(Color.parseColor("#74cdfc"));
+            checkThemePassword = "Aqua blue";
+            dialog.dismiss();
         });
 
-        fiiolet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#e9a6ff"));
-                toolbar.setBackgroundColor(Color.parseColor("#e9a6ff"));
-                checkThemePassword = "fiolet";
-                dialog.dismiss();
-            }
+        fiiolet.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#e9a6ff"));
+            toolbar.setBackgroundColor(Color.parseColor("#e9a6ff"));
+            checkThemePassword = "fiolet";
+            dialog.dismiss();
         });
 
-        piink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                theme.setBackgroundColor(Color.parseColor("#ff9cbe"));
-                toolbar.setBackgroundColor(Color.parseColor("#ff9cbe"));
-                checkThemePassword = "pink";
-                dialog.dismiss();
-            }
+        piink.setOnClickListener(view -> {
+            theme.setBackgroundColor(Color.parseColor("#ff9cbe"));
+            toolbar.setBackgroundColor(Color.parseColor("#ff9cbe"));
+            checkThemePassword = "pink";
+            dialog.dismiss();
         });
-
 
         dialog.show();
     }
@@ -587,15 +517,15 @@ public class AddPasswordActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public boolean valibateWeb() {
-        String check = Objects.requireNonNull(webAdressLayout.getEditText()).getText().toString().trim();
+    public boolean validateWeb() {
+        String check = Objects.requireNonNull(webAddressLayout.getEditText()).getText().toString().trim();
 
         if(check.isEmpty()){
-            webAdressLayout.setError(getString(R.string.error_empty_field));
+            webAddressLayout.setError(getString(R.string.error_empty_field));
 
             return false;
         } else {
-            webAdressLayout.setError(null);
+            webAddressLayout.setError(null);
             return true;
         }
     }
@@ -626,11 +556,5 @@ public class AddPasswordActivity extends AppCompatActivity {
             return true;
         }
 
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

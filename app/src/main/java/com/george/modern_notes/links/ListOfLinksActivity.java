@@ -1,4 +1,4 @@
-package com.gradient.free;
+package com.george.modern_notes.links;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,7 +12,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -24,6 +23,9 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.george.modern_notes.MainActivity;
+import com.george.modern_notes.R;
+import com.george.modern_notes.database.LinksDatabase;
 
 public class ListOfLinksActivity extends AppCompatActivity {
 
@@ -34,8 +36,6 @@ public class ListOfLinksActivity extends AppCompatActivity {
     SQLiteDatabase db;
     Cursor userCursor;
     SimpleCursorAdapter userAdapter;
-
-    private AdView mAdView;
 
 
     @Override
@@ -69,13 +69,10 @@ public class ListOfLinksActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_of_links);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
+        MobileAds.initialize(this, initializationStatus -> {
         });
 
-        mAdView = findViewById(R.id.adViewLinks);
+        AdView mAdView = findViewById(R.id.adViewLinks);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -83,25 +80,13 @@ public class ListOfLinksActivity extends AppCompatActivity {
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar_list_of_links);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ListOfLinksActivity.this, MainActivity.class));
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-            }
-        });
+        toolbar.setNavigationOnClickListener(view -> startActivity(new Intent(ListOfLinksActivity.this, MainActivity.class)));
 
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
 
 
         fab_add_link = findViewById(R.id.add_link);
-        fab_add_link.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ListOfLinksActivity.this, AddLinkActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        });
+        fab_add_link.setOnClickListener(view -> startActivity(new Intent(ListOfLinksActivity.this, AddLinkActivity.class)));
 
         if(theme_app.equals("Orange"))
             fab_add_link.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange_color_fab))); //#f59619
@@ -129,14 +114,10 @@ public class ListOfLinksActivity extends AppCompatActivity {
 
 
         userList = findViewById(R.id.list_of_links);
-        userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), AddLinkActivity.class);
-                intent.putExtra("id", id);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
+        userList.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(getApplicationContext(), AddLinkActivity.class);
+            intent.putExtra("id", id);
+            startActivity(intent);
         });
 
         View empty = findViewById(R.id.empty_link_layout);
@@ -169,11 +150,5 @@ public class ListOfLinksActivity extends AppCompatActivity {
         super.onDestroy();
         db.close();
         userCursor.close();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

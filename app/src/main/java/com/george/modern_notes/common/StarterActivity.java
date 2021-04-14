@@ -1,4 +1,4 @@
-package com.gradient.free;
+package com.george.modern_notes.common;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.george.modern_notes.MainActivity;
+import com.george.modern_notes.R;
 
 import java.util.Objects;
 
@@ -29,21 +31,18 @@ public class StarterActivity extends AppCompatActivity {
         final TextInputLayout username_layout = findViewById(R.id.username_layout_start_page);
 
         ImageView signin = findViewById(R.id.sign_in_btn_1);
-        signin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String userName = Objects.requireNonNull(username_layout.getEditText()).getText().toString();
-                if (userName.isEmpty()) {
-                    username_layout.setError(getString(R.string.error_empty_field));
-                } else {
+        signin.setOnClickListener(view -> {
+            String userName = Objects.requireNonNull(username_layout.getEditText()).getText().toString();
+            if (userName.isEmpty()) {
+                username_layout.setError(getString(R.string.error_empty_field));
+            } else {
 
-                    final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString("full_name", userName);
-                    editor.apply();
+                final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("full_name", userName);
+                editor.apply();
 
-                    startActivity(new Intent(StarterActivity.this, MainActivity.class));
-                }
+                startActivity(new Intent(StarterActivity.this, MainActivity.class));
             }
         });
 

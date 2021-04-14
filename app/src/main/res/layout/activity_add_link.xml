@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddLinkActivity">
+    tools:context=".links.AddLinkActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar_add_link_dark"
@@ -112,7 +112,7 @@
             android:id="@+id/note_link"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="top|left"
+            android:gravity="top|start"
             android:hint="@string/note_for_link"
             android:fontFamily="@font/roboto_medium"
             android:textSize="18sp"

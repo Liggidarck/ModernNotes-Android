@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TopNoteActivity">
+    tools:context=".notebook.TopNoteActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar_note_top"
@@ -59,7 +59,7 @@
             android:id="@+id/note_text_top"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="top|left"
+            android:gravity="top|start"
             android:hint="@string/text_note"
             android:textSize="15sp"
             app:borderWidth="0dp"
