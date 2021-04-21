@@ -3,7 +3,7 @@
     <PreferenceCategory android:title="@string/basic_settings">
 
         <EditTextPreference
-            android:defaultValue="Default value"
+            android:defaultValue="empty_user_name"
             android:key="full_name"
             android:selectAllOnFocus="true"
             android:singleLine="true"
@@ -22,7 +22,7 @@
             android:inputType="text" />
 
         <ListPreference
-            android:defaultValue="1"
+            android:defaultValue="3"
             android:entries="@array/kolichestvo_strok_top_note"
             android:entryValues="@array/kolichestvo_strok_top_note_values"
             android:key="number_lines_top_note"
@@ -30,7 +30,7 @@
             android:summary="@string/change_the_number_of_lines"/>
 
         <SwitchPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="show_pro_ad"
             android:title="@string/show_ads_pro_version"
             android:summary="@string/disable_pro_version_ads" />
@@ -40,12 +40,17 @@
     <PreferenceCategory android:title="@string/customization_text" >
 
         <ListPreference
-            android:defaultValue="1"
+            android:defaultValue="Fiolet"
             android:entries="@array/theme_app"
             android:entryValues="@array/theme_app_val"
             android:key="theme_app"
             android:title="@string/theme_app"
             android:summary="@string/choose_a_theme_for_application" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="delet_bool"
+            android:title="Подтверждать перед удалением" />
 
         <SwitchPreference
             android:defaultValue="false"
@@ -60,7 +65,7 @@
             android:summary="@string/button_on_home_screen"/>
 
         <ListPreference
-            android:defaultValue="1"
+            android:defaultValue="Orange"
             android:entries="@array/color_fab_add"
             android:entryValues="@array/color_fab_add_values"
             android:key="color_fab_add"
@@ -69,7 +74,7 @@
             android:summary="@string/change_color_button_add"/>
 
         <ListPreference
-            android:defaultValue="1"
+            android:defaultValue="note"
             android:entries="@array/fab_on_click"
             android:entryValues="@array/fab_on_click_values"
             android:key="fab_on_click_val"

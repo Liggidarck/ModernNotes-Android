@@ -1,6 +1,7 @@
 package com.george.modern_notes.passwords;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
@@ -31,6 +32,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.george.modern_notes.notebook.AddNoteActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -50,7 +52,7 @@ public class AddPasswordActivity extends AppCompatActivity {
     TextInputEditText webAddress, PasswordText, nameText;
     TextInputLayout webAddressLayout, passwordLayout, usernameLayout;
 
-    FloatingActionButton delButton, saveButton;
+    FloatingActionButton saveButton;
 
     MaterialToolbar toolbar, toolbarDark;
 
@@ -61,8 +63,6 @@ public class AddPasswordActivity extends AppCompatActivity {
     SQLiteDatabase db;
     Cursor userCursor;
     long PasswordId = 0;
-
-    private static final String TAG = "addPass";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,13 +95,6 @@ public class AddPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_password);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        MobileAds.initialize(this, initializationStatus -> {
-        });
-
-        AdView mAdView = findViewById(R.id.adViewAddPassword);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-
         theme = findViewById(R.id.theme_pass);
 
         webAddress = findViewById(R.id.web_address);
@@ -113,7 +106,6 @@ public class AddPasswordActivity extends AppCompatActivity {
         usernameLayout = findViewById(R.id.username_layout);
 
         saveButton = findViewById(R.id.add_password);
-        delButton = findViewById(R.id.del_password);
         toolbar = findViewById(R.id.toolbar_add_password);
         toolbarDark = findViewById(R.id.toolbar_add_password_dark);
 
@@ -128,7 +120,6 @@ public class AddPasswordActivity extends AppCompatActivity {
             toolbar.setNavigationOnClickListener(view -> goHome_password());
         }
 
-        //Это запуск первой активити (страртовой).
         String name_user = sharedPreferences.getString("full_name", "empty_user_name");
         assert name_user != null;
         if(name_user.equals("empty_user_name"))
@@ -152,61 +143,10 @@ public class AddPasswordActivity extends AppCompatActivity {
             webAddress.setText(userCursor.getString(3));
             checkThemePassword = userCursor.getString(4);
 
-            if(checkThemePassword.equals("Default")){
-                if(theme_app.equals("Dark"))
-                    Log.i(TAG, "Ничего не делаем!");
-                else {
-                    theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
-                    toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
-                }
-            }
-
-            if(checkThemePassword.equals("Red")){
-                theme.setBackgroundColor(Color.parseColor("#ff9e9e"));
-                toolbar.setBackgroundColor(Color.parseColor("#ff9e9e"));
-            }
-
-            if(checkThemePassword.equals("Light Yellow")){
-                theme.setBackgroundColor(Color.parseColor("#ffeaa7"));
-                toolbar.setBackgroundColor(Color.parseColor("#ffeaa7"));
-            }
-
-            if(checkThemePassword.equals("Yellow")){
-                theme.setBackgroundColor(Color.parseColor("#fdcb6f"));
-                toolbar.setBackgroundColor(Color.parseColor("#fdcb6f"));
-            }
-
-            if(checkThemePassword.equals("Green")){
-                theme.setBackgroundColor(Color.parseColor("#a3ff9e"));
-                toolbar.setBackgroundColor(Color.parseColor("#a3ff9e"));
-            }
-
-            if(checkThemePassword.equals("Blue")){
-                theme.setBackgroundColor(Color.parseColor("#9eb8ff"));
-                toolbar.setBackgroundColor(Color.parseColor("#9eb8ff"));
-            }
-
-            if(checkThemePassword.equals("Aqua blue")){
-                theme.setBackgroundColor(Color.parseColor("#74cdfc"));
-                toolbar.setBackgroundColor(Color.parseColor("#74cdfc"));
-            }
-
-            if(checkThemePassword.equals("fiolet")){
-                theme.setBackgroundColor(Color.parseColor("#e9a6ff"));
-                toolbar.setBackgroundColor(Color.parseColor("#e9a6ff"));
-            }
-
-            if(checkThemePassword.equals("pink")){
-                theme.setBackgroundColor(Color.parseColor("#ff9cbe"));
-                toolbar.setBackgroundColor(Color.parseColor("#ff9cbe"));
-            }
-
             userCursor.close();
-        } else
-            delButton.setVisibility(View.GONE);
+        }
 
         saveButton.setOnClickListener(view -> save_password());
-        delButton.setOnClickListener(view -> delete_password());
 
         webAddressLayout.setEndIconOnClickListener(v -> {
             if(validateWeb()) {
@@ -224,7 +164,7 @@ public class AddPasswordActivity extends AppCompatActivity {
         });
 
         usernameLayout.setEndIconOnClickListener(v -> {
-            if(validateUsername()){
+            if(validateUsername()) {
                 usernameLayout.setError(null);
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("", Objects.requireNonNull(usernameLayout.getEditText()).getText().toString());
@@ -285,41 +225,26 @@ public class AddPasswordActivity extends AppCompatActivity {
             }
         });
 
-        if(theme_app.equals("Orange")) {
+        if(theme_app.equals("Orange"))
             saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange_color_fab))); //#f59619
-            delButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange_color_fab)));
-        }
 
-        if(theme_app.equals("Blue")) {
+        if(theme_app.equals("Blue"))
             saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blue_color_fab)));
-            delButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blue_color_fab)));
-        }
 
-        if(theme_app.equals("Dark")) {
+        if(theme_app.equals("Dark"))
             saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.black_color_fab)));
-            delButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.black_color_fab)));
-        }
 
-        if(theme_app.equals("AquaBlue")) {
+        if(theme_app.equals("AquaBlue"))
             saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blueaqua_color_fab)));
-            delButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blueaqua_color_fab)));
-        }
 
-        if(theme_app.equals("Green")) {
+        if(theme_app.equals("Green"))
             saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green_color_fab)));
-            delButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green_color_fab)));
-        }
 
-        if(theme_app.equals("Red")) {
+        if(theme_app.equals("Red"))
             saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.red_color_fab)));
-            delButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.red_color_fab)));
-        }
 
-        if(theme_app.equals("Fiolet")) {
+        if(theme_app.equals("Fiolet"))
             saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fiolet_color_fab)));
-            delButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fiolet_color_fab)));
-        }
-
     }
 
     public void save_password() {
@@ -350,168 +275,35 @@ public class AddPasswordActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void showDialogEditThemePassword() {
-        final Dialog dialog = new Dialog(AddPasswordActivity.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_theme);
-        Log.i(TAG, "Диалог вызван");
-
-        Button done = dialog.findViewById(R.id.button_ok);
-        done.setOnClickListener(view -> dialog.dismiss());
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        final String theme_app_check = sharedPreferences.getString("theme_app", "Fiolet");
-
-
-        ImageView default_th, reed, light_yello, yello, greeen, bluue, aqqua_blue, fiiolet, piink;
-        ImageView check_default,  check_red, check_yellow, chek_light_yellow, check_green, check_blue, check_aqua_blue, check_fiolet, chek_pink;
-
-        default_th = dialog.findViewById(R.id.default_theme);
-        reed = dialog.findViewById(R.id.red_theme);
-        light_yello = dialog.findViewById(R.id.white_yello_theme);
-        yello = dialog.findViewById(R.id.yello_theme);
-        greeen = dialog.findViewById(R.id.green_theme);
-        bluue = dialog.findViewById(R.id.blue_theme);
-        aqqua_blue = dialog.findViewById(R.id.aqua_blue_theme);
-        fiiolet = dialog.findViewById(R.id.fiolet_theme);
-        piink = dialog.findViewById(R.id.pink_theme);
-
-        check_default = dialog.findViewById(R.id.check_default);
-        check_red = dialog.findViewById(R.id.check_red);
-        chek_light_yellow = dialog.findViewById(R.id.check_tght_yellow);
-        check_yellow = dialog.findViewById(R.id.check_yellow);
-        check_green = dialog.findViewById(R.id.check_green);
-        check_blue = dialog.findViewById(R.id.check_blue);
-        check_aqua_blue = dialog.findViewById(R.id.check_aqua_blue);
-        check_fiolet = dialog.findViewById(R.id.check_fiolet);
-        chek_pink = dialog.findViewById(R.id.check_pink);
-
-        TextView text_default_theme = dialog.findViewById(R.id.text_default_theme);
-
-        Drawable dark_image = getResources().getDrawable(R.drawable.dark_default);
-
-        if(theme_app_check.equals("Dark")) {
-            default_th.setImageDrawable(dark_image);
-            text_default_theme.setTextColor(Color.WHITE);
-            done.setTextColor(Color.WHITE);
-        }
-
-        if(checkThemePassword.equals("Default"))
-            check_default.setVisibility(View.VISIBLE);
-
-        if(checkThemePassword.equals("Red"))
-            check_red.setVisibility(View.VISIBLE);
-
-        if(checkThemePassword.equals("Light Yellow"))
-            chek_light_yellow.setVisibility(View.VISIBLE);
-
-        if(checkThemePassword.equals("Yellow"))
-            check_yellow.setVisibility(View.VISIBLE);
-
-        if(checkThemePassword.equals("Green"))
-            check_green.setVisibility(View.VISIBLE);
-
-        if(checkThemePassword.equals("Blue"))
-            check_blue.setVisibility(View.VISIBLE);
-
-        if(checkThemePassword.equals("Aqua blue"))
-            check_aqua_blue.setVisibility(View.VISIBLE);
-
-        if(checkThemePassword.equals("fiolet"))
-            check_fiolet.setVisibility(View.VISIBLE);
-
-        if(checkThemePassword.equals("pink"))
-            chek_pink.setVisibility(View.VISIBLE);
-
-
-        default_th.setOnClickListener(view -> {
-            theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
-            toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
-
-            checkThemePassword = "Default";
-            dialog.dismiss();
-        });
-
-        reed.setOnClickListener(view -> {
-            theme.setBackgroundColor(Color.parseColor("#ff9e9e"));
-            toolbar.setBackgroundColor(Color.parseColor("#ff9e9e"));
-
-            checkThemePassword = "Red";
-            dialog.dismiss();
-        });
-
-        light_yello.setOnClickListener(view -> {
-            theme.setBackgroundColor(Color.parseColor("#ffeaa7"));
-            toolbar.setBackgroundColor(Color.parseColor("#ffeaa7"));
-            checkThemePassword = "Light Yellow";
-            dialog.dismiss();
-        });
-
-        yello.setOnClickListener(view -> {
-            theme.setBackgroundColor(Color.parseColor("#fdcb6f"));
-            toolbar.setBackgroundColor(Color.parseColor("#fdcb6f"));
-            checkThemePassword = "Yellow";
-            dialog.dismiss();
-        });
-
-        greeen.setOnClickListener(view -> {
-            theme.setBackgroundColor(Color.parseColor("#a3ff9e"));
-            toolbar.setBackgroundColor(Color.parseColor("#a3ff9e"));
-            checkThemePassword = "Green";
-            dialog.dismiss();
-        });
-
-        bluue.setOnClickListener(view -> {
-            theme.setBackgroundColor(Color.parseColor("#9eb8ff"));
-            toolbar.setBackgroundColor(Color.parseColor("#9eb8ff"));
-            checkThemePassword = "Blue";
-            dialog.dismiss();
-        });
-
-        aqqua_blue.setOnClickListener(view -> {
-            theme.setBackgroundColor(Color.parseColor("#74cdfc"));
-            toolbar.setBackgroundColor(Color.parseColor("#74cdfc"));
-            checkThemePassword = "Aqua blue";
-            dialog.dismiss();
-        });
-
-        fiiolet.setOnClickListener(view -> {
-            theme.setBackgroundColor(Color.parseColor("#e9a6ff"));
-            toolbar.setBackgroundColor(Color.parseColor("#e9a6ff"));
-            checkThemePassword = "fiolet";
-            dialog.dismiss();
-        });
-
-        piink.setOnClickListener(view -> {
-            theme.setBackgroundColor(Color.parseColor("#ff9cbe"));
-            toolbar.setBackgroundColor(Color.parseColor("#ff9cbe"));
-            checkThemePassword = "pink";
-            dialog.dismiss();
-        });
-
-        dialog.show();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String theme_app = sharedPreferences.getString("theme_app", "Fiolet");
-
         MenuInflater inflater = getMenuInflater();
-
-        if(theme_app.equals("Dark"))
-            inflater.inflate(R.menu.menu_empty, menu);
-        else
-            inflater.inflate(R.menu.menu_theme, menu);
-
+        inflater.inflate(R.menu.menu_top_note_dark, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.edit_theme) {
-            Log.i(TAG, "Кнопка нажата");
-            showDialogEditThemePassword();
+        if(item.getItemId() == R.id.nav_del) {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            boolean confirmDelete = preferences.getBoolean("delet_bool", true);
+
+            if(confirmDelete) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddPasswordActivity.this);
+                builder.setTitle("attention");
+                builder.setMessage("confirm_delete_note");
+
+                builder.setPositiveButton(getString(android.R.string.ok), (dialog, id) -> {
+                    delete_password();
+                    dialog.dismiss();
+                });
+
+                builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> dialog.dismiss());
+
+                builder.show();
+
+            } else
+                delete_password();
         }
 
         return super.onOptionsItemSelected(item);

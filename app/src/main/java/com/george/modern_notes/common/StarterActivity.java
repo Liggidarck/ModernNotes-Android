@@ -10,11 +10,9 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.george.modern_notes.MainActivity;
 import com.george.modern_notes.R;
 
 import java.util.Objects;

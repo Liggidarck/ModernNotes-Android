@@ -12,7 +12,6 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.george.modern_notes.MainActivity;
 import com.george.modern_notes.R;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -42,6 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         if(theme_app.equals("Fiolet"))
             setTheme(R.style.FioletTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -50,9 +50,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar_settings);
         setSupportActionBar(toolbar);
-
-        if(theme_app.equals("Dark"))
-            toolbar.setBackgroundColor(Color.parseColor("#4C4C4C"));
 
         toolbar.setNavigationOnClickListener(v -> startActivity(new Intent(SettingsActivity.this, MainActivity.class)));
     }

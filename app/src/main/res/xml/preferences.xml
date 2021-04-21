@@ -15,6 +15,7 @@
 
         <EditTextPreference
             android:key="nizniy_text_header"
+            android:defaultValue="Default value"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/welcome_text"

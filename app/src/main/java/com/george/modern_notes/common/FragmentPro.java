@@ -12,16 +12,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.george.modern_notes.R;
 
-import java.util.Objects;
-
 public class FragmentPro extends Fragment {
-
 
     @Nullable
     @Override
@@ -55,13 +51,11 @@ public class FragmentPro extends Fragment {
         if(theme_app.equals("Fiolet"))
             pro_layl.setBackground(ContextCompat.getDrawable(FragmentPro.this.getActivity(), R.drawable.top_note_back_fiolet));
 
-
-
             pro_layl.setOnClickListener(view1 -> {
                 final String appPackageName = "george.note";
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-                } catch (android.content.ActivityNotFoundException anfe) {
+                } catch (android.content.ActivityNotFoundException ange) {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appPackageName)));
                 }
             });

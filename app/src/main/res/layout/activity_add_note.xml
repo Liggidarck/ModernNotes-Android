@@ -6,11 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".notebook.AddNoteActivity">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/snak_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar_add_note_dark"
         android:layout_width="match_parent"
@@ -32,6 +27,12 @@
         android:elevation="4dp"
         android:visibility="invisible"
         style="@style/Widget.MaterialComponents.Toolbar.Surface" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/snak_layout_note"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/card_more_bottom" />
 
     <View
         android:id="@+id/theme_view"
@@ -60,7 +61,8 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="2dp"
         android:orientation="vertical"
-        android:layout_below="@id/name_note">
+        android:layout_below="@id/name_note"
+        android:layout_above="@+id/card_more_bottom">
 
         <EditText
             android:id="@+id/note_text"
@@ -83,8 +85,45 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="30sp"
-        android:layout_marginBottom="25sp"
+        android:layout_marginBottom="65sp"
         app:srcCompat="@drawable/ic_baseline_done_white_24"
         app:tint="@color/colorWhite" />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_more_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentBottom="true"
+        app:cardElevation="3dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/date_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/google_sans_medium"
+                android:textColor="@android:color/black"
+                android:layout_centerInParent="true" />
+
+            <ImageView
+                android:id="@+id/more_notes"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="11dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_baseline_more_vert_24"
+                android:layout_marginEnd="5dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                tools:ignore="UnusedAttribute" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+    
 </RelativeLayout>

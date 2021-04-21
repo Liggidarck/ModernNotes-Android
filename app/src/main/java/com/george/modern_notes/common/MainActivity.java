@@ -1,4 +1,4 @@
-package com.george.modern_notes;
+package com.george.modern_notes.common;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -19,14 +19,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.george.modern_notes.future.SettingsActivity;
+import com.george.modern_notes.R;
+import com.george.modern_notes.common.future.SettingsActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.george.modern_notes.common.FragmentPro;
-import com.george.modern_notes.common.StarterActivity;
 import com.george.modern_notes.links.AddLinkActivity;
 import com.george.modern_notes.links.ListOfLinksActivity;
 import com.george.modern_notes.notebook.AddNoteActivity;
@@ -44,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab_add;
     EditText textHeader;
 
+    TextView notebook_text, links_text, password_tex, generatoe_text;
+
     private static final String TAG = "MainActivity";
 
     @Override
@@ -52,9 +53,6 @@ public class MainActivity extends AppCompatActivity {
         String theme_app = sharedPreferences.getString("theme_app", "Fiolet");
 
         assert theme_app != null;
-        if(theme_app.equals("Dark"))
-            setTheme(R.style.DarckTheme);
-
         if(theme_app.equals("Orange"))
             setTheme(R.style.Orange);
 
@@ -77,12 +75,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        MobileAds.initialize(this, initializationStatus -> {
-        });
-
-        AdView mAdView = findViewById(R.id.adViewMain);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        notebook_text = findViewById(R.id.notebook_text);
+        links_text = findViewById(R.id.links_text);
+        password_tex = findViewById(R.id.password_tex);
+        generatoe_text = findViewById(R.id.generatoe_text);
 
         fab_add = findViewById(R.id.fab_add);
         textUserName = findViewById(R.id.textUsername);
@@ -98,6 +94,13 @@ public class MainActivity extends AppCompatActivity {
         listOfLinks = findViewById(R.id.link_card);
         passwordsList = findViewById(R.id.password_card);
         generator = findViewById(R.id.generator_card);
+
+        MobileAds.initialize(this, initializationStatus -> {
+        });
+
+        AdView mAdView = findViewById(R.id.adViewMain);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         String name_user = sharedPreferences.getString("full_name", "empty_user_name");
         String text_header = sharedPreferences.getString("welcome_text_header", "");
@@ -115,11 +118,10 @@ public class MainActivity extends AppCompatActivity {
         if(number_of_lines_top_note.equals("infinity")){
             Log.i(TAG, "Top notes lines - infinity");
         } else {
-            int killichestvo_strok_top_note_int = Integer.parseInt(number_of_lines_top_note);
-            text_topNote.setMaxLines(killichestvo_strok_top_note_int);
+            int num = Integer.parseInt(number_of_lines_top_note);
+            text_topNote.setMaxLines(num);
         }
 
-        //Это запуск первой стартовой активити
         if(name_user.equals("empty_user_name"))
             startActivity(new Intent(MainActivity.this, StarterActivity.class));
 
@@ -132,33 +134,8 @@ public class MainActivity extends AppCompatActivity {
 
         LoadTopNote();
 
-        TextView notebook_text = findViewById(R.id.notebook_text);
-        TextView links_text = findViewById(R.id.links_text);
-        TextView password_tex = findViewById(R.id.password_tex);
-        TextView generatoe_text = findViewById(R.id.generatoe_text);
-
         if(ad_pro_version)
             getSupportFragmentManager().beginTransaction().replace(R.id.layout_card_free, new FragmentPro()).commit();
-
-        if(theme_app.equals("Dark")) {
-            header.setBackground(ContextCompat.getDrawable(this, R.drawable.header_background_dark));
-            text_top_note.setTextColor(Color.parseColor("#636363"));
-            topNote.setBackground(ContextCompat.getDrawable(this, R.drawable.top_note_back_dark));
-
-            notebook.setBackground(ContextCompat.getDrawable(this, R.drawable.black_rectangel_background));
-            notebook_text.setTextColor(Color.parseColor("#FFFFFF"));
-
-            listOfLinks.setBackground(ContextCompat.getDrawable(this, R.drawable.black_rectangel_background));
-            links_text.setTextColor(Color.parseColor("#FFFFFF"));
-
-            passwordsList.setBackground(ContextCompat.getDrawable(this, R.drawable.black_rectangel_background));
-            password_tex.setTextColor(Color.parseColor("#FFFFFF"));
-
-            generator.setBackground(ContextCompat.getDrawable(this, R.drawable.black_rectangel_background));
-            generatoe_text.setTextColor(Color.parseColor("#FFFFFF"));
-
-            textHeader.setHintTextColor(Color.BLACK);
-        }
 
         if(theme_app.equals("Orange")) {
             header.setBackground(ContextCompat.getDrawable(this, R.drawable.header_background_orange));
@@ -196,7 +173,6 @@ public class MainActivity extends AppCompatActivity {
             topNote.setBackground(ContextCompat.getDrawable(this, R.drawable.top_note_back_fiolet));
         }
 
-        //Это видимость кнопки добавить
         if(!fab_enabled)
             fab_add.setVisibility(View.INVISIBLE);
         else
@@ -226,7 +202,6 @@ public class MainActivity extends AppCompatActivity {
         if(on_click_fab.equals("password"))
             fab_add.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AddPasswordActivity.class)));
 
-        //Это нажатие по карточкам и разным кнопкам карточки
         ImageView imageSettings = findViewById(R.id.imageSettings);
         imageSettings.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
 

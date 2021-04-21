@@ -1,9 +1,14 @@
 package com.george.modern_notes.notebook;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -34,8 +39,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.george.modern_notes.R;
 import com.george.modern_notes.common.StarterActivity;
 import com.george.modern_notes.database.NotesDatabase;
+import com.google.android.material.snackbar.Snackbar;
 
-public class AddNoteActivity extends AppCompatActivity {
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+public class AddNoteActivity extends AppCompatActivity implements BottomSheetNotes.BottomSheetListener {
 
     MaterialToolbar toolbar, toolbarDark;
 
@@ -52,6 +63,12 @@ public class AddNoteActivity extends AppCompatActivity {
 
     View theme;
     String checkTheme = "Default";
+
+    ImageView more_notes;
+    CardView card_more_bottom;
+
+    String dateFull;
+    TextView dateView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,9 +106,27 @@ public class AddNoteActivity extends AppCompatActivity {
         MobileAds.initialize(this, initializationStatus -> {
         });
 
-//        mAdView = findViewById(R.id.adViewAddNote);
-//        AdRequest adRequest = new AdRequest.Builder().build();
-//        mAdView.loadAd(adRequest);
+        dateView = findViewById(R.id.date_textView);
+        Date currentDate = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        String dateText = dateFormat.format(currentDate);
+        DateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        String timeText = timeFormat.format(currentDate);
+        dateFull = "last_modified" + ":" + " " + dateText + " " + timeText;
+        dateView.setText(dateFull);
+
+        card_more_bottom = findViewById(R.id.card_more_bottom);
+        more_notes = findViewById(R.id.more_notes);
+        more_notes.setOnClickListener(v -> {
+            BottomSheetNotes bottomSheetNotes = new BottomSheetNotes();
+
+            Bundle bundle = new Bundle();
+            bundle.putString("theme", checkTheme );
+            bottomSheetNotes.setArguments(bundle);
+
+            bottomSheetNotes.show(getSupportFragmentManager(), "BottomSheetNotes");
+        });
+
 
         Log.e(TAG, checkTheme+" В самом начале OnCreate");
 
@@ -159,7 +194,7 @@ public class AddNoteActivity extends AppCompatActivity {
             notesId = extras.getLong("id");
 
         }
-        // если 0, то добавление
+
         if (notesId > 0) {
             // получаем элемент по id из бд
             userCursor = db.rawQuery("select * from " + NotesDatabase.TABLE + " where " +
@@ -168,7 +203,8 @@ public class AddNoteActivity extends AppCompatActivity {
 
             nameBox.setText(userCursor.getString(1));
             noteBox.setText(userCursor.getString(2));
-            checkTheme = userCursor.getString(3);
+            dateView.setText(userCursor.getString(3));
+            checkTheme = userCursor.getString(4);
             Log.e(TAG, checkTheme+" Когда получил значение");
 
             if(checkTheme.equals("Default")){
@@ -181,43 +217,73 @@ public class AddNoteActivity extends AppCompatActivity {
             }
 
             if(checkTheme.equals("Red")){
-                theme.setBackgroundColor(Color.parseColor("#ff9e9e"));
-                toolbar.setBackgroundColor(Color.parseColor("#ff9e9e"));
+                checkTheme = "Red";
+                theme.setBackgroundColor(Color.parseColor("#FF8C8C"));
+                toolbar.setBackgroundColor(Color.parseColor("#FF8C8C"));
+                card_more_bottom.setCardBackgroundColor(Color.parseColor("#FF8C8C"));
             }
 
-            if(checkTheme.equals("Light Yellow")){
-                theme.setBackgroundColor(Color.parseColor("#ffeaa7"));
-                toolbar.setBackgroundColor(Color.parseColor("#ffeaa7"));
+            if(checkTheme.equals("Orange")){
+                checkTheme = "Orange";
+                theme.setBackgroundColor(Color.parseColor("#FFB661"));
+                toolbar.setBackgroundColor(Color.parseColor("#FFB661"));
+                card_more_bottom.setCardBackgroundColor(Color.parseColor("#FFB661"));
             }
 
             if(checkTheme.equals("Yellow")){
-                theme.setBackgroundColor(Color.parseColor("#fdcb6f"));
-                toolbar.setBackgroundColor(Color.parseColor("#fdcb6f"));
+                checkTheme = "Yellow";
+                theme.setBackgroundColor(Color.parseColor("#FFD850"));
+                toolbar.setBackgroundColor(Color.parseColor("#FFD850"));
+                card_more_bottom.setCardBackgroundColor(Color.parseColor("#FFD850"));
             }
 
             if(checkTheme.equals("Green")){
-                theme.setBackgroundColor(Color.parseColor("#a3ff9e"));
-                toolbar.setBackgroundColor(Color.parseColor("#a3ff9e"));
+                checkTheme = "Green";
+                theme.setBackgroundColor(Color.parseColor("#7AE471"));
+                toolbar.setBackgroundColor(Color.parseColor("#7AE471"));
+                card_more_bottom.setCardBackgroundColor(Color.parseColor("#7AE471"));
             }
 
-            if(checkTheme.equals("Blue")){
-                theme.setBackgroundColor(Color.parseColor("#9eb8ff"));
-                toolbar.setBackgroundColor(Color.parseColor("#9eb8ff"));
+            if(checkTheme.equals("Light Green")){
+                checkTheme = "Light Green";
+                theme.setBackgroundColor(Color.parseColor("#56E0C7"));
+                toolbar.setBackgroundColor(Color.parseColor("#56E0C7"));
+                card_more_bottom.setCardBackgroundColor(Color.parseColor("#56E0C7"));
             }
 
-            if(checkTheme.equals("Aqua blue")){
-                theme.setBackgroundColor(Color.parseColor("#74cdfc"));
-                toolbar.setBackgroundColor(Color.parseColor("#74cdfc"));
+            if(checkTheme.equals("Ligth Blue")){
+                checkTheme = "Ligth Blue";
+                theme.setBackgroundColor(Color.parseColor("#6CD3FF"));
+                toolbar.setBackgroundColor(Color.parseColor("#6CD3FF"));
+                card_more_bottom.setCardBackgroundColor(Color.parseColor("#6CD3FF"));
             }
 
-            if(checkTheme.equals("fiolet")){
-                theme.setBackgroundColor(Color.parseColor("#e9a6ff"));
-                toolbar.setBackgroundColor(Color.parseColor("#e9a6ff"));
+            if(checkTheme.equals("Blue")) {
+                checkTheme = "Blue";
+                theme.setBackgroundColor(Color.parseColor("#819CFF"));
+                toolbar.setBackgroundColor(Color.parseColor("#819CFF"));
+                card_more_bottom.setCardBackgroundColor(Color.parseColor("#819CFF"));
             }
 
-            if(checkTheme.equals("pink")){
-                theme.setBackgroundColor(Color.parseColor("#ff9cbe"));
-                toolbar.setBackgroundColor(Color.parseColor("#ff9cbe"));
+            if(checkTheme.equals("violet")) {
+                checkTheme = "violet";
+                theme.setBackgroundColor(Color.parseColor("#DD8BFA"));
+                toolbar.setBackgroundColor(Color.parseColor("#DD8BFA"));
+                card_more_bottom.setCardBackgroundColor(Color.parseColor("#DD8BFA"));
+            }
+
+            if(checkTheme.equals("Pink")) {
+                checkTheme = "Pink";
+                theme.setBackgroundColor(Color.parseColor("#FF6CA1"));
+                toolbar.setBackgroundColor(Color.parseColor("#FF6CA1"));
+                card_more_bottom.setCardBackgroundColor(Color.parseColor("#FF6CA1"));
+            }
+
+            if(checkTheme.equals("Gray")) {
+                checkTheme = "Gray";
+                theme.setBackgroundColor(Color.parseColor("#C4C4C4"));
+                toolbar.setBackgroundColor(Color.parseColor("#C4C4C4"));
+                card_more_bottom.setCardBackgroundColor(Color.parseColor("#C4C4C4"));
             }
 
             userCursor.close();
@@ -227,9 +293,17 @@ public class AddNoteActivity extends AppCompatActivity {
 
     public void save() {
         if(validateNameNote()) {
+            Date currentDate = new Date();
+            DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+            String dateText = dateFormat.format(currentDate);
+            DateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+            String timeText = timeFormat.format(currentDate);
+            dateFull = "last_modified" + ":" + " " + dateText + " " + timeText;
+
             ContentValues cv = new ContentValues();
             cv.put(NotesDatabase.COLUMN_NAME_NOTE, nameBox.getText().toString());
             cv.put(NotesDatabase.COLUMN_NOTE, noteBox.getText().toString());
+            cv.put(NotesDatabase.COLUMN_DATE, dateFull);
             cv.put(NotesDatabase.COLUMN_THEME, checkTheme);
 
             if (notesId > 0)
@@ -271,152 +345,6 @@ public class AddNoteActivity extends AppCompatActivity {
 
     }
 
-    public void showDialogTheme() {
-        final Dialog dialog = new Dialog(AddNoteActivity.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_theme);
-
-        Button done = dialog.findViewById(R.id.button_ok);
-        done.setOnClickListener(view -> dialog.dismiss());
-
-        TextView text_default_theme = dialog.findViewById(R.id.text_default_theme);
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        final String theme_app_check = sharedPreferences.getString("theme_app", "Fiolet");
-
-        ImageView default_th, reed, light_yello, yello, greeen, bluue, aqqua_blue, fiiolet, piink;
-        ImageView check_default, check_red, check_yellow, chek_light_yellow, check_green, check_blue, check_aqua_blue, check_fiolet, chek_pink;
-
-        default_th = dialog.findViewById(R.id.default_theme);
-        reed = dialog.findViewById(R.id.red_theme);
-        light_yello = dialog.findViewById(R.id.white_yello_theme);
-        yello = dialog.findViewById(R.id.yello_theme);
-        greeen = dialog.findViewById(R.id.green_theme);
-        bluue = dialog.findViewById(R.id.blue_theme);
-        aqqua_blue = dialog.findViewById(R.id.aqua_blue_theme);
-        fiiolet = dialog.findViewById(R.id.fiolet_theme);
-        piink = dialog.findViewById(R.id.pink_theme);
-
-        check_default = dialog.findViewById(R.id.check_default);
-        check_red = dialog.findViewById(R.id.check_red);
-        chek_light_yellow = dialog.findViewById(R.id.check_tght_yellow);
-        check_yellow = dialog.findViewById(R.id.check_yellow);
-        check_green = dialog.findViewById(R.id.check_green);
-        check_blue = dialog.findViewById(R.id.check_blue);
-        check_aqua_blue = dialog.findViewById(R.id.check_aqua_blue);
-        check_fiolet = dialog.findViewById(R.id.check_fiolet);
-        chek_pink = dialog.findViewById(R.id.check_pink);
-
-        theme = findViewById(R.id.theme_view);
-        Drawable image = getResources().getDrawable(R.drawable.dark_default);
-
-        if(theme_app_check.equals("Dark")) {
-            default_th.setImageDrawable(image);
-            text_default_theme.setTextColor(Color.WHITE);
-            done.setTextColor(Color.WHITE);
-        }
-
-        if(checkTheme.equals("Default")) {
-            check_default.setVisibility(View.VISIBLE);
-        }
-
-        if(checkTheme.equals("Red"))
-            check_red.setVisibility(View.VISIBLE);
-
-        if(checkTheme.equals("Light Yellow"))
-            chek_light_yellow.setVisibility(View.VISIBLE);
-
-        if(checkTheme.equals("Yellow"))
-            check_yellow.setVisibility(View.VISIBLE);
-
-        if(checkTheme.equals("Green"))
-            check_green.setVisibility(View.VISIBLE);
-
-        if(checkTheme.equals("Blue"))
-            check_blue.setVisibility(View.VISIBLE);
-
-        if(checkTheme.equals("Aqua blue"))
-            check_aqua_blue.setVisibility(View.VISIBLE);
-
-        if(checkTheme.equals("fiolet"))
-            check_fiolet.setVisibility(View.VISIBLE);
-
-        if(checkTheme.equals("pink"))
-            chek_pink.setVisibility(View.VISIBLE);
-
-
-        default_th.setOnClickListener(view -> {
-            Log.i(TAG, theme_app_check + " проверка в теме");
-            if(theme_app_check.equals("Dark")) {
-                recreate();
-            } else {
-                theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
-                toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
-            }
-
-            checkTheme = "Default";
-            dialog.dismiss();
-        });
-
-        reed.setOnClickListener(view -> {
-            theme.setBackgroundColor(Color.parseColor("#ff9e9e"));
-            toolbar.setBackgroundColor(Color.parseColor("#ff9e9e"));
-            checkTheme = "Red";
-            dialog.dismiss();
-        });
-
-        light_yello.setOnClickListener(view -> {
-            theme.setBackgroundColor(Color.parseColor("#ffeaa7"));
-            toolbar.setBackgroundColor(Color.parseColor("#ffeaa7"));
-            checkTheme = "Light Yellow";
-            dialog.dismiss();
-        });
-
-        yello.setOnClickListener(view -> {
-            theme.setBackgroundColor(Color.parseColor("#fdcb6f"));
-            toolbar.setBackgroundColor(Color.parseColor("#fdcb6f"));
-            checkTheme = "Yellow";
-            dialog.dismiss();
-        });
-
-        greeen.setOnClickListener(view -> {
-            theme.setBackgroundColor(Color.parseColor("#a3ff9e"));
-            toolbar.setBackgroundColor(Color.parseColor("#a3ff9e"));
-            checkTheme = "Green";
-            dialog.dismiss();
-        });
-
-        bluue.setOnClickListener(view -> {
-            theme.setBackgroundColor(Color.parseColor("#9eb8ff"));
-            toolbar.setBackgroundColor(Color.parseColor("#9eb8ff"));
-            checkTheme = "Blue";
-            dialog.dismiss();
-        });
-
-        aqqua_blue.setOnClickListener(view -> {
-            theme.setBackgroundColor(Color.parseColor("#74cdfc"));
-            toolbar.setBackgroundColor(Color.parseColor("#74cdfc"));
-            checkTheme = "Aqua blue";
-            dialog.dismiss();
-        });
-
-        fiiolet.setOnClickListener(view -> {
-            theme.setBackgroundColor(Color.parseColor("#e9a6ff"));
-            toolbar.setBackgroundColor(Color.parseColor("#e9a6ff"));
-            checkTheme = "fiolet";
-            dialog.dismiss();
-        });
-
-        piink.setOnClickListener(view -> {
-            theme.setBackgroundColor(Color.parseColor("#ff9cbe"));
-            toolbar.setBackgroundColor(Color.parseColor("#ff9cbe"));
-            checkTheme = "pink";
-            dialog.dismiss();
-        });
-
-        dialog.show();
-    }
-
     @Override
     public void onBackPressed() {
         save();
@@ -439,6 +367,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        CoordinatorLayout Layout = findViewById(R.id.snak_layout_note);
 
         if(item.getItemId() == R.id.in_top_note) {
             String name_top_note = nameBox.getText().toString();
@@ -448,10 +377,10 @@ public class AddNoteActivity extends AppCompatActivity {
 
             if(name_top_note.isEmpty() && top_note.isEmpty()) {
                 Log.e(TAG, "Полностью пустая заметка");
-                Toast.makeText(getApplicationContext(), getText(R.string.error_empty_top_note), Toast.LENGTH_SHORT).show();
+                Snackbar.make(Layout, "note_copied", Snackbar.LENGTH_SHORT).setAction("done", null).show();
             } else {
                 Log.e(TAG, "Нормальная заметка");
-                Toast.makeText(getApplicationContext(), getText(R.string.pinned_done_text), Toast.LENGTH_SHORT).show();
+                Snackbar.make(Layout, "note_copied", Snackbar.LENGTH_SHORT).setAction("done", null).show();
 
                 editor.putString("note", top_note);
                 editor.putString("name_note", name_top_note);
@@ -462,6 +391,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
             if(name_top_note.isEmpty() && top_note.length() > 0) {
                 Log.e(TAG, "Имя пустое а заметка нет");
+                Snackbar.make(Layout, "note_copied", Snackbar.LENGTH_SHORT).setAction("done", null).show();
 
                 String nameEmpty = getString(R.string.noname_note);
 
@@ -474,6 +404,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
             if(name_top_note.length() > 0 && top_note.isEmpty()) {
                 Log.e(TAG, "Заметка пустая а имя нет");
+                Snackbar.make(Layout, "note_copied", Snackbar.LENGTH_SHORT).setAction("done", null).show();
 
                 String noteEmpty = getString(R.string.blank_note);
 
@@ -486,14 +417,145 @@ public class AddNoteActivity extends AppCompatActivity {
 
         }
 
-        if (item.getItemId() == R.id.nav_theme)
-            showDialogTheme();
-
-        if(item.getItemId() == R.id.del)
-            delete();
-
         return super.onOptionsItemSelected(item);
     }
 
 
+    @Override
+    public void onButtonClicked(String button_clicked) {
+        Log.i(TAG, "" + button_clicked);
+        CoordinatorLayout Layout = findViewById(R.id.snak_layout_note);
+
+        if(button_clicked.equals("Button delete clicked")) {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            boolean confirmDelet = preferences.getBoolean("delet_bool", true);
+
+            if(confirmDelet) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddNoteActivity.this);
+                builder.setTitle("attention");
+                builder.setMessage("confirm_delete_note");
+
+                builder.setPositiveButton(getString(android.R.string.ok), (dialog, id) -> {
+                    delete();
+                    dialog.dismiss();
+                });
+
+                builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> dialog.dismiss());
+
+                builder.show();
+
+            } else
+                delete();
+
+        }
+
+        if(button_clicked.equals("Button copy clicked")){
+            String copy = noteBox.getText().toString();
+            if(copy.isEmpty()){
+                Log.i(TAG, "empty_note_cant_copied");
+                Snackbar.make(Layout, "empty_note_cant_copied", Snackbar.LENGTH_SHORT).setAction("done", null).show();
+            } else {
+                Log.i(TAG, "note_copied");
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("", copy);
+                assert clipboard != null;
+                clipboard.setPrimaryClip(clip);
+                Snackbar.make(Layout, "note_copied", Snackbar.LENGTH_SHORT).setAction("done", null).show();
+            }
+        }
+
+        if(button_clicked.equals("Button share clicked")) {
+            String copy = noteBox.getText().toString();
+            if (copy.isEmpty()) {
+                Snackbar.make(Layout, "empty_note_cant_shared", Snackbar.LENGTH_SHORT).setAction("done", null).show();
+            } else {
+
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, copy + "");
+                sendIntent.setType("text/plain");
+
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
+            }
+        }
+
+        if(button_clicked.equals("Default")){
+            checkTheme = "Default";
+            theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
+            toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
+            card_more_bottom.setCardBackgroundColor(Color.parseColor("#FAFAFA"));
+        }
+
+        if(button_clicked.equals("Red")){
+            checkTheme = "Red";
+            theme.setBackgroundColor(Color.parseColor("#FF8C8C"));
+            toolbar.setBackgroundColor(Color.parseColor("#FF8C8C"));
+            card_more_bottom.setCardBackgroundColor(Color.parseColor("#FF8C8C"));
+        }
+
+        if(button_clicked.equals("Orange")){
+            checkTheme = "Orange";
+            theme.setBackgroundColor(Color.parseColor("#FFB661"));
+            toolbar.setBackgroundColor(Color.parseColor("#FFB661"));
+            card_more_bottom.setCardBackgroundColor(Color.parseColor("#FFB661"));
+        }
+
+        if(button_clicked.equals("Yellow")){
+            checkTheme = "Yellow";
+            theme.setBackgroundColor(Color.parseColor("#FFD850"));
+            toolbar.setBackgroundColor(Color.parseColor("#FFD850"));
+            card_more_bottom.setCardBackgroundColor(Color.parseColor("#FFD850"));
+        }
+
+        if(button_clicked.equals("Green")){
+            checkTheme = "Green";
+            theme.setBackgroundColor(Color.parseColor("#7AE471"));
+            toolbar.setBackgroundColor(Color.parseColor("#7AE471"));
+            card_more_bottom.setCardBackgroundColor(Color.parseColor("#7AE471"));
+        }
+
+        if(button_clicked.equals("Light Green")){
+            checkTheme = "Light Green";
+            theme.setBackgroundColor(Color.parseColor("#56E0C7"));
+            toolbar.setBackgroundColor(Color.parseColor("#56E0C7"));
+            card_more_bottom.setCardBackgroundColor(Color.parseColor("#56E0C7"));
+        }
+
+        if(button_clicked.equals("Ligth Blue")){
+            checkTheme = "Ligth Blue";
+            theme.setBackgroundColor(Color.parseColor("#6CD3FF"));
+            toolbar.setBackgroundColor(Color.parseColor("#6CD3FF"));
+            card_more_bottom.setCardBackgroundColor(Color.parseColor("#6CD3FF"));
+        }
+
+        if(button_clicked.equals("Blue")) {
+            checkTheme = "Blue";
+            theme.setBackgroundColor(Color.parseColor("#819CFF"));
+            toolbar.setBackgroundColor(Color.parseColor("#819CFF"));
+            card_more_bottom.setCardBackgroundColor(Color.parseColor("#819CFF"));
+        }
+
+        if(button_clicked.equals("violet")) {
+            checkTheme = "violet";
+            theme.setBackgroundColor(Color.parseColor("#DD8BFA"));
+            toolbar.setBackgroundColor(Color.parseColor("#DD8BFA"));
+            card_more_bottom.setCardBackgroundColor(Color.parseColor("#DD8BFA"));
+        }
+
+        if(button_clicked.equals("Pink")) {
+            checkTheme = "Pink";
+            theme.setBackgroundColor(Color.parseColor("#FF6CA1"));
+            toolbar.setBackgroundColor(Color.parseColor("#FF6CA1"));
+            card_more_bottom.setCardBackgroundColor(Color.parseColor("#FF6CA1"));
+        }
+
+        if(button_clicked.equals("Gray")) {
+            checkTheme = "Gray";
+            theme.setBackgroundColor(Color.parseColor("#C4C4C4"));
+            toolbar.setBackgroundColor(Color.parseColor("#C4C4C4"));
+            card_more_bottom.setCardBackgroundColor(Color.parseColor("#C4C4C4"));
+        }
+
+    }
 }

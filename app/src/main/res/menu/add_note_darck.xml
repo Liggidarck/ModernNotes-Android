@@ -8,15 +8,5 @@
         android:icon="@drawable/ic_star"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/nav_theme"
-        android:title="@string/themes_text"
-        app:showAsAction="withText"/>
-
-    <item
-        android:id="@+id/del"
-        android:title="@string/delete_text"
-        android:icon="@drawable/ic_baseline_delete_24"
-        app:showAsAction="ifRoom" />
 
 </menu>

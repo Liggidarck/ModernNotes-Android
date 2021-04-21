@@ -7,13 +7,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class LinksDatabase extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "link.db"; // название бд
-    private static final int SCHEMA = 1; // версия базы данных
+    private static final int SCHEMA = 2; // версия базы данных
     public static final String TABLE = "links"; // название таблицы в бд
     // названия столбцов
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAME_LINK = "name";
     public static final String COLUMN_LNK = "link";
     public static final String COLUMN_LINK_NOTE = "link_note";
+    public static final String COLUMN_LINK_DATE = "date";
     public static final String COLUMN_THEME_MODE_LINK = "theme";
 
     public LinksDatabase(Context context) {
@@ -23,8 +24,9 @@ public class LinksDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("CREATE TABLE links (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NAME_LINK + " TEXT, " + COLUMN_LNK + " TEXT, "
-                + COLUMN_LINK_NOTE + " TEXT, " + COLUMN_THEME_MODE_LINK + " TEXT);");
+        db.execSQL("CREATE TABLE links (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COLUMN_NAME_LINK + " TEXT, " + COLUMN_LNK + " TEXT, " + COLUMN_LINK_NOTE
+                + " TEXT, " + COLUMN_LINK_DATE + " TEXT, " + COLUMN_THEME_MODE_LINK + " TEXT);");
 
     }
     @Override

@@ -1,4 +1,4 @@
-package com.george.modern_notes.future;
+package com.george.modern_notes.common.future;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -6,12 +6,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
-import com.george.modern_notes.MainActivity;
+import com.george.modern_notes.common.MainActivity;
 import com.george.modern_notes.R;
 import com.google.android.material.appbar.MaterialToolbar;
 
@@ -56,9 +55,6 @@ public class SettingsActivity extends AppCompatActivity {
         MaterialToolbar toolbar = findViewById(R.id.toolbar_settings);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> startActivity(new Intent(this, MainActivity.class)));
-
-        if(theme_app.equals("Dark"))
-            toolbar.setBackgroundColor(Color.parseColor("#4C4C4C"));
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
@@ -73,5 +69,10 @@ public class SettingsActivity extends AppCompatActivity {
             });
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

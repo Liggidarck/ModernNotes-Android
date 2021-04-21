@@ -28,7 +28,7 @@ import android.widget.TextView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.george.modern_notes.MainActivity;
+import com.george.modern_notes.common.MainActivity;
 import com.george.modern_notes.R;
 
 public class TopNoteActivity extends AppCompatActivity {

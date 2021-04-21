@@ -46,7 +46,6 @@
     </string-array>
 
     <string-array name="theme_app">
-        <item>Buio</item>
         <item>arancia</item>
         <item>Blu</item>
         <item>Azzurro</item>
@@ -56,7 +55,6 @@
     </string-array>
 
     <string-array name="theme_app_val">
-        <item>Dark</item>
         <item>Orange</item>
         <item>Blue</item>
         <item>AquaBlue</item>

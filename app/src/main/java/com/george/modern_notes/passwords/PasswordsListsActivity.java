@@ -19,11 +19,9 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.george.modern_notes.MainActivity;
+import com.george.modern_notes.common.MainActivity;
 import com.george.modern_notes.R;
 import com.george.modern_notes.database.PasswordsDatabase;
 

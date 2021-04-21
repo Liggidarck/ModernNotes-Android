@@ -23,7 +23,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.george.modern_notes.MainActivity;
+import com.george.modern_notes.common.MainActivity;
 import com.george.modern_notes.R;
 import com.george.modern_notes.database.NotesDatabase;
 

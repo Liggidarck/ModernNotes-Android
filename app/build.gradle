@@ -8,8 +8,8 @@ android {
         applicationId "com.george.notes"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.6"
+        versionCode 2
+        versionName "1.7"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -39,6 +39,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0-alpha02'
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.preference:preference:1.1.1'

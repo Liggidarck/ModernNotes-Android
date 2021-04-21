@@ -11,7 +11,7 @@
         android:theme="@style/FioletTheme">
 
         <activity
-            android:name=".future.SettingsActivity" />
+            android:name=".common.future.SettingsActivity" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
@@ -33,7 +33,7 @@
             android:name=".notebook.AddNoteActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".links.AddLinkActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".common.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
