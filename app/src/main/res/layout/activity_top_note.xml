@@ -15,17 +15,7 @@
         app:navigationIcon="@drawable/ic_black_arrow_back_24"
         app:title=" "
         android:visibility="invisible"
-        app:menu="@menu/menu_top_note"
-        style="@style/Widget.MaterialComponents.Toolbar.Surface" />
-
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/topAppBar_note_top_dark"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:navigationIcon="@drawable/ic_black_arrow_back_24"
-        app:title=" "
-        android:visibility="invisible"
-        app:menu="@menu/menu_top_note_dark"
+        app:menu="@menu/menu_delete"
         style="@style/Widget.MaterialComponents.Toolbar.Surface" />
 
     <View

@@ -71,4 +71,24 @@
     <string name="upgrade_to_pro">प्रो में अपग्रेड</string>
     <string name="completely_disable_ads_by_purchasing_the_pro_version">प्रो संस्करण खरीदकर विज्ञापनों को पूरी तरह से निष्क्रिय कर दें!</string>
 
+    <string name="attention">ध्यान</string>
+
+    <string name="confirm_delete_note">क्या आप वाकई नोट हटाना चाहते हैं?</string>
+    <string name="confirm_delete_link">क्या आप वाकई लिंक हटाना चाहते हैं?</string>
+    <string name="confirm_delete_password">क्या आप वाकई अपना पासवर्ड निकालना चाहते हैं?</string>
+
+    <string name="confirm_before_deleting">हटाने से पहले पुष्टि करें</string>
+    <string name="activate_button_save" >नोट्स में बटन सेव को सक्रिय करें</string>
+
+
+    <string name="empty_note_cant_copied">खाली नोट कॉपी नहीं किया जा सकता</string>
+    <string name="note_copied">नोट कॉपी किया गया</string>
+    <string name="empty_note_cant_shared">खाली नोट साझा नहीं किया जा सकता है</string>
+
+    <string name="empty_link_cant_copied">खाली लिंक को कॉपी नहीं किया जा सकता</string>
+    <string name="link_copied">लिंक कॉपी किया गया</string>
+    <string name="empty_link_cant_shared">खाली लिंक साझा नहीं किया जा सकता है</string>
+
+    <string name="last_modified">अंतिम बार संशोधित</string>
+
 </resources>

@@ -70,4 +70,25 @@
 
     <string name="upgrade_to_pro">Passer à Pro</string>
     <string name="completely_disable_ads_by_purchasing_the_pro_version">Désactivez complètement les publicités en achetant la version pro!</string>
+
+    <string name="attention">Attention</string>
+
+    <string name="confirm_delete_note">Voulez-vous vraiment supprimer la note?</string>
+    <string name="confirm_delete_link">Voulez-vous vraiment supprimer le lien?</string>
+    <string name="confirm_delete_password">Voulez-vous vraiment supprimer votre mot de passe?</string>
+
+    <string name="confirm_before_deleting">Confirmer avant de supprimer</string>
+    <string name="activate_button_save" >Activez le bouton Enregistrer dans les notes</string>
+
+
+    <string name="empty_note_cant_copied">La note vide ne peut pas être copiée</string>
+    <string name="note_copied">Note copiée</string>
+    <string name="empty_note_cant_shared">La note vide ne peut pas être partagée</string>
+
+    <string name="empty_link_cant_copied">Le lien vide ne peut pas être copié</string>
+    <string name="link_copied">Lien copié</string>
+    <string name="empty_link_cant_shared">Le lien vide ne peut pas être partagé</string>
+
+    <string name="last_modified">Dernière modification</string>
+
 </resources>

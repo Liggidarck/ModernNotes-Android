@@ -4,24 +4,24 @@
     <item android:state_pressed="true" >
         <shape android:shape="rectangle" >
             <corners android:radius="20dip" />
-            <stroke android:width="2dip" android:color="@color/colorFioletPrimary" />
-            <solid android:color="@color/colorFioletPrimary" />
+            <stroke android:width="2dip" android:color="@color/colorVioletPrimary" />
+            <solid android:color="@color/colorVioletPrimary" />
         </shape>
     </item>
 
     <item android:state_focused="true" >
         <shape android:shape="rectangle" >
             <corners android:radius="20dip" />
-            <stroke android:width="2dip" android:color="@color/colorFioletPrimary" />
-            <solid android:color="@color/colorFioletPrimary" />
+            <stroke android:width="2dip" android:color="@color/colorVioletPrimary" />
+            <solid android:color="@color/colorVioletPrimary" />
         </shape>
     </item>
 
     <item >
         <shape android:shape="rectangle" >
             <corners android:radius="20dip" />
-            <stroke android:width="2dip" android:color="@color/colorFioletPrimary" />
-            <solid android:color="@color/colorFioletPrimary" />
+            <stroke android:width="2dip" android:color="@color/colorVioletPrimary" />
+            <solid android:color="@color/colorVioletPrimary" />
         </shape>
     </item>
 

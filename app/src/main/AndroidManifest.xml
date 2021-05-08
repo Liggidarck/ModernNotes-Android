@@ -8,10 +8,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/FioletTheme">
+        android:theme="@style/VioletTheme">
 
         <activity
-            android:name=".common.future.SettingsActivity" />
+            android:name=".common.SettingsActivity" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
@@ -21,7 +21,6 @@
             android:name=".notebook.TopNoteActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".common.StarterActivity" />
-        <activity android:name=".common.SettingsActivity" />
         <activity android:name=".passwords.PasswordsListsActivity" />
         <activity android:name=".notebook.NotebookActivity" />
         <activity android:name=".links.ListOfLinksActivity" />

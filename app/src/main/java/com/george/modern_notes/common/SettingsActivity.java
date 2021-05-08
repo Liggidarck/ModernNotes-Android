@@ -1,73 +1,73 @@
 package com.george.modern_notes.common;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import com.google.android.material.appbar.MaterialToolbar;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
+
 import com.george.modern_notes.R;
+import com.google.android.material.appbar.MaterialToolbar;
+
+import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String theme_app = sharedPreferences.getString("theme_app", "Fiolet");
+        String theme_app = sharedPreferences.getString(getString(R.string.root_theme_app), getString(R.string.root_theme_violet));
+
         assert theme_app != null;
-        if(theme_app.equals("Orange"))
+        if(theme_app.equals(getString(R.string.root_theme_orange)))
             setTheme(R.style.Orange);
 
-        if(theme_app.equals("Blue"))
+        if(theme_app.equals(getString(R.string.root_theme_blue)))
             setTheme(R.style.BlueTheme);
 
-        if(theme_app.equals("Dark"))
-            setTheme(R.style.DarckThemeSettings);
-
-        if(theme_app.equals("AquaBlue"))
+        if(theme_app.equals(getString(R.string.root_theme_aqua_blue)))
             setTheme(R.style.AquaBlueTheme);
 
-        if(theme_app.equals("Green"))
+        if(theme_app.equals(getString(R.string.root_theme_green)))
             setTheme(R.style.GreenTheme);
 
-        if(theme_app.equals("Red"))
+        if(theme_app.equals(getString(R.string.root_theme_red)))
             setTheme(R.style.RedTheme);
 
-        if(theme_app.equals("Fiolet"))
-            setTheme(R.style.FioletTheme);
+        if(theme_app.equals(getString(R.string.root_theme_violet)))
+            setTheme(R.style.VioletTheme);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setContentView(R.layout.settings_activity);
 
-        getFragmentManager().beginTransaction().replace(R.id.content_frame_settings, new MainPreferencesFragment()).commit();
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.settings, new SettingsFragment())
+                    .commit();
+        }
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar_settings);
         setSupportActionBar(toolbar);
-
-        toolbar.setNavigationOnClickListener(v -> startActivity(new Intent(SettingsActivity.this, MainActivity.class)));
+        toolbar.setNavigationOnClickListener(v -> startActivity(new Intent(this, MainActivity.class)));
     }
 
-    public static class MainPreferencesFragment extends PreferenceFragment {
+    public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override
-        public void onCreate(@Nullable Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.preferences);
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
-            final Preference mster = findPreference("theme_app");
-            mster.setOnPreferenceChangeListener((preference, newValue) -> {
-                getActivity().recreate();
+            final Preference pref_theme = findPreference("theme_app");
+            assert pref_theme != null;
+            pref_theme.setOnPreferenceChangeListener((preference, newValue) -> {
+                Objects.requireNonNull(getActivity()).recreate();
                 return true;
             });
 
         }
-
     }
 
     @Override

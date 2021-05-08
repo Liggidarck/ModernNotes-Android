@@ -7,44 +7,33 @@
     tools:context=".notebook.AddNoteActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/topAppBar_add_note_dark"
+        android:id="@+id/topAppBar_add_note"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationIcon="@drawable/ic_black_arrow_back_24"
         app:title=" "
-        android:visibility="invisible"
-        app:menu="@menu/menu_top_note_only"
+        app:menu="@menu/menu_top_note"
         android:elevation="4dp"
-        style="@style/Widget.MaterialComponents.Toolbar.Surface" />
-
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/topAppBar_add_note_darck_buttns"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:navigationIcon="@drawable/ic_black_arrow_back_24"
-        app:title=" "
-        app:menu="@menu/add_note_darck"
-        android:elevation="4dp"
-        android:visibility="invisible"
         style="@style/Widget.MaterialComponents.Toolbar.Surface" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/snak_layout_note"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/card_more_bottom" />
+        android:layout_above="@+id/card_more_bottom"
+        android:layout_below="@+id/topAppBar_add_note" />
 
     <View
         android:id="@+id/theme_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/topAppBar_add_note_darck_buttns"/>
+        android:layout_below="@id/topAppBar_add_note"/>
 
     <EditText
         android:id="@+id/name_note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/topAppBar_add_note_darck_buttns"
+        android:layout_below="@id/topAppBar_add_note"
         android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
         android:background="@null"
@@ -87,7 +76,7 @@
         android:layout_marginEnd="30sp"
         android:layout_marginBottom="65sp"
         app:srcCompat="@drawable/ic_baseline_done_white_24"
-        app:tint="@color/colorWhite" />
+        app:tint="@color/colorWhite"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_more_bottom"

@@ -18,8 +18,6 @@ public class BottomSheetPasswords extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bottom_sheet_password, container, false);
 
-
-
         return view;
     }
 }

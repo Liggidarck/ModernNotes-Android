@@ -29,6 +29,25 @@
     <string name="Add_button_color">Add button color</string>
     <string name="change_color_button_add">Here you can change the color of the button add</string>
 
+    <string name="attention">Attention</string>
+
+    <string name="confirm_delete_note">Are you sure you want to delete the note?</string>
+    <string name="confirm_delete_link">Are you sure you want to remove the link?</string>
+    <string name="confirm_delete_password">Are you sure you want to remove your password?</string>
+
+    <string name="confirm_before_deleting">Confirm before deleting</string>
+    <string name="activate_button_save" >Activate the button save in notes</string>
+
+    <string name="empty_note_cant_copied">Empty note can\'t copied</string>
+    <string name="note_copied">Note copied</string>
+    <string name="empty_note_cant_shared">Empty note can\'t shared</string>
+
+    <string name="empty_link_cant_copied">Empty link can\'t copied</string>
+    <string name="link_copied">Link copied</string>
+    <string name="empty_link_cant_shared">Empty link can\'t shared</string>
+
+    <string name="last_modified">Last modified</string>
+
     <string name="pressing_button">Pressing the button</string>
     <string name="change_actions_you_click_button">Here you can change the actions when you click on the button</string>
 

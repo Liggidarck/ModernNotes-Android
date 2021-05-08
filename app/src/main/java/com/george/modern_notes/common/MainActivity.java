@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.george.modern_notes.R;
-import com.george.modern_notes.common.future.SettingsActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -43,33 +42,33 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab_add;
     EditText textHeader;
 
-    TextView notebook_text, links_text, password_tex, generatoe_text;
+    TextView notebook_text, links_text, password_tex, generator_text;
 
     private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String theme_app = sharedPreferences.getString("theme_app", "Fiolet");
+        String theme_app = sharedPreferences.getString(getString(R.string.root_theme_app), getString(R.string.root_theme_violet));
 
         assert theme_app != null;
-        if(theme_app.equals("Orange"))
+        if(theme_app.equals(getString(R.string.root_theme_orange)))
             setTheme(R.style.Orange);
 
-        if(theme_app.equals("Blue"))
+        if(theme_app.equals(getString(R.string.root_theme_blue)))
             setTheme(R.style.BlueTheme);
 
-        if(theme_app.equals("AquaBlue"))
+        if(theme_app.equals(getString(R.string.root_theme_aqua_blue)))
             setTheme(R.style.AquaBlueTheme);
 
-        if(theme_app.equals("Green"))
+        if(theme_app.equals(getString(R.string.root_theme_green)))
             setTheme(R.style.GreenTheme);
 
-        if(theme_app.equals("Red"))
+        if(theme_app.equals(getString(R.string.root_theme_red)))
             setTheme(R.style.RedTheme);
 
-        if(theme_app.equals("Fiolet"))
-            setTheme(R.style.FioletTheme);
+        if(theme_app.equals(getString(R.string.root_theme_violet)))
+            setTheme(R.style.VioletTheme);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         notebook_text = findViewById(R.id.notebook_text);
         links_text = findViewById(R.id.links_text);
         password_tex = findViewById(R.id.password_tex);
-        generatoe_text = findViewById(R.id.generatoe_text);
+        generator_text = findViewById(R.id.generatoe_text);
 
         fab_add = findViewById(R.id.fab_add);
         textUserName = findViewById(R.id.textUsername);
@@ -102,13 +101,13 @@ public class MainActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        String name_user = sharedPreferences.getString("full_name", "empty_user_name");
-        String text_header = sharedPreferences.getString("welcome_text_header", "");
-        String number_of_lines_top_note = sharedPreferences.getString("number_lines_top_note", "3");
-        String color_fab_add = sharedPreferences.getString("color_fab_add", "Orange");
-        String on_click_fab = sharedPreferences.getString("fab_on_click_val", "note");
-        boolean ad_pro_version = sharedPreferences.getBoolean("show_pro_ad", true);
-        boolean fab_enabled = sharedPreferences.getBoolean("fab_enabled", false);
+        String name_user = sharedPreferences.getString(getString(R.string.root_full_name), "empty_user_name");
+        String text_header = sharedPreferences.getString(getString(R.string.root_welcome_text_header), "");
+        String number_of_lines_top_note = sharedPreferences.getString(getString(R.string.root_number_lines_top_note), "3");
+        String color_fab_add = sharedPreferences.getString(getString(R.string.root_color_fab_add), "Orange");
+        String on_click_fab = sharedPreferences.getString(getString(R.string.root_fab_on_click_val), "note");
+        boolean ad_pro_version = sharedPreferences.getBoolean(getString(R.string.root_show_pro_ad), true);
+        boolean fab_enabled = sharedPreferences.getBoolean(getString(R.string.root_fab_enabled), false);
 
         assert number_of_lines_top_note != null;
         assert name_user != null;
@@ -167,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
             topNote.setBackground(ContextCompat.getDrawable(this, R.drawable.top_note_back_red));
         }
 
-        if(theme_app.equals("Fiolet")) {
+        if(theme_app.equals("Violet")) {
             header.setBackground(ContextCompat.getDrawable(this, R.drawable.header_back_filot));
             text_top_note.setTextColor(Color.parseColor("#FF9B3F"));
             topNote.setBackground(ContextCompat.getDrawable(this, R.drawable.top_note_back_fiolet));
@@ -190,8 +189,8 @@ public class MainActivity extends AppCompatActivity {
         if(color_fab_add.equals("Blue"))
             fab_add.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blue_color_fab)));
 
-        if(color_fab_add.equals("Fiolet"))
-            fab_add.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fiolet_color_fab)));
+        if(color_fab_add.equals("Violet"))
+            fab_add.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.violet_color_fab)));
 
         if(on_click_fab.equals("note"))
             fab_add.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AddNoteActivity.class)));
@@ -241,9 +240,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferencesSS = getSharedPreferences("top", Context.MODE_PRIVATE);
         String top_note = sharedPreferencesSS.getString("note", note_top_def);
         String name_top_note = sharedPreferencesSS.getString("name_note", name_note_def);
-
-        Log.i(TAG, name_note_def+ " - полученные OnCreate");
-        Log.i(TAG, note_top_def+ " - полученные OnCreate");
 
         text_topNote.setText(top_note);
         text_topNote_name.setText(name_top_note);

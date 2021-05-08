@@ -66,7 +66,7 @@ public class BottomSheetLinks extends BottomSheetDialogFragment {
         if(theme.equals("Blue"))
             check_blue.setVisibility(View.VISIBLE);
 
-        if(theme.equals("Ligth Blue"))
+        if(theme.equals("Light Blue"))
             check_blue_ligth.setVisibility(View.VISIBLE);
 
         if(theme.equals("violet"))
@@ -134,7 +134,7 @@ public class BottomSheetLinks extends BottomSheetDialogFragment {
 
         RelativeLayout ligth_blue = view.findViewById(R.id.ligth_blue_layout);
         ligth_blue.setOnClickListener(v -> {
-            mListener.onButtonClicked("Ligth Blue");
+            mListener.onButtonClicked("Light Blue");
             dismiss();
         });
 

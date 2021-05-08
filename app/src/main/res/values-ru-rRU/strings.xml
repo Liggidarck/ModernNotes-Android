@@ -70,4 +70,23 @@
 
     <string name="upgrade_to_pro">Перейти на Pro</string>
     <string name="completely_disable_ads_by_purchasing_the_pro_version">Полностью отключите рекламу, купив про версию!</string>
+
+    <string name="attention">Внимание</string>
+
+    <string name="confirm_delete_note">Вы действительно хотите удалить заметку?</string>
+    <string name="confirm_delete_link">Вы действительно хотите удалить ссылку?</string>
+    <string name="confirm_delete_password">Вы действительно хотите удалить пароль?</string>
+
+    <string name="confirm_before_deleting">Подтверждать перед удалением</string>
+    <string name="activate_button_save" >Активировать кнопку сохранить в заметках</string>
+
+    <string name="empty_note_cant_copied">Пустая заметка не может быть скопирована</string>
+    <string name="note_copied">Заметка скопирована</string>
+    <string name="empty_note_cant_shared">Пустая заметка не может отправлена</string>
+
+    <string name="empty_link_cant_copied">Пустая ссылка не может быть скопирована</string>
+    <string name="link_copied">Ссылка скопирована</string>
+    <string name="empty_link_cant_shared">Пустой ссылкой нельзя поделиться</string>
+
+    <string name="last_modified">Последнее изменение</string>
 </resources>

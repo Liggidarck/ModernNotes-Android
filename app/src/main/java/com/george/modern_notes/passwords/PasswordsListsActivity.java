@@ -6,7 +6,6 @@ import androidx.cursoradapter.widget.SimpleCursorAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -14,7 +13,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -33,33 +31,29 @@ public class PasswordsListsActivity extends AppCompatActivity {
     Cursor userCursor;
     SimpleCursorAdapter userAdapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String theme_app = sharedPreferences.getString("theme_app", "Fiolet");
+        String theme_app = sharedPreferences.getString(getString(R.string.root_theme_app), getString(R.string.root_theme_violet));
 
         assert theme_app != null;
-        if(theme_app.equals("Orange"))
+        if(theme_app.equals(getString(R.string.root_theme_orange)))
             setTheme(R.style.Orange);
 
-        if(theme_app.equals("Blue"))
+        if(theme_app.equals(getString(R.string.root_theme_blue)))
             setTheme(R.style.BlueTheme);
 
-        if(theme_app.equals("Dark"))
-            setTheme(R.style.DarckTheme);
-
-        if(theme_app.equals("AquaBlue"))
+        if(theme_app.equals(getString(R.string.root_theme_aqua_blue)))
             setTheme(R.style.AquaBlueTheme);
 
-        if(theme_app.equals("Green"))
+        if(theme_app.equals(getString(R.string.root_theme_green)))
             setTheme(R.style.GreenTheme);
 
-        if(theme_app.equals("Red"))
+        if(theme_app.equals(getString(R.string.root_theme_red)))
             setTheme(R.style.RedTheme);
 
-        if(theme_app.equals("Fiolet"))
-            setTheme(R.style.FioletTheme);
+        if(theme_app.equals(getString(R.string.root_theme_violet)))
+            setTheme(R.style.VioletTheme);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passwords_lists);
@@ -81,33 +75,6 @@ public class PasswordsListsActivity extends AppCompatActivity {
 
         FloatingActionButton add_password = findViewById(R.id.floatingActionButton_add_password);
         add_password.setOnClickListener(view -> startActivity(new Intent(PasswordsListsActivity.this, AddPasswordActivity.class)));
-
-        if(theme_app.equals("Orange"))
-            add_password.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange_color_fab))); //#f59619
-
-        if(theme_app.equals("Blue"))
-            add_password.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blue_color_fab)));
-
-        TextView empty_text_passwords = findViewById(R.id.empty_text_passwords);
-
-        if(theme_app.equals("Dark")) {
-            toolbar.setNavigationIcon(R.drawable.ic_white_baseline_arrow_back_24);
-            empty_text_passwords.setTextColor(Color.WHITE);
-            add_password.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.black_color_fab)));
-        }
-
-        if(theme_app.equals("AquaBlue"))
-            add_password.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blueaqua_color_fab)));
-
-        if(theme_app.equals("Green"))
-            add_password.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green_color_fab)));
-
-        if(theme_app.equals("Red"))
-            add_password.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.red_color_fab)));
-
-        if(theme_app.equals("Fiolet"))
-            add_password.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fiolet_color_fab)));
-
 
         pas_list = findViewById(R.id.list_passwords);
 
@@ -134,7 +101,8 @@ public class PasswordsListsActivity extends AppCompatActivity {
 
         String[] headers = new String[] {PasswordsDatabase.NAME_ACCOUNT, PasswordsDatabase.WEB};
 
-        userAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2, userCursor, headers, new int[] {android.R.id.text1, android.R.id.text2}, 0);
+        userAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2, userCursor, headers,
+                new int[] {android.R.id.text1, android.R.id.text2}, 0);
         pas_list.setAdapter(userAdapter);
     }
 

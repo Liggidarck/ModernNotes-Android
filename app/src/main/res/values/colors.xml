@@ -21,8 +21,8 @@
     <color name="colorRedPrimary">#c0392b</color>
     <color name="colorRedPrimaryDark">#b03528</color>
 
-    <color name="colorFioletPrimary">#D22E9D</color>
-    <color name="colorFioletPrimaryDark">#a6267d</color>
+    <color name="colorVioletPrimary">#D22E9D</color>
+    <color name="colorVioletPrimaryDark">#a6267d</color>
 
     <color name="colorWhite">#FFFFFF</color>
     
@@ -35,7 +35,7 @@
     <color name="orange_color_fab">#d35400</color>
     <color name="green_color_fab">#2ecc71</color>
     <color name="blue_color_fab">#6a89cc</color>
-    <color name="blueaqua_color_fab">#03d3fc</color>
-    <color name="fiolet_color_fab">#a6267d</color>
+    <color name="blue_aqua_color_fab">#03d3fc</color>
+    <color name="violet_color_fab">#a6267d</color>
 
 </resources>

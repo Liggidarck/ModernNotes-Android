@@ -71,4 +71,24 @@
     <string name="upgrade_to_pro">Upgrade auf Pro</string>
     <string name="completely_disable_ads_by_purchasing_the_pro_version">Deaktivieren Sie Anzeigen vollständig, indem Sie die Pro-Version kaufen!</string>
 
+    <string name="attention">Beachtung</string>
+
+    <string name="confirm_delete_note">Möchten Sie die Notiz wirklich löschen?</string>
+    <string name="confirm_delete_link">Möchten Sie den Link wirklich entfernen?</string>
+    <string name="confirm_delete_password">Möchten Sie Ihr Passwort wirklich entfernen?</string>
+
+    <string name="confirm_before_deleting">Bestätigen Sie vor dem Löschen</string>
+    <string name="activate_button_save" >Aktivieren Sie die Schaltfläche In Notizen speichern</string>
+
+
+    <string name="empty_note_cant_copied">Leere Notiz kann nicht kopiert werden</string>
+    <string name="note_copied">Hinweis kopiert</string>
+    <string name="empty_note_cant_shared">Leere Notiz kann nicht geteilt werden</string>
+
+    <string name="empty_link_cant_copied">Leerer Link kann nicht kopiert werden</string>
+    <string name="link_copied">Link kopiert</string>
+    <string name="empty_link_cant_shared">Leerer Link kann nicht geteilt werden</string>
+
+    <string name="last_modified">Zuletzt bearbeitet</string>
+
 </resources>

@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="kolichestvo_strok_top_note" >
+    <string-array name="num_lines_top_note" >
         <item>2 strings</item>
         <item>3 strings</item>
         <item>5 strings</item>
         <item>10 strings</item>
         <item>With no restrictions</item>
-    </string-array>
-
-    <string-array name="kolichestvo_strok_top_note_values">
-        <item>2</item>
-        <item>3</item>
-        <item>5</item>
-        <item>10</item>
-        <item>infinity</item>
     </string-array>
 
     <string-array name="color_fab_add">
@@ -25,24 +17,10 @@
         <item>Violet</item>
     </string-array>
 
-    <string-array name="color_fab_add_values">
-        <item>Red</item>
-        <item>Orange</item>
-        <item>Green</item>
-        <item>Blue</item>
-        <item>Fiolet</item>
-    </string-array>
-
     <string-array name="fab_on_click">
         <item>Add note</item>
         <item>Add link</item>
         <item>Add password</item>
-    </string-array>
-
-    <string-array name="fab_on_click_values">
-        <item>note</item>
-        <item>link</item>
-        <item>password</item>
     </string-array>
 
     <string-array name="theme_app">
@@ -52,15 +30,6 @@
         <item>Green</item>
         <item>Red</item>
         <item>Violet</item>
-    </string-array>
-
-    <string-array name="theme_app_val">
-        <item>Orange</item>
-        <item>Blue</item>
-        <item>AquaBlue</item>
-        <item>Green</item>
-        <item>Red</item>
-        <item>Fiolet</item>
     </string-array>
 
 </resources>

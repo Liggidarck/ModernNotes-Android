@@ -4,7 +4,7 @@
 
         <EditTextPreference
             android:defaultValue="empty_user_name"
-            android:key="full_name"
+            android:key="@string/root_full_name"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/you_name"
@@ -13,7 +13,7 @@
 
         <EditTextPreference
             android:defaultValue="Default value"
-            android:key="welcome_text_header"
+            android:key="@string/root_welcome_text_header"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/welcome_text"
@@ -23,15 +23,15 @@
 
         <ListPreference
             android:defaultValue="3"
-            android:entries="@array/kolichestvo_strok_top_note"
-            android:entryValues="@array/kolichestvo_strok_top_note_values"
-            android:key="number_lines_top_note"
+            android:entries="@array/num_lines_top_note"
+            android:entryValues="@array/num_lines_top_note_values"
+            android:key="@string/root_number_lines_top_note"
             android:title="@string/Number_of_lines"
             android:summary="@string/change_the_number_of_lines"/>
 
         <SwitchPreference
             android:defaultValue="true"
-            android:key="show_pro_ad"
+            android:key="@string/root_show_pro_ad"
             android:title="@string/show_ads_pro_version"
             android:summary="@string/disable_pro_version_ads" />
 
@@ -40,27 +40,26 @@
     <PreferenceCategory android:title="@string/customization_text" >
 
         <ListPreference
-            android:defaultValue="Fiolet"
+            android:defaultValue="Violet"
             android:entries="@array/theme_app"
             android:entryValues="@array/theme_app_val"
-            android:key="theme_app"
+            android:key="@string/root_theme_app"
             android:title="@string/theme_app"
             android:summary="@string/choose_a_theme_for_application" />
 
         <SwitchPreference
             android:defaultValue="true"
-            android:key="delet_bool"
-            android:title="Подтверждать перед удалением" />
+            android:key="@string/root_delete_bool"
+            android:title="@string/confirm_before_deleting" />
 
         <SwitchPreference
             android:defaultValue="false"
-            android:key="save_button_note"
-            android:title="Активировать кнопку сохранить в заметках"
-            android:summary="Активация кнопки сохранить в заметках" />
+            android:key="@string/root_save_button_note"
+            android:title="@string/activate_button_save" />
 
         <SwitchPreference
             android:defaultValue="false"
-            android:key="fab_enabled"
+            android:key="@string/root_fab_enabled"
             android:title="@string/activate_add_button"
             android:summary="@string/button_on_home_screen"/>
 
@@ -68,7 +67,7 @@
             android:defaultValue="Orange"
             android:entries="@array/color_fab_add"
             android:entryValues="@array/color_fab_add_values"
-            android:key="color_fab_add"
+            android:key="@string/root_color_fab_add"
             android:dependency="fab_enabled"
             android:title="@string/Add_button_color"
             android:summary="@string/change_color_button_add"/>
@@ -77,7 +76,7 @@
             android:defaultValue="note"
             android:entries="@array/fab_on_click"
             android:entryValues="@array/fab_on_click_values"
-            android:key="fab_on_click_val"
+            android:key="@string/root_fab_on_click_val"
             android:dependency="fab_enabled"
             android:title="@string/pressing_button"
             android:summary="@string/change_actions_you_click_button" />

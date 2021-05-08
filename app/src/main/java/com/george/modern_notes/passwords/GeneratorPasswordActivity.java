@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
@@ -20,7 +19,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
@@ -42,8 +40,8 @@ public class GeneratorPasswordActivity extends AppCompatActivity {
     public TextView PasswordText;
     public ImageButton refresh, copy;
     private TextInputEditText PasswordLength;
-    private TextInputLayout passwordLenghtLAyoutl;
-    private CheckBox symwals;
+    private TextInputLayout passwordLengthLayout;
+    private CheckBox symbols;
 
     int passwordLength = 16;
 
@@ -51,30 +49,26 @@ public class GeneratorPasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String theme_app = sharedPreferences.getString("theme_app", "Fiolet");
+        String theme_app = sharedPreferences.getString(getString(R.string.root_theme_app), getString(R.string.root_theme_violet));
 
         assert theme_app != null;
-        if(theme_app.equals("Orange"))
+        if(theme_app.equals(getString(R.string.root_theme_orange)))
             setTheme(R.style.Orange);
 
-        if(theme_app.equals("Blue"))
+        if(theme_app.equals(getString(R.string.root_theme_blue)))
             setTheme(R.style.BlueTheme);
 
-        if(theme_app.equals("Dark"))
-            setTheme(R.style.DarckTheme);
-
-        if(theme_app.equals("AquaBlue"))
+        if(theme_app.equals(getString(R.string.root_theme_aqua_blue)))
             setTheme(R.style.AquaBlueTheme);
 
-        if(theme_app.equals("Green"))
+        if(theme_app.equals(getString(R.string.root_theme_green)))
             setTheme(R.style.GreenTheme);
 
-        if(theme_app.equals("Red"))
+        if(theme_app.equals(getString(R.string.root_theme_red)))
             setTheme(R.style.RedTheme);
 
-        if(theme_app.equals("Fiolet"))
-            setTheme(R.style.FioletTheme);
-
+        if(theme_app.equals(getString(R.string.root_theme_violet)))
+            setTheme(R.style.VioletTheme);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generator_password);
@@ -90,8 +84,8 @@ public class GeneratorPasswordActivity extends AppCompatActivity {
         refresh = findViewById(R.id.generate_password);
         PasswordText = findViewById(R.id.password_text);
         PasswordLength = findViewById(R.id.lengthPassword);
-        symwals = findViewById(R.id.checkBoxSymvals);
-        passwordLenghtLAyoutl = findViewById(R.id.lengthPasswordLayout);
+        symbols = findViewById(R.id.checkBoxSymvals);
+        passwordLengthLayout = findViewById(R.id.lengthPasswordLayout);
         copy = findViewById(R.id.copyBtn);
 
         String name_user = sharedPreferences.getString("full_name", "empty_user_name");
@@ -110,55 +104,43 @@ public class GeneratorPasswordActivity extends AppCompatActivity {
         final Animation refresh_anim_set = AnimationUtils.loadAnimation(this, R.anim.refresh_anim);
         final Animation refresh_anim_err = AnimationUtils.loadAnimation(this, R.anim.ripple_anim);
 
-        Objects.requireNonNull(passwordLenghtLAyoutl.getEditText()).setText("16");
+        Objects.requireNonNull(passwordLengthLayout.getEditText()).setText("16");
 
-        if(theme_app.equals("Orange")){
+        if(theme_app.equals(getString(R.string.root_theme_orange))){
             refresh.setBackground(ContextCompat.getDrawable(this, R.drawable.for_buttons_orange));
             copy.setBackground(ContextCompat.getDrawable(this, R.drawable.for_buttons_orange));
         }
 
-        if(theme_app.equals("Blue")){
+        if(theme_app.equals(getString(R.string.root_theme_blue))){
             refresh.setBackground(ContextCompat.getDrawable(this, R.drawable.for_buttons_blue));
             copy.setBackground(ContextCompat.getDrawable(this, R.drawable.for_buttons_blue));
         }
 
-        if(theme_app.equals("Dark")){
-            Drawable white_line = getResources().getDrawable(R.drawable.line_white);
-
-            ImageView line = findViewById(R.id.password_line);
-            line.setImageDrawable(white_line);
-
-            toolbar.setNavigationIcon(R.drawable.ic_white_baseline_arrow_back_24);
-            PasswordText.setTextColor(Color.WHITE);
-            refresh.setBackground(ContextCompat.getDrawable(this, R.drawable.for_buttons_dark));
-            copy.setBackground(ContextCompat.getDrawable(this, R.drawable.for_buttons_dark));
-        }
-
-        if(theme_app.equals("AquaBlue")){
+        if(theme_app.equals(getString(R.string.root_theme_aqua_blue))){
             refresh.setBackground(ContextCompat.getDrawable(this, R.drawable.for_buttons_aqua_blue));
             copy.setBackground(ContextCompat.getDrawable(this, R.drawable.for_buttons_aqua_blue));
         }
 
-        if(theme_app.equals("Green")){
+        if(theme_app.equals(getString(R.string.root_theme_green))){
             refresh.setBackground(ContextCompat.getDrawable(this, R.drawable.for_buttons_green));
             copy.setBackground(ContextCompat.getDrawable(this, R.drawable.for_buttons_green));
         }
 
-        if(theme_app.equals("Red")) {
+        if(theme_app.equals(getString(R.string.root_theme_red))) {
             refresh.setBackground(ContextCompat.getDrawable(this, R.drawable.for_buttons_red));
             copy.setBackground(ContextCompat.getDrawable(this, R.drawable.for_buttons_red));
         }
 
-        if(theme_app.equals("Fiolet")){
+        if(theme_app.equals(getString(R.string.root_theme_violet))){
             refresh.setBackground(ContextCompat.getDrawable(this, R.drawable.for_buttons_fiolet));
             copy.setBackground(ContextCompat.getDrawable(this, R.drawable.for_buttons_fiolet));
         }
 
-        PasswordText.setText(getRandomPasswordSymwals((int) passwordLength));
-        passwordLenghtLAyoutl.getEditText().addTextChangedListener(new TextWatcher() {
+        PasswordText.setText(getRandomPasswordSymbols(passwordLength));
+        passwordLengthLayout.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                passwordLenghtLAyoutl.setError(null);
+                passwordLengthLayout.setError(null);
             }
 
             @Override
@@ -175,44 +157,44 @@ public class GeneratorPasswordActivity extends AppCompatActivity {
         //Для генератора паролей
         refresh.setOnClickListener(v -> {
             String checkPasswordLength = Objects.requireNonNull(PasswordLength.getText()).toString();
-            if(symwals.isChecked()) {
+            if(symbols.isChecked()) {
                 if(checkPasswordLength.isEmpty()) {
-                    passwordLenghtLAyoutl.setError(getString(R.string.error_empty_field));
+                    passwordLengthLayout.setError(getString(R.string.error_empty_field));
                     refresh.startAnimation(refresh_anim_err);
                 }
                 else if(Integer.parseInt(PasswordLength.getText().toString()) > 128 ) {
-                    passwordLenghtLAyoutl.setError(getString(R.string.error_max));
+                    passwordLengthLayout.setError(getString(R.string.error_max));
                     refresh.startAnimation(refresh_anim_err);
                 } else {
                     refresh.startAnimation(refresh_anim_set);
                     passwordLength = Integer.parseInt(PasswordLength.getText().toString());
-                    PasswordText.setText(getRandomPasswordSymwals(passwordLength));
-                    passwordLenghtLAyoutl.setError(null);
+                    PasswordText.setText(getRandomPasswordSymbols(passwordLength));
+                    passwordLengthLayout.setError(null);
                 }
             } else {
                 if(checkPasswordLength.isEmpty()) {
-                    passwordLenghtLAyoutl.setError(getString(R.string.error_empty_field));
+                    passwordLengthLayout.setError(getString(R.string.error_empty_field));
                     refresh.startAnimation(refresh_anim_err);
                 }
                 else if(Integer.parseInt(PasswordLength.getText().toString()) > 128) {
-                    passwordLenghtLAyoutl.setError(getString(R.string.error_max));
+                    passwordLengthLayout.setError(getString(R.string.error_max));
                     refresh.startAnimation(refresh_anim_err);
                 } else {
                     refresh.startAnimation(refresh_anim_set);
                     passwordLength = Integer.parseInt(PasswordLength.getText().toString());
                     PasswordText.setText(getRandomPassword(passwordLength));
-                    passwordLenghtLAyoutl.setError(null);
+                    passwordLengthLayout.setError(null);
                 }
             }
         });
 
-        copy.setOnClickListener(view -> OnCopyBtnClick(view));
+        copy.setOnClickListener(this::OnCopyBtnClick);
 
     }
 
 
     //Генератор паролей с символами
-    public static String getRandomPasswordSymwals(int passwordLength) {
+    public static String getRandomPasswordSymbols(int passwordLength) {
         final String charsPassword ="1234567890qwertyuiopasdfghjklzxcvbnm%*)?@#$~QWERTYUIOPASDFGHJKLZXCVBNM%*)?@#$~1234567890";
         StringBuilder result = new StringBuilder();
         while(passwordLength > 0) {
@@ -225,11 +207,11 @@ public class GeneratorPasswordActivity extends AppCompatActivity {
 
     //Генератор паролей без символов
     public static String getRandomPassword(int passwordLength) {
-        final String noSymvalsCharsPassword ="1234567980qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM";
+        final String noSymbolsCharsPassword ="1234567980qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM";
         StringBuilder result = new StringBuilder();
         while(passwordLength > 0) {
             Random rand = new Random();
-            result.append(noSymvalsCharsPassword.charAt(rand.nextInt(noSymvalsCharsPassword.length())));
+            result.append(noSymbolsCharsPassword.charAt(rand.nextInt(noSymbolsCharsPassword.length())));
             passwordLength--;
         }
         return result.toString();

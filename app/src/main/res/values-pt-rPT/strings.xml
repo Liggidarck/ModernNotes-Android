@@ -70,4 +70,25 @@
 
     <string name="upgrade_to_pro">Atualize para o Pro</string>
     <string name="completely_disable_ads_by_purchasing_the_pro_version">Desative completamente os anúncios comprando a versão profissional!</string>
+
+    <string name="attention">Atenção</string>
+
+    <string name="confirm_delete_note">Tem certeza de que deseja excluir a nota?</string>
+    <string name="confirm_delete_link">Tem certeza de que deseja remover o link?</string>
+    <string name="confirm_delete_password">Tem certeza de que deseja remover sua senha?</string>
+
+    <string name="confirm_before_deleting">Confirme antes de excluir</string>
+    <string name="activate_button_save" >Ative o botão salvar em notas</string>
+
+
+    <string name="empty_note_cant_copied">Nota vazia não pode ser copiada</string>
+    <string name="note_copied">Nota copiada</string>
+    <string name="empty_note_cant_shared">Nota vazia não pode ser compartilhada</string>
+
+    <string name="empty_link_cant_copied">Link vazio não pode ser copiado</string>
+    <string name="link_copied">Link copiado</string>
+    <string name="empty_link_cant_shared">Link vazio não pode ser compartilhado</string>
+
+    <string name="last_modified">Última modificação</string>
+
 </resources>

@@ -22,14 +22,14 @@ public class StarterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.FioletThemeStartPage);
+        setTheme(R.style.VioletThemeStartPage);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starter);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         final TextInputLayout username_layout = findViewById(R.id.username_layout_start_page);
 
-        ImageView signin = findViewById(R.id.sign_in_btn_1);
-        signin.setOnClickListener(view -> {
+        ImageView sign = findViewById(R.id.sign_in_btn_1);
+        sign.setOnClickListener(view -> {
             String userName = Objects.requireNonNull(username_layout.getEditText()).getText().toString();
             if (userName.isEmpty()) {
                 username_layout.setError(getString(R.string.error_empty_field));
@@ -37,7 +37,7 @@ public class StarterActivity extends AppCompatActivity {
 
                 final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("full_name", userName);
+                editor.putString(getString(R.string.root_full_name), userName);
                 editor.apply();
 
                 startActivity(new Intent(StarterActivity.this, MainActivity.class));

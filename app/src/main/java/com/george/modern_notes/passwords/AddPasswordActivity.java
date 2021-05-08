@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ContentValues;
@@ -12,30 +11,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.george.modern_notes.notebook.AddNoteActivity;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -49,12 +36,12 @@ import java.util.Objects;
 
 public class AddPasswordActivity extends AppCompatActivity {
 
-    TextInputEditText webAddress, PasswordText, nameText;
-    TextInputLayout webAddressLayout, passwordLayout, usernameLayout;
+    TextInputEditText web_address_edit_text, password_edit_text, name_edit_text;
+    TextInputLayout web_address_input_layout, password_text_layout, username_input_layout;
 
     FloatingActionButton saveButton;
 
-    MaterialToolbar toolbar, toolbarDark;
+    MaterialToolbar toolbar;
 
     View theme;
     String checkThemePassword = "Default";
@@ -67,60 +54,46 @@ public class AddPasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String theme_app = sharedPreferences.getString("theme_app", "Fiolet");
+        String theme_app = sharedPreferences.getString(getString(R.string.root_theme_app), getString(R.string.root_theme_violet));
 
         assert theme_app != null;
-        if(theme_app.equals("Orange"))
+        if(theme_app.equals(getString(R.string.root_theme_orange)))
             setTheme(R.style.Orange);
 
-        if(theme_app.equals("Blue"))
+        if(theme_app.equals(getString(R.string.root_theme_blue)))
             setTheme(R.style.BlueTheme);
 
-        if(theme_app.equals("Dark"))
-            setTheme(R.style.DarckTheme);
-
-        if(theme_app.equals("AquaBlue"))
+        if(theme_app.equals(getString(R.string.root_theme_aqua_blue)))
             setTheme(R.style.AquaBlueTheme);
 
-        if(theme_app.equals("Green"))
+        if(theme_app.equals(getString(R.string.root_theme_green)))
             setTheme(R.style.GreenTheme);
 
-        if(theme_app.equals("Red"))
+        if(theme_app.equals(getString(R.string.root_theme_red)))
             setTheme(R.style.RedTheme);
 
-        if(theme_app.equals("Fiolet"))
-            setTheme(R.style.FioletTheme);
+        if(theme_app.equals(getString(R.string.root_theme_violet)))
+            setTheme(R.style.VioletTheme);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_password);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         theme = findViewById(R.id.theme_pass);
-
-        webAddress = findViewById(R.id.web_address);
-        nameText = findViewById(R.id.username);
-        PasswordText =findViewById(R.id.password);
-
-        webAddressLayout = findViewById(R.id.web_address_layout);
-        passwordLayout = findViewById(R.id.password_layout);
-        usernameLayout = findViewById(R.id.username_layout);
-
+        web_address_edit_text = findViewById(R.id.web_address);
+        name_edit_text = findViewById(R.id.username);
+        password_edit_text =findViewById(R.id.password);
+        web_address_input_layout = findViewById(R.id.web_address_layout);
+        password_text_layout = findViewById(R.id.password_layout);
+        username_input_layout = findViewById(R.id.username_layout);
         saveButton = findViewById(R.id.add_password);
         toolbar = findViewById(R.id.toolbar_add_password);
-        toolbarDark = findViewById(R.id.toolbar_add_password_dark);
 
-        if(theme_app.equals("Dark")){
-            setSupportActionBar(toolbarDark);
-            toolbarDark.setNavigationIcon(R.drawable.ic_white_baseline_arrow_back_24);
-            toolbarDark.setVisibility(View.VISIBLE);
-            toolbarDark.setNavigationOnClickListener(view -> goHome_password());
-        } else {
-            setSupportActionBar(toolbar);
-            toolbar.setVisibility(View.VISIBLE);
-            toolbar.setNavigationOnClickListener(view -> goHome_password());
-        }
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(view -> goHome_password());
 
-        String name_user = sharedPreferences.getString("full_name", "empty_user_name");
+
+        String name_user = sharedPreferences.getString(getString(R.string.root_full_name), "empty_user_name");
         assert name_user != null;
         if(name_user.equals("empty_user_name"))
             startActivity(new Intent(AddPasswordActivity.this, StarterActivity.class));
@@ -138,9 +111,9 @@ public class AddPasswordActivity extends AppCompatActivity {
                     PasswordsDatabase.ID + "=?", new String[] {String.valueOf(PasswordId)} );
             userCursor.moveToFirst();
 
-            nameText.setText(userCursor.getString(1));
-            PasswordText.setText(userCursor.getString(2));
-            webAddress.setText(userCursor.getString(3));
+            name_edit_text.setText(userCursor.getString(1));
+            password_edit_text.setText(userCursor.getString(2));
+            web_address_edit_text.setText(userCursor.getString(3));
             checkThemePassword = userCursor.getString(4);
 
             userCursor.close();
@@ -148,9 +121,9 @@ public class AddPasswordActivity extends AppCompatActivity {
 
         saveButton.setOnClickListener(view -> save_password());
 
-        webAddressLayout.setEndIconOnClickListener(v -> {
+        web_address_input_layout.setEndIconOnClickListener(v -> {
             if(validateWeb()) {
-                String url = Objects.requireNonNull(webAddressLayout.getEditText()).getText().toString();
+                String url = Objects.requireNonNull(web_address_input_layout.getEditText()).getText().toString();
 
                 if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("ftp://"))
                     v.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
@@ -163,21 +136,25 @@ public class AddPasswordActivity extends AppCompatActivity {
 
         });
 
-        usernameLayout.setEndIconOnClickListener(v -> {
+        username_input_layout.setEndIconOnClickListener(v -> {
             if(validateUsername()) {
-                usernameLayout.setError(null);
+                username_input_layout.setError(null);
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("", Objects.requireNonNull(usernameLayout.getEditText()).getText().toString());
+                ClipData clip = ClipData.newPlainText("", Objects.requireNonNull(username_input_layout.getEditText()).getText().toString());
                 assert clipboard != null;
                 clipboard.setPrimaryClip(clip);
                 Snackbar.make(v, getString(R.string.username_copied), Snackbar.LENGTH_LONG).setAction("done", null).show();
             }
         });
 
-        Objects.requireNonNull(webAddressLayout.getEditText()).addTextChangedListener(new TextWatcher() {
+        clear_errors();
+    }
+
+    void clear_errors() {
+        Objects.requireNonNull(web_address_input_layout.getEditText()).addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                webAddressLayout.setError(null);
+                web_address_input_layout.setError(null);
             }
 
             @Override
@@ -191,10 +168,10 @@ public class AddPasswordActivity extends AppCompatActivity {
             }
         });
 
-        Objects.requireNonNull(passwordLayout.getEditText()).addTextChangedListener(new TextWatcher() {
+        Objects.requireNonNull(password_text_layout.getEditText()).addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                passwordLayout.setError(null);
+                password_text_layout.setError(null);
             }
 
             @Override
@@ -208,10 +185,10 @@ public class AddPasswordActivity extends AppCompatActivity {
             }
         });
 
-        Objects.requireNonNull(usernameLayout.getEditText()).addTextChangedListener(new TextWatcher() {
+        Objects.requireNonNull(username_input_layout.getEditText()).addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                usernameLayout.setError(null);
+                username_input_layout.setError(null);
             }
 
             @Override
@@ -224,35 +201,14 @@ public class AddPasswordActivity extends AppCompatActivity {
 
             }
         });
-
-        if(theme_app.equals("Orange"))
-            saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.orange_color_fab))); //#f59619
-
-        if(theme_app.equals("Blue"))
-            saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blue_color_fab)));
-
-        if(theme_app.equals("Dark"))
-            saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.black_color_fab)));
-
-        if(theme_app.equals("AquaBlue"))
-            saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.blueaqua_color_fab)));
-
-        if(theme_app.equals("Green"))
-            saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green_color_fab)));
-
-        if(theme_app.equals("Red"))
-            saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.red_color_fab)));
-
-        if(theme_app.equals("Fiolet"))
-            saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fiolet_color_fab)));
     }
 
     public void save_password() {
         if(validatePass() | validateWeb()) {
             ContentValues cv = new ContentValues();
-            cv.put(PasswordsDatabase.WEB, Objects.requireNonNull(nameText.getText()).toString());
-            cv.put(PasswordsDatabase.PASSWORD, Objects.requireNonNull(PasswordText.getText()).toString());
-            cv.put(PasswordsDatabase.NAME_ACCOUNT, Objects.requireNonNull(webAddress.getText()).toString());
+            cv.put(PasswordsDatabase.WEB, Objects.requireNonNull(name_edit_text.getText()).toString());
+            cv.put(PasswordsDatabase.PASSWORD, Objects.requireNonNull(password_edit_text.getText()).toString());
+            cv.put(PasswordsDatabase.NAME_ACCOUNT, Objects.requireNonNull(web_address_edit_text.getText()).toString());
             cv.put(PasswordsDatabase.THEME_MODE_PASSWORDS, checkThemePassword);
 
             if (PasswordId > 0)
@@ -278,7 +234,8 @@ public class AddPasswordActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_top_note_dark, menu);
+        inflater.inflate(R.menu.menu_delete, menu);
+
         return true;
     }
 
@@ -286,12 +243,12 @@ public class AddPasswordActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.nav_del) {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-            boolean confirmDelete = preferences.getBoolean("delet_bool", true);
+            boolean confirmDelete = preferences.getBoolean(getString(R.string.root_delete_bool), true);
 
             if(confirmDelete) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(AddPasswordActivity.this);
-                builder.setTitle("attention");
-                builder.setMessage("confirm_delete_note");
+                builder.setTitle(getText(R.string.attention));
+                builder.setMessage(getText(R.string.confirm_delete_password));
 
                 builder.setPositiveButton(getString(android.R.string.ok), (dialog, id) -> {
                     delete_password();
@@ -301,7 +258,6 @@ public class AddPasswordActivity extends AppCompatActivity {
                 builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> dialog.dismiss());
 
                 builder.show();
-
             } else
                 delete_password();
         }
@@ -310,41 +266,38 @@ public class AddPasswordActivity extends AppCompatActivity {
     }
 
     public boolean validateWeb() {
-        String check = Objects.requireNonNull(webAddressLayout.getEditText()).getText().toString().trim();
+        String check = Objects.requireNonNull(web_address_input_layout.getEditText()).getText().toString().trim();
 
         if(check.isEmpty()){
-            webAddressLayout.setError(getString(R.string.error_empty_field));
-
+            web_address_input_layout.setError(getString(R.string.error_empty_field));
             return false;
         } else {
-            webAddressLayout.setError(null);
+            web_address_input_layout.setError(null);
             return true;
         }
     }
 
     public boolean validatePass() {
-        String check = Objects.requireNonNull(passwordLayout.getEditText()).getText().toString().trim();
+        String check = Objects.requireNonNull(password_text_layout.getEditText()).getText().toString().trim();
 
         if(check.isEmpty()){
-            passwordLayout.setError(getString(R.string.error_empty_field));
-
+            password_text_layout.setError(getString(R.string.error_empty_field));
             return false;
         } else {
-            passwordLayout.setError(null);
+            password_text_layout.setError(null);
             return true;
         }
 
     }
 
     public boolean validateUsername() {
-        String check = Objects.requireNonNull(usernameLayout.getEditText()).getText().toString().trim();
+        String check = Objects.requireNonNull(username_input_layout.getEditText()).getText().toString().trim();
 
         if(check.isEmpty()){
-            usernameLayout.setError(getString(R.string.error_empty_field));
-
+            username_input_layout.setError(getString(R.string.error_empty_field));
             return false;
         } else {
-            usernameLayout.setError(null);
+            username_input_layout.setError(null);
             return true;
         }
 
