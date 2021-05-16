@@ -17,7 +17,7 @@
         style="@style/Widget.MaterialComponents.Toolbar.Surface" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/snak_layout_note"
+        android:id="@+id/snackbar_layout_note"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/card_more_bottom"
@@ -27,22 +27,22 @@
         android:id="@+id/theme_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/topAppBar_add_note"/>
+        android:layout_below="@id/topAppBar_add_note" />
 
     <EditText
-        android:id="@+id/name_note"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/topAppBar_add_note"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
-        android:background="@null"
-        android:hint="@string/title_text"
-        android:fontFamily="@font/roboto_medium"
-        android:inputType="textMultiLine"
-        android:padding="8dp"
-        android:selectAllOnFocus="true"
-        android:textSize="20sp" />
+            android:id="@+id/name_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/topAppBar_add_note"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:hint="@string/title_text"
+            android:fontFamily="@font/roboto_medium"
+            android:inputType="textMultiLine"
+            android:padding="8dp"
+            android:selectAllOnFocus="true"
+            android:textSize="20sp" android:importantForAutofill="no"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,29 +54,29 @@
         android:layout_above="@+id/card_more_bottom">
 
         <EditText
-            android:id="@+id/note_text"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="top|start"
-            android:hint="@string/text_note"
-            android:textSize="15sp"
-            app:borderWidth="0dp"
-            android:fontFamily="@font/roboto_medium"
-            android:background="@null"
-            android:padding="8dp"
-            android:inputType="textMultiLine" />
+                android:id="@+id/note_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top|start"
+                android:hint="@string/text_note"
+                android:textSize="15sp"
+                app:borderWidth="0dp"
+                android:fontFamily="@font/roboto_medium"
+                android:background="@null"
+                android:padding="8dp"
+                android:inputType="textMultiLine" android:importantForAutofill="no"/>
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_save_note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="30sp"
-        android:layout_marginBottom="65sp"
-        app:srcCompat="@drawable/ic_baseline_done_white_24"
-        app:tint="@color/colorWhite"/>
+            android:id="@+id/fab_save_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="30sp"
+            android:layout_marginBottom="65sp"
+            app:srcCompat="@drawable/ic_baseline_done_white_24"
+            app:tint="@color/colorWhite" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_more_bottom"

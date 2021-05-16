@@ -9,11 +9,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -27,18 +26,19 @@ import com.george.modern_notes.database.LinksDatabase;
 public class ListOfLinksActivity extends AppCompatActivity {
 
     FloatingActionButton fab_add_link;
+    MaterialToolbar toolbar;
+    ListView user_list;
+    View empty;
 
-    ListView userList;
-    LinksDatabase databaseHelper;
+    LinksDatabase database_helper;
     SQLiteDatabase db;
-    Cursor userCursor;
-    SimpleCursorAdapter userAdapter;
-
+    Cursor user_cursor;
+    SimpleCursorAdapter user_adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String theme_app = sharedPreferences.getString(getString(R.string.root_theme_app), getString(R.string.root_theme_violet));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String theme_app = preferences.getString(getString(R.string.root_theme_app), getString(R.string.root_theme_violet));
 
         assert theme_app != null;
         if(theme_app.equals(getString(R.string.root_theme_orange)))
@@ -63,55 +63,46 @@ public class ListOfLinksActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_of_links);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        toolbar = findViewById(R.id.toolbar_list_of_links);
+        fab_add_link = findViewById(R.id.add_link);
+        user_list = findViewById(R.id.list_of_links);
+        empty = findViewById(R.id.empty_link_layout);
+        AdView mAdView = findViewById(R.id.adViewLinks);
+
         MobileAds.initialize(this, initializationStatus -> {
         });
-
-        AdView mAdView = findViewById(R.id.adViewLinks);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        TextView empty_text_links = findViewById(R.id.empty_text_links);
-
-        MaterialToolbar toolbar = findViewById(R.id.toolbar_list_of_links);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(view -> startActivity(new Intent(ListOfLinksActivity.this, MainActivity.class)));
-
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
 
-
-        fab_add_link = findViewById(R.id.add_link);
         fab_add_link.setOnClickListener(view -> startActivity(new Intent(ListOfLinksActivity.this, AddLinkActivity.class)));
 
-
-        userList = findViewById(R.id.list_of_links);
-        userList.setOnItemClickListener((parent, view, position, id) -> {
+        user_list.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = new Intent(getApplicationContext(), AddLinkActivity.class);
             intent.putExtra("id", id);
             startActivity(intent);
         });
-
-        View empty = findViewById(R.id.empty_link_layout);
-        userList.setEmptyView(empty);
-
-        databaseHelper = new LinksDatabase(getApplicationContext());
-
-
+        user_list.setEmptyView(empty);
+        database_helper = new LinksDatabase(getApplicationContext());
     }
 
     @Override
     public void onResume(){
         super.onResume();
 
-        db = databaseHelper.getReadableDatabase();
-        userCursor = db.rawQuery("select * from "+
+        db = database_helper.getReadableDatabase();
+        user_cursor = db.rawQuery("select * from "+
                 LinksDatabase.TABLE, null);
 
         String[] headers = new String[] {LinksDatabase.COLUMN_NAME_LINK,
                 LinksDatabase.COLUMN_LNK};
 
-        userAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2, userCursor,
+        user_adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2, user_cursor,
                 headers, new int[] {android.R.id.text1, android.R.id.text2}, 0);
-        userList.setAdapter(userAdapter);
+        user_list.setAdapter(user_adapter);
     }
 
 
@@ -119,6 +110,6 @@ public class ListOfLinksActivity extends AppCompatActivity {
     public void onDestroy(){
         super.onDestroy();
         db.close();
-        userCursor.close();
+        user_cursor.close();
     }
 }

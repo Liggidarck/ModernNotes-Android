@@ -21,8 +21,8 @@ public class BottomSheetLinks extends BottomSheetDialogFragment {
     private BottomSheetLinks.BottomSheetListener mListener;
 
     private static final String TAG = "bottomSheetLinks";
-    CircleImageView check_defualt, check_red, check_orange, check_yellow, check_green,
-            check_green_secondary, check_blue_ligth, check_blue, check_violet, check_pink, check_gray;
+    CircleImageView check_default, check_red, check_orange, check_yellow, check_green,
+            check_green_secondary, check_blue_light, check_blue, check_violet, check_pink, check_gray;
 
     @Nullable
     @Override
@@ -33,20 +33,20 @@ public class BottomSheetLinks extends BottomSheetDialogFragment {
         String theme = this.getArguments().getString("theme");
         Log.i(TAG, "val - " + theme);
 
-        check_defualt = view.findViewById(R.id.check_defualt);
+        check_default = view.findViewById(R.id.check_default);
         check_red = view.findViewById(R.id.check_red);
         check_orange = view.findViewById(R.id.check_orange);
         check_yellow = view.findViewById(R.id.check_yellow);
         check_green = view.findViewById(R.id.check_green);
         check_green_secondary = view.findViewById(R.id.check_green_secondary);
-        check_blue_ligth = view.findViewById(R.id.check_blue_ligth);
+        check_blue_light = view.findViewById(R.id.check_blue_light);
         check_blue = view.findViewById(R.id.check_blue);
         check_violet = view.findViewById(R.id.check_violet);
         check_pink = view.findViewById(R.id.check_pink);
         check_gray = view.findViewById(R.id.check_gray);
 
         if(theme.equals("Default"))
-            check_defualt.setVisibility(View.VISIBLE);
+            check_default.setVisibility(View.VISIBLE);
 
         if(theme.equals("Red"))
             check_red.setVisibility(View.VISIBLE);
@@ -67,7 +67,7 @@ public class BottomSheetLinks extends BottomSheetDialogFragment {
             check_blue.setVisibility(View.VISIBLE);
 
         if(theme.equals("Light Blue"))
-            check_blue_ligth.setVisibility(View.VISIBLE);
+            check_blue_light.setVisibility(View.VISIBLE);
 
         if(theme.equals("violet"))
             check_violet.setVisibility(View.VISIBLE);
@@ -114,8 +114,8 @@ public class BottomSheetLinks extends BottomSheetDialogFragment {
             dismiss();
         });
 
-        RelativeLayout yeloow_theme = view.findViewById(R.id.yellow_layout);
-        yeloow_theme.setOnClickListener(v -> {
+        RelativeLayout yellow_theme = view.findViewById(R.id.yellow_layout);
+        yellow_theme.setOnClickListener(v -> {
             mListener.onButtonClicked("Yellow");
             dismiss();
         });
@@ -126,14 +126,14 @@ public class BottomSheetLinks extends BottomSheetDialogFragment {
             dismiss();
         });
 
-        RelativeLayout green_ligth_layout = view.findViewById(R.id.green_secondary_layout);
-        green_ligth_layout.setOnClickListener(v -> {
+        RelativeLayout green_light_layout = view.findViewById(R.id.green_secondary_layout);
+        green_light_layout.setOnClickListener(v -> {
             mListener.onButtonClicked("Light Green");
             dismiss();
         });
 
-        RelativeLayout ligth_blue = view.findViewById(R.id.ligth_blue_layout);
-        ligth_blue.setOnClickListener(v -> {
+        RelativeLayout light_blue = view.findViewById(R.id.light_blue_layout);
+        light_blue.setOnClickListener(v -> {
             mListener.onButtonClicked("Light Blue");
             dismiss();
         });
@@ -176,7 +176,7 @@ public class BottomSheetLinks extends BottomSheetDialogFragment {
         try {
             mListener = (BottomSheetLinks.BottomSheetListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
+            throw new ClassCastException(context
                     + " must implement BottomSheetListener");
         }
     }

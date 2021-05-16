@@ -39,16 +39,16 @@
     <string name="error_empty_top_note">Blank notes are not attached</string>
     <string name="error_empty_field">This field cannot be empty</string>
 
-    <string name="noname_link">No name link</string>
+    <string name="no_name_link">No name link</string>
 
     <string name="username_copied">Username copied!</string>
 
     <string name="pinned_done_text">Note pinned to home screen</string>
 
-    <string name="noname_note">A note without a name</string>
+    <string name="no_name_note">A note without a name</string>
     <string name="blank_note">Blank note</string>
 
-    <string name="empty_note_dont_save">Empty notes are not saved</string>
+    <string name="empty_note_do_not_save">Empty notes are not saved</string>
 
     <string name="generate_password_to_copy">Generate password to copy</string>
 
@@ -87,6 +87,11 @@
     <string name="upgrade_to_pro">Upgrade to Pro</string>
     <string name="completely_disable_ads_by_purchasing_the_pro_version">Completely disable ads by purchasing the pro version!</string>
 
+    <string name="actions_with_links">Acciones con enlaces</string>
+    <string name="actions_with_notes">Acciones con notas</string>
+    <string name="actions_with_passwords">Acciones con contraseñas</string>
+    <string name="copy_content">Copiar contenido</string>
+    <string name="share">Cuota</string>
 
     <string name="attention">Atención</string>
 

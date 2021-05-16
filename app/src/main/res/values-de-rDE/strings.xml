@@ -30,12 +30,12 @@
     <string name="error_empty_note">Fügen Sie zuerst eine Notiz hinzu</string>
     <string name="error_empty_top_note">Leere Notizen sind nicht beigefügt</string>
     <string name="error_empty_field">Dieses Feld kann nicht leer sein</string>
-    <string name="noname_link">Link ohne Namen</string>
+    <string name="no_name_link">Link ohne Namen</string>
     <string name="username_copied">Benutzername kopiert!</string>
     <string name="pinned_done_text">Eine Notiz wird auf dem Startbildschirm angeheftet </string>
-    <string name="noname_note">Eine Notiz ohne Namen</string>
+    <string name="no_name_note">Eine Notiz ohne Namen</string>
     <string name="blank_note">Leere Notiz</string>
-    <string name="empty_note_dont_save">Leere Notizen werden nicht gespeichert</string>
+    <string name="empty_note_do_not_save">Leere Notizen werden nicht gespeichert</string>
     <string name="generate_password_to_copy">Generieren Sie ein zu kopierendes Passwort</string>
     <string name="password_copied">Passwort kopiert</string>
     <string name="error_max">Falscher Wert. Maximal 128</string>
@@ -80,6 +80,11 @@
     <string name="confirm_before_deleting">Bestätigen Sie vor dem Löschen</string>
     <string name="activate_button_save" >Aktivieren Sie die Schaltfläche In Notizen speichern</string>
 
+    <string name="actions_with_links">Aktionen mit Links</string>
+    <string name="actions_with_notes">Aktionen mit Notizen</string>
+    <string name="actions_with_passwords">Aktionen mit Passwörtern</string>
+    <string name="copy_content">Inhalt kopieren</string>
+    <string name="share">Teilen</string>
 
     <string name="empty_note_cant_copied">Leere Notiz kann nicht kopiert werden</string>
     <string name="note_copied">Hinweis kopiert</string>

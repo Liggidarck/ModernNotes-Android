@@ -18,7 +18,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class BottomSheetNotes extends BottomSheetDialogFragment {
 
-    private BottomSheetListener mListener;
+    private BottomSheetListener bottomSheetListener;
 
     private static final String TAG = "bottomSheetNotes";
     CircleImageView check_default, check_red, check_orange, check_yellow, check_green, check_green_secondary, check_blue_light, check_blue, check_violet, check_pink, check_gray;
@@ -32,13 +32,13 @@ public class BottomSheetNotes extends BottomSheetDialogFragment {
         String theme = this.getArguments().getString("theme");
         Log.i(TAG, "val - " + theme);
 
-        check_default = view.findViewById(R.id.check_defualt);
+        check_default = view.findViewById(R.id.check_default);
         check_red = view.findViewById(R.id.check_red);
         check_orange = view.findViewById(R.id.check_orange);
         check_yellow = view.findViewById(R.id.check_yellow);
         check_green = view.findViewById(R.id.check_green);
         check_green_secondary = view.findViewById(R.id.check_green_secondary);
-        check_blue_light = view.findViewById(R.id.check_blue_ligth);
+        check_blue_light = view.findViewById(R.id.check_blue_light);
         check_blue = view.findViewById(R.id.check_blue);
         check_violet = view.findViewById(R.id.check_violet);
         check_pink = view.findViewById(R.id.check_pink);
@@ -77,87 +77,87 @@ public class BottomSheetNotes extends BottomSheetDialogFragment {
         if(theme.equals("Gray"))
             check_gray.setVisibility(View.VISIBLE);
 
-        RelativeLayout del = view.findViewById(R.id.delet_note_layout);
+        RelativeLayout del = view.findViewById(R.id.delete_note_layout);
         del.setOnClickListener(v -> {
-            mListener.onButtonClicked("Button delete clicked");
+            bottomSheetListener.onButtonClicked("Button delete clicked");
             dismiss();
         });
 
         RelativeLayout copy = view.findViewById(R.id.copy_content_bottom);
         copy.setOnClickListener(v -> {
-            mListener.onButtonClicked("Button copy clicked");
+            bottomSheetListener.onButtonClicked("Button copy clicked");
             dismiss();
         });
 
         RelativeLayout share = view.findViewById(R.id.share_content_bottom);
         share.setOnClickListener(v -> {
-            mListener.onButtonClicked("Button share clicked");
+            bottomSheetListener.onButtonClicked("Button share clicked");
             dismiss();
         });
 
         RelativeLayout default_theme = view.findViewById(R.id.white_layout);
         default_theme.setOnClickListener(v -> {
-            mListener.onButtonClicked("Default");
+            bottomSheetListener.onButtonClicked("Default");
             dismiss();
         });
 
         RelativeLayout red_theme = view.findViewById(R.id.red_layout);
         red_theme.setOnClickListener(v -> {
-            mListener.onButtonClicked("Red");
+            bottomSheetListener.onButtonClicked("Red");
             dismiss();
         });
 
         RelativeLayout orange_theme = view.findViewById(R.id.orange_layout);
         orange_theme.setOnClickListener(v -> {
-            mListener.onButtonClicked("Orange");
+            bottomSheetListener.onButtonClicked("Orange");
             dismiss();
         });
 
         RelativeLayout yellow_theme = view.findViewById(R.id.yellow_layout);
         yellow_theme.setOnClickListener(v -> {
-            mListener.onButtonClicked("Yellow");
+            bottomSheetListener.onButtonClicked("Yellow");
             dismiss();
         });
 
         RelativeLayout green_theme = view.findViewById(R.id.green_layout);
         green_theme.setOnClickListener(v -> {
-            mListener.onButtonClicked("Green");
+            bottomSheetListener.onButtonClicked("Green");
             dismiss();
         });
 
         RelativeLayout green_light_layout = view.findViewById(R.id.green_secondary_layout);
         green_light_layout.setOnClickListener(v -> {
-            mListener.onButtonClicked("Light Green");
+            bottomSheetListener.onButtonClicked("Light Green");
             dismiss();
         });
 
-        RelativeLayout light_blue = view.findViewById(R.id.ligth_blue_layout);
+        RelativeLayout light_blue = view.findViewById(R.id.light_blue_layout);
         light_blue.setOnClickListener(v -> {
-            mListener.onButtonClicked("Light Blue");
+            bottomSheetListener.onButtonClicked("Light Blue");
             dismiss();
         });
 
         RelativeLayout blue_layout = view.findViewById(R.id.blue_layout);
         blue_layout.setOnClickListener(v -> {
-            mListener.onButtonClicked("Blue");
+            bottomSheetListener.onButtonClicked("Blue");
             dismiss();
         });
 
         RelativeLayout violet_layout = view.findViewById(R.id.violet_layout);
         violet_layout.setOnClickListener(v -> {
-            mListener.onButtonClicked("violet");
+            bottomSheetListener.onButtonClicked("violet");
             dismiss();
         });
 
         RelativeLayout pink_layout = view.findViewById(R.id.pink_layout);
         pink_layout.setOnClickListener(v -> {
-            mListener.onButtonClicked("Pink");
+            bottomSheetListener.onButtonClicked("Pink");
             dismiss();
         });
 
         RelativeLayout gray_layout = view.findViewById(R.id.gray_layout);
         gray_layout.setOnClickListener(v -> {
-            mListener.onButtonClicked("Gray");
+            bottomSheetListener.onButtonClicked("Gray");
             dismiss();
         });
 
@@ -172,7 +172,7 @@ public class BottomSheetNotes extends BottomSheetDialogFragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
-            mListener = (BottomSheetListener) context;
+            bottomSheetListener = (BottomSheetListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context
                     + " must implement BottomSheetListener");

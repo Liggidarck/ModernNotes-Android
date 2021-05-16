@@ -8,7 +8,7 @@
     android:background="@mipmap/start_page_final">
 
     <RelativeLayout
-        android:id="@+id/lauout_fist"
+        android:id="@+id/layout_fist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="270dp" >
@@ -23,7 +23,7 @@
             android:layout_marginStart="18dp" />
 
         <TextView
-            android:id="@+id/text_registr"
+            android:id="@+id/text_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/register_your_account_text"
@@ -37,7 +37,7 @@
             android:id="@+id/username_layout_start_page"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/text_registr"
+            android:layout_below="@+id/text_register"
             android:layout_marginTop="15sp"
             android:layout_marginRight="20sp"
             android:layout_marginLeft="20sp"
@@ -58,7 +58,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lauout_fist"
+        android:layout_below="@+id/layout_fist"
         android:layout_marginTop="50dp">
 
         <ImageView

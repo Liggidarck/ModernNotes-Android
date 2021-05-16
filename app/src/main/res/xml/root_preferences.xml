@@ -29,12 +29,6 @@
             android:title="@string/Number_of_lines"
             android:summary="@string/change_the_number_of_lines"/>
 
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="@string/root_show_pro_ad"
-            android:title="@string/show_ads_pro_version"
-            android:summary="@string/disable_pro_version_ads" />
-
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/customization_text" >

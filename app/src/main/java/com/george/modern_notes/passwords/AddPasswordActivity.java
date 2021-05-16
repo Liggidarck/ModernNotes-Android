@@ -15,7 +15,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -38,23 +38,21 @@ public class AddPasswordActivity extends AppCompatActivity {
 
     TextInputEditText web_address_edit_text, password_edit_text, name_edit_text;
     TextInputLayout web_address_input_layout, password_text_layout, username_input_layout;
-
-    FloatingActionButton saveButton;
-
+    FloatingActionButton save_fab;
     MaterialToolbar toolbar;
-
     View theme;
-    String checkThemePassword = "Default";
 
-    PasswordsDatabase sqlHelper;
+    String check_theme_password = "Default";
+
+    PasswordsDatabase sql_helper;
     SQLiteDatabase db;
-    Cursor userCursor;
-    long PasswordId = 0;
+    Cursor user_cursor;
+    long password_id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String theme_app = sharedPreferences.getString(getString(R.string.root_theme_app), getString(R.string.root_theme_violet));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String theme_app = preferences.getString(getString(R.string.root_theme_app), getString(R.string.root_theme_violet));
 
         assert theme_app != null;
         if(theme_app.equals(getString(R.string.root_theme_orange)))
@@ -86,41 +84,13 @@ public class AddPasswordActivity extends AppCompatActivity {
         web_address_input_layout = findViewById(R.id.web_address_layout);
         password_text_layout = findViewById(R.id.password_layout);
         username_input_layout = findViewById(R.id.username_layout);
-        saveButton = findViewById(R.id.add_password);
+        save_fab = findViewById(R.id.add_password);
         toolbar = findViewById(R.id.toolbar_add_password);
 
         setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(view -> goHome_password());
+        toolbar.setNavigationOnClickListener(view -> goHomePassword());
 
-
-        String name_user = sharedPreferences.getString(getString(R.string.root_full_name), "empty_user_name");
-        assert name_user != null;
-        if(name_user.equals("empty_user_name"))
-            startActivity(new Intent(AddPasswordActivity.this, StarterActivity.class));
-
-        Bundle extras = getIntent().getExtras();
-        if (extras != null)
-            PasswordId = extras.getLong("id");
-
-        sqlHelper = new PasswordsDatabase(this);
-        db = sqlHelper.getWritableDatabase();
-
-        if (PasswordId > 0) {
-            // получаем элемент по id из бд
-            userCursor = db.rawQuery("select * from " + PasswordsDatabase.TABLE + " where " +
-                    PasswordsDatabase.ID + "=?", new String[] {String.valueOf(PasswordId)} );
-            userCursor.moveToFirst();
-
-            name_edit_text.setText(userCursor.getString(1));
-            password_edit_text.setText(userCursor.getString(2));
-            web_address_edit_text.setText(userCursor.getString(3));
-            checkThemePassword = userCursor.getString(4);
-
-            userCursor.close();
-        }
-
-        saveButton.setOnClickListener(view -> save_password());
-
+        save_fab.setOnClickListener(view -> savePassword());
         web_address_input_layout.setEndIconOnClickListener(v -> {
             if(validateWeb()) {
                 String url = Objects.requireNonNull(web_address_input_layout.getEditText()).getText().toString();
@@ -135,7 +105,6 @@ public class AddPasswordActivity extends AppCompatActivity {
             }
 
         });
-
         username_input_layout.setEndIconOnClickListener(v -> {
             if(validateUsername()) {
                 username_input_layout.setError(null);
@@ -147,10 +116,35 @@ public class AddPasswordActivity extends AppCompatActivity {
             }
         });
 
-        clear_errors();
+        String name_user = preferences.getString(getString(R.string.root_full_name), "empty_user_name");
+        assert name_user != null;
+        if(name_user.equals("empty_user_name"))
+            startActivity(new Intent(AddPasswordActivity.this, StarterActivity.class));
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null)
+            password_id = extras.getLong("id");
+
+        sql_helper = new PasswordsDatabase(this);
+        db = sql_helper.getWritableDatabase();
+
+        if (password_id > 0) {
+            // получаем элемент по id из бд
+            user_cursor = db.rawQuery("select * from " + PasswordsDatabase.TABLE + " where " +
+                    PasswordsDatabase.ID + "=?", new String[] {String.valueOf(password_id)} );
+            user_cursor.moveToFirst();
+
+            name_edit_text.setText(user_cursor.getString(1));
+            password_edit_text.setText(user_cursor.getString(2));
+            web_address_edit_text.setText(user_cursor.getString(3));
+            check_theme_password = user_cursor.getString(4);
+
+            user_cursor.close();
+        }
+        clearErrors();
     }
 
-    void clear_errors() {
+    void clearErrors() {
         Objects.requireNonNull(web_address_input_layout.getEditText()).addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -203,66 +197,32 @@ public class AddPasswordActivity extends AppCompatActivity {
         });
     }
 
-    public void save_password() {
-        if(validatePass() | validateWeb()) {
+    public void savePassword() {
+        if(validatePassword() | validateWeb()) {
             ContentValues cv = new ContentValues();
             cv.put(PasswordsDatabase.WEB, Objects.requireNonNull(name_edit_text.getText()).toString());
             cv.put(PasswordsDatabase.PASSWORD, Objects.requireNonNull(password_edit_text.getText()).toString());
             cv.put(PasswordsDatabase.NAME_ACCOUNT, Objects.requireNonNull(web_address_edit_text.getText()).toString());
-            cv.put(PasswordsDatabase.THEME_MODE_PASSWORDS, checkThemePassword);
+            cv.put(PasswordsDatabase.THEME_MODE_PASSWORDS, check_theme_password);
 
-            if (PasswordId > 0)
-                db.update(PasswordsDatabase.TABLE, cv, PasswordsDatabase.ID + "=" + PasswordId, null);
+            if (password_id > 0)
+                db.update(PasswordsDatabase.TABLE, cv, PasswordsDatabase.ID + "=" + password_id, null);
             else
                 db.insert(PasswordsDatabase.TABLE, null, cv);
-            goHome_password();
+            goHomePassword();
         }
     }
 
-    public void delete_password(){
-        db.delete(PasswordsDatabase.TABLE, "_id = ?", new String[]{String.valueOf(PasswordId)});
-        goHome_password();
+    public void deletePassword(){
+        db.delete(PasswordsDatabase.TABLE, "_id = ?", new String[]{String.valueOf(password_id)});
+        goHomePassword();
     }
 
-    private void goHome_password(){
+    private void goHomePassword(){
         db.close();
         Intent intent = new Intent(this, PasswordsListsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_delete, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.nav_del) {
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-            boolean confirmDelete = preferences.getBoolean(getString(R.string.root_delete_bool), true);
-
-            if(confirmDelete) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AddPasswordActivity.this);
-                builder.setTitle(getText(R.string.attention));
-                builder.setMessage(getText(R.string.confirm_delete_password));
-
-                builder.setPositiveButton(getString(android.R.string.ok), (dialog, id) -> {
-                    delete_password();
-                    dialog.dismiss();
-                });
-
-                builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> dialog.dismiss());
-
-                builder.show();
-            } else
-                delete_password();
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public boolean validateWeb() {
@@ -277,7 +237,7 @@ public class AddPasswordActivity extends AppCompatActivity {
         }
     }
 
-    public boolean validatePass() {
+    public boolean validatePassword() {
         String check = Objects.requireNonNull(password_text_layout.getEditText()).getText().toString().trim();
 
         if(check.isEmpty()){
@@ -301,5 +261,39 @@ public class AddPasswordActivity extends AppCompatActivity {
             return true;
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_delete, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.nav_del) {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            boolean confirmDelete = preferences.getBoolean(getString(R.string.root_delete_bool), true);
+
+            if(confirmDelete) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddPasswordActivity.this);
+                builder.setTitle(getText(R.string.attention));
+                builder.setMessage(getText(R.string.confirm_delete_password));
+
+                builder.setPositiveButton(getString(android.R.string.ok), (dialog, id) -> {
+                    deletePassword();
+                    dialog.dismiss();
+                });
+
+                builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> dialog.dismiss());
+
+                builder.show();
+            } else
+                deletePassword();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

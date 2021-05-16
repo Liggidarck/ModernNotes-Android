@@ -30,12 +30,12 @@
     <string name="error_empty_note">Joindre d\'abord une note</string>
     <string name="error_empty_top_note">Les notes vierges ne sont pas jointes</string>
     <string name="error_empty_field">Ce champ ne peut pas être vide</string>
-    <string name="noname_link">Lien sans nom</string>
+    <string name="no_name_link">Lien sans nom</string>
     <string name="username_copied">Nom d\'utilisateur copié!</string>
     <string name="pinned_done_text">Une note est épinglée sur l\'écran d\'accueil</string>
-    <string name="noname_note">Une note sans nom</string>
+    <string name="no_name_note">Une note sans nom</string>
     <string name="blank_note">Note vierge</string>
-    <string name="empty_note_dont_save">Les notes vides ne sont pas enregistrées</string>
+    <string name="empty_note_do_not_save">Les notes vides ne sont pas enregistrées</string>
     <string name="generate_password_to_copy">Générer un mot de passe à copier</string>
     <string name="password_copied">Mot de passe copié</string>
     <string name="error_max">Valeur incorrecte.  Maximum 128</string>
@@ -70,6 +70,12 @@
 
     <string name="upgrade_to_pro">Passer à Pro</string>
     <string name="completely_disable_ads_by_purchasing_the_pro_version">Désactivez complètement les publicités en achetant la version pro!</string>
+
+    <string name="actions_with_links">Acciones con enlaces</string>
+    <string name="actions_with_notes">Acciones con notas</string>
+    <string name="actions_with_passwords">Acciones con contraseñas</string>
+    <string name="copy_content">Copiar contenido</string>
+    <string name="share">Cuota</string>
 
     <string name="attention">Attention</string>
 

@@ -30,12 +30,12 @@
     <string name="error_empty_note">Anexe uma nota primeiro</string>
     <string name="error_empty_top_note">Notas em branco não são anexadas</string>
     <string name="error_empty_field">Este campo não pode estar vazio</string>
-    <string name="noname_link">Link sem nome</string>
+    <string name="no_name_link">Link sem nome</string>
     <string name="username_copied">Nome de usuário copiado!</string>
     <string name="pinned_done_text">Uma nota é fixada na tela inicial</string>
-    <string name="noname_note">Uma nota sem nome</string>
+    <string name="no_name_note">Uma nota sem nome</string>
     <string name="blank_note">Nota em branco</string>
-    <string name="empty_note_dont_save">Notas vazias não são salvas</string>
+    <string name="empty_note_do_not_save">Notas vazias não são salvas</string>
     <string name="generate_password_to_copy">Gere uma senha para copiar</string>
     <string name="password_copied">Senha copiada</string>
     <string name="error_max">Valor incorreto. Máximo 128</string>
@@ -72,6 +72,12 @@
     <string name="completely_disable_ads_by_purchasing_the_pro_version">Desative completamente os anúncios comprando a versão profissional!</string>
 
     <string name="attention">Atenção</string>
+
+    <string name="actions_with_links">Ações com links</string>
+    <string name="actions_with_notes">Ações com notas</string>
+    <string name="actions_with_passwords">Ações com senhas</string>
+    <string name="copy_content">Copiar conteúdo</string>
+    <string name="share">Compartilhar</string>
 
     <string name="confirm_delete_note">Tem certeza de que deseja excluir a nota?</string>
     <string name="confirm_delete_link">Tem certeza de que deseja remover o link?</string>

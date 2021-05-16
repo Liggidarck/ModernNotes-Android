@@ -30,12 +30,12 @@
     <string name="error_empty_note">सबसे पहले एक नोट जोड़ें</string>
     <string name="error_empty_top_note">खाली नोट शामिल नहीं हैं</string>
     <string name="error_empty_field">यह स्थान खाली नहीं रह सकता</string>
-    <string name="noname_link">बिना नाम का लिंक</string>
+    <string name="no_name_link">बिना नाम का लिंक</string>
     <string name="username_copied">उपयोगकर्ता नाम की प्रतिलिपि बनाई गई!</string>
     <string name="pinned_done_text">एक नोट को होम स्क्रीन पर पिन किया जाता है </string>
-    <string name="noname_note">बिना नाम वाला एक नोट</string>
+    <string name="no_name_note">बिना नाम वाला एक नोट</string>
     <string name="blank_note">खाली नोट</string>
-    <string name="empty_note_dont_save">खाली नोट सहेजे नहीं जाते</string>
+    <string name="empty_note_do_not_save">खाली नोट सहेजे नहीं जाते</string>
     <string name="generate_password_to_copy">कॉपी किया जाने वाला पासवर्ड जनरेट करें</string>
     <string name="password_copied">पासवर्ड कॉपी किया गया</string>
     <string name="error_max">गलत मूल्य। 128</string>
@@ -72,6 +72,12 @@
     <string name="completely_disable_ads_by_purchasing_the_pro_version">प्रो संस्करण खरीदकर विज्ञापनों को पूरी तरह से निष्क्रिय कर दें!</string>
 
     <string name="attention">ध्यान</string>
+
+    <string name="actions_with_links">लिंक के साथ क्रिया</string>
+    <string name="actions_with_notes">नोट्स के साथ क्रिया</string>
+    <string name="actions_with_passwords">पासवर्ड के साथ कार्य</string>
+    <string name="copy_content">सामग्री की प्रतिलिपि बनाएँ</string>
+    <string name="share">शेयर</string>
 
     <string name="confirm_delete_note">क्या आप वाकई नोट हटाना चाहते हैं?</string>
     <string name="confirm_delete_link">क्या आप वाकई लिंक हटाना चाहते हैं?</string>

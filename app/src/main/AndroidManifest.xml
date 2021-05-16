@@ -3,12 +3,12 @@
     package="com.george.modern_notes">
 
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/VioletTheme">
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/VioletTheme" android:fullBackupContent="@xml/backup_descriptor">
 
         <activity
             android:name=".common.SettingsActivity" />
@@ -25,19 +25,25 @@
         <activity android:name=".notebook.NotebookActivity" />
         <activity android:name=".links.ListOfLinksActivity" />
         <activity android:name=".passwords.GeneratorPasswordActivity" />
+
         <activity
             android:name=".passwords.AddPasswordActivity"
             android:windowSoftInputMode="adjustResize" />
+
         <activity
             android:name=".notebook.AddNoteActivity"
             android:windowSoftInputMode="adjustResize" />
+
         <activity android:name=".links.AddLinkActivity" />
+
         <activity android:name=".common.MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 

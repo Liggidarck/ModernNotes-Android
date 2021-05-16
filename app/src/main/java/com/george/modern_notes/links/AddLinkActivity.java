@@ -17,7 +17,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -41,34 +41,34 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
-public class    AddLinkActivity extends AppCompatActivity implements BottomSheetLinks.BottomSheetListener {
+public class AddLinkActivity extends AppCompatActivity implements BottomSheetLinks.BottomSheetListener {
 
-    TextInputEditText nameLinkEditText, linkEditText;
+    TextInputEditText name_link_edit_text, link_edit_text;
     TextInputLayout name_link_input_layout, link_input_layout;
     EditText link_note_input_layout;
 
     MaterialToolbar toolbar;
-    FloatingActionButton saveLink;
+    FloatingActionButton save_link;
     View theme;
-    String checkThemeLink = "Default";
+    String check_theme_link = "Default";
 
     private static final String TAG = "addLink";
 
-    LinksDatabase sqlHelper;
+    LinksDatabase sql_helper;
     SQLiteDatabase db;
-    Cursor userCursor;
-    long linkId =0;
+    Cursor user_cursor;
+    long link_id =0;
 
-    TextView dateView;
-    String dateFull;
+    TextView date_text_view;
+    String DATE;
 
     CardView card_more_bottom;
     ImageView more_links;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String theme_app = sharedPreferences.getString(getString(R.string.root_theme_app), getString(R.string.root_theme_violet));
+        SharedPreferences shared_preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String theme_app = shared_preferences.getString(getString(R.string.root_theme_app), getString(R.string.root_theme_violet));
 
         assert theme_app != null;
         if(theme_app.equals(getString(R.string.root_theme_orange)))
@@ -93,40 +93,32 @@ public class    AddLinkActivity extends AppCompatActivity implements BottomSheet
         setContentView(R.layout.activity_add_link);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        saveLink = findViewById(R.id.save_link_fab);
-        dateView = findViewById(R.id.date_textView_link);
+        save_link = findViewById(R.id.save_link_fab);
+        date_text_view = findViewById(R.id.date_textView_link);
         card_more_bottom = findViewById(R.id.card_more_bottom_link);
         more_links = findViewById(R.id.more_links);
         toolbar = findViewById(R.id.topAppBar_add_link);
-        nameLinkEditText = findViewById(R.id.name_link_edit_text);
-        linkEditText = findViewById(R.id.link_edit_text);
+        name_link_edit_text = findViewById(R.id.name_link_edit_text);
+        link_edit_text = findViewById(R.id.link_edit_text);
         link_note_input_layout = findViewById(R.id.note_link);
         name_link_input_layout = findViewById(R.id.link_name_text_layout);
         link_input_layout = findViewById(R.id.link_edit_text_layout);
         theme = findViewById(R.id.theme_link);
 
         setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(view -> goHome_link());
-
-        Date currentDate = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-        String dateText = dateFormat.format(currentDate);
-        DateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        String timeText = timeFormat.format(currentDate);
-        dateFull = getString(R.string.last_modified) + ":" + " " + dateText + " " + timeText;
-        dateView.setText(dateFull);
+        toolbar.setNavigationOnClickListener(view -> goHomeLink());
 
         more_links.setOnClickListener(v -> {
-            BottomSheetLinks bottomSheetNotes = new BottomSheetLinks();
+            BottomSheetLinks bottom_sheet_notes = new BottomSheetLinks();
 
             Bundle bundle = new Bundle();
-            bundle.putString("theme", checkThemeLink );
-            bottomSheetNotes.setArguments(bundle);
+            bundle.putString("theme", check_theme_link);
+            bottom_sheet_notes.setArguments(bundle);
 
-            bottomSheetNotes.show(getSupportFragmentManager(), "BottomSheetNotes");
+            bottom_sheet_notes.show(getSupportFragmentManager(), "BottomSheetNotes");
         });
 
-        saveLink.setOnClickListener(view -> save_link());
+        save_link.setOnClickListener(view -> saveLink());
 
         link_input_layout.setEndIconOnClickListener(view -> {
             if(validateLink()) {
@@ -143,52 +135,42 @@ public class    AddLinkActivity extends AppCompatActivity implements BottomSheet
 
         });
 
-        String name_user = sharedPreferences.getString(getString(R.string.root_full_name), "empty_user_name");
-
+        String name_user = shared_preferences.getString(getString(R.string.root_full_name), "empty_user_name");
         assert name_user != null;
         if(name_user.equals("empty_user_name"))
             startActivity(new Intent(AddLinkActivity.this, StarterActivity.class));
 
-        Objects.requireNonNull(link_input_layout.getEditText()).addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                link_input_layout.setError(null);
-            }
+        Date current_date = new Date();
+        DateFormat date_format = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        String date_text = date_format.format(current_date);
+        DateFormat time_format = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        String time_text = time_format.format(current_date);
+        DATE = getString(R.string.last_modified) + ":" + " " + date_text + " " + time_text;
+        date_text_view.setText(DATE);
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        sqlHelper = new LinksDatabase(this);
-        db = sqlHelper.getWritableDatabase();
+        sql_helper = new LinksDatabase(this);
+        db = sql_helper.getWritableDatabase();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            linkId = extras.getLong("id");
+            link_id = extras.getLong("id");
         }
 
-        if (linkId > 0) {
-            userCursor = db.rawQuery("select * from " + LinksDatabase.TABLE + " where " +
-                    LinksDatabase.COLUMN_ID + "=?", new String[]{String.valueOf(linkId)});
-            userCursor.moveToFirst();
+        if (link_id > 0) {
+            user_cursor = db.rawQuery("select * from " + LinksDatabase.TABLE + " where " +
+                    LinksDatabase.COLUMN_ID + "=?", new String[]{String.valueOf(link_id)});
+            user_cursor.moveToFirst();
 
-            nameLinkEditText.setText(userCursor.getString(1));
-            linkEditText.setText(userCursor.getString(2));
-            link_note_input_layout.setText(userCursor.getString(3));
-            String date = userCursor.getString(4);
-            checkThemeLink = userCursor.getString(5);
+            name_link_edit_text.setText(user_cursor.getString(1));
+            link_edit_text.setText(user_cursor.getString(2));
+            link_note_input_layout.setText(user_cursor.getString(3));
+            String date = user_cursor.getString(4);
+            check_theme_link = user_cursor.getString(5);
 
-            Log.i(TAG, "checkThemeLink - " + checkThemeLink);
+            Log.i(TAG, "checkThemeLink - " + check_theme_link);
             Log.i(TAG, "date" + date);
 
-            switch (checkThemeLink){
+            switch (check_theme_link){
 
                 case ("Default"):
                     theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
@@ -256,9 +238,26 @@ public class    AddLinkActivity extends AppCompatActivity implements BottomSheet
                     break;
             }
 
-            userCursor.close();
+            user_cursor.close();
         }
 
+
+        Objects.requireNonNull(link_input_layout.getEditText()).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                link_input_layout.setError(null);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     public boolean validateLink() {
@@ -279,13 +278,13 @@ public class    AddLinkActivity extends AppCompatActivity implements BottomSheet
         return !check.isEmpty();
     }
 
-    public void save_link() {
+    public void saveLink() {
         Date currentDate = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
         String dateText = dateFormat.format(currentDate);
         DateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
         String timeText = timeFormat.format(currentDate);
-        dateFull = getString(R.string.last_modified) + ":" + " " + dateText + " " + timeText;
+        DATE = getString(R.string.last_modified) + ":" + " " + dateText + " " + timeText;
 
 
         boolean data = validateLink();
@@ -295,47 +294,47 @@ public class    AddLinkActivity extends AppCompatActivity implements BottomSheet
             Log.i(TAG, "!validate");
         } else if (!validateNameLink()) {
 
-            Objects.requireNonNull(name_link_input_layout.getEditText()).setText(getString(R.string.noname_link));
+            Objects.requireNonNull(name_link_input_layout.getEditText()).setText(getString(R.string.no_name_link));
 
             ContentValues cv = new ContentValues();
-            cv.put(LinksDatabase.COLUMN_NAME_LINK, Objects.requireNonNull(nameLinkEditText.getText()).toString());
-            cv.put(LinksDatabase.COLUMN_LNK, Objects.requireNonNull(linkEditText.getText()).toString());
+            cv.put(LinksDatabase.COLUMN_NAME_LINK, Objects.requireNonNull(name_link_edit_text.getText()).toString());
+            cv.put(LinksDatabase.COLUMN_LNK, Objects.requireNonNull(link_edit_text.getText()).toString());
             cv.put(LinksDatabase.COLUMN_LINK_NOTE, link_note_input_layout.getText().toString());
-            cv.put(LinksDatabase.COLUMN_LINK_DATE, dateFull);
-            cv.put(LinksDatabase.COLUMN_THEME_MODE_LINK, checkThemeLink);
+            cv.put(LinksDatabase.COLUMN_LINK_DATE, DATE);
+            cv.put(LinksDatabase.COLUMN_THEME_MODE_LINK, check_theme_link);
 
-            if (linkId > 0) {
-                db.update(LinksDatabase.TABLE, cv, LinksDatabase.COLUMN_ID + "=" + linkId, null);
+            if (link_id > 0) {
+                db.update(LinksDatabase.TABLE, cv, LinksDatabase.COLUMN_ID + "=" + link_id, null);
             } else {
                 db.insert(LinksDatabase.TABLE, null, cv);
             }
-            goHome_link();
+            goHomeLink();
 
         } else {
 
             ContentValues cv = new ContentValues();
-            cv.put(LinksDatabase.COLUMN_NAME_LINK, Objects.requireNonNull(nameLinkEditText.getText()).toString());
-            cv.put(LinksDatabase.COLUMN_LNK, Objects.requireNonNull(linkEditText.getText()).toString());
+            cv.put(LinksDatabase.COLUMN_NAME_LINK, Objects.requireNonNull(name_link_edit_text.getText()).toString());
+            cv.put(LinksDatabase.COLUMN_LNK, Objects.requireNonNull(link_edit_text.getText()).toString());
             cv.put(LinksDatabase.COLUMN_LINK_NOTE, link_note_input_layout.getText().toString());
-            cv.put(LinksDatabase.COLUMN_LINK_DATE, dateFull);
-            cv.put(LinksDatabase.COLUMN_THEME_MODE_LINK, checkThemeLink);
+            cv.put(LinksDatabase.COLUMN_LINK_DATE, DATE);
+            cv.put(LinksDatabase.COLUMN_THEME_MODE_LINK, check_theme_link);
 
-            if (linkId > 0) {
-                db.update(LinksDatabase.TABLE, cv, LinksDatabase.COLUMN_ID + "=" + linkId, null);
+            if (link_id > 0) {
+                db.update(LinksDatabase.TABLE, cv, LinksDatabase.COLUMN_ID + "=" + link_id, null);
             } else {
                 db.insert(LinksDatabase.TABLE, null, cv);
             }
-            goHome_link();
+            goHomeLink();
         }
 
     }
 
-    public void delete_link(){
-        db.delete(LinksDatabase.TABLE, "_id = ?", new String[]{String.valueOf(linkId)});
-        goHome_link();
+    public void deleteLink(){
+        db.delete(LinksDatabase.TABLE, "_id = ?", new String[]{String.valueOf(link_id)});
+        goHomeLink();
     }
 
-    private void goHome_link(){
+    private void goHomeLink(){
         db.close();
 
         Intent intent = new Intent(this, ListOfLinksActivity.class);
@@ -346,34 +345,40 @@ public class    AddLinkActivity extends AppCompatActivity implements BottomSheet
     @Override
     public void onButtonClicked(String button_clicked) {
         Log.i(TAG, "" + button_clicked);
-        CoordinatorLayout
-                Layout = findViewById(R.id.snak_layout_links);
+        CoordinatorLayout Layout = findViewById(R.id.snackbar_layout_links);
 
         if(button_clicked.equals("Button delete clicked")) {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
             boolean confirmDelete = preferences.getBoolean(getString(R.string.root_delete_bool), true);
 
-            if(confirmDelete) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AddLinkActivity.this);
-                builder.setTitle(getString(R.string.attention));
-                builder.setMessage(getString(R.string.confirm_delete_link));
+            String checkLink = Objects.requireNonNull(link_input_layout.getEditText()).getText().toString();
+            String checkNameLink = Objects.requireNonNull(name_link_input_layout.getEditText()).getText().toString();
+            String NoteLink = link_note_input_layout.getText().toString();
 
-                builder.setPositiveButton(getString(android.R.string.ok), (dialog, id) -> {
-                    delete_link();
-                    dialog.dismiss();
-                });
+            if(checkLink.isEmpty() & checkNameLink.isEmpty() & NoteLink.isEmpty()) {
+                Snackbar.make(Layout, "Пустая ссылка не может быть удалена", Snackbar.LENGTH_SHORT).setAction("error", null).show();
+            } else {
+                if (confirmDelete) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AddLinkActivity.this);
+                    builder.setTitle(getString(R.string.attention));
+                    builder.setMessage(getString(R.string.confirm_delete_link));
 
-                builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> dialog.dismiss());
+                    builder.setPositiveButton(getString(android.R.string.ok), (dialog, id) -> {
+                        deleteLink();
+                        dialog.dismiss();
+                    });
 
-                builder.show();
+                    builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> dialog.dismiss());
 
-            } else
-                delete_link();
+                    builder.show();
 
+                } else
+                    deleteLink();
+            }
         }
 
         if(button_clicked.equals("Button copy clicked")){
-            String copy = Objects.requireNonNull(linkEditText.getText()).toString();
+            String copy = Objects.requireNonNull(link_edit_text.getText()).toString();
             if(copy.isEmpty()){
                 Snackbar.make(Layout, getText(R.string.empty_link_cant_copied), Snackbar.LENGTH_SHORT)
                         .setAction("done", null).show();
@@ -388,7 +393,7 @@ public class    AddLinkActivity extends AppCompatActivity implements BottomSheet
         }
 
         if(button_clicked.equals("Button share clicked")) {
-            String copy = Objects.requireNonNull(linkEditText.getText()).toString();
+            String copy = Objects.requireNonNull(link_edit_text.getText()).toString();
             if (copy.isEmpty()) {
                 Snackbar.make(Layout, getText(R.string.empty_link_cant_shared), Snackbar.LENGTH_SHORT).setAction("done", null).show();
             } else {
@@ -405,77 +410,77 @@ public class    AddLinkActivity extends AppCompatActivity implements BottomSheet
         switch (button_clicked) {
 
             case("Default"):
-                checkThemeLink = "Default";
+                check_theme_link = "Default";
                 theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
                 toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
                 card_more_bottom.setCardBackgroundColor(Color.parseColor("#FAFAFA"));
                 break;
 
             case ("Red"):
-                checkThemeLink = "Red";
+                check_theme_link = "Red";
                 theme.setBackgroundColor(Color.parseColor("#FF8C8C"));
                 toolbar.setBackgroundColor(Color.parseColor("#FF8C8C"));
                 card_more_bottom.setCardBackgroundColor(Color.parseColor("#FF8C8C"));
                 break;
 
             case ("Orange"):
-                checkThemeLink = "Orange";
+                check_theme_link = "Orange";
                 theme.setBackgroundColor(Color.parseColor("#FFB661"));
                 toolbar.setBackgroundColor(Color.parseColor("#FFB661"));
                 card_more_bottom.setCardBackgroundColor(Color.parseColor("#FFB661"));
                 break;
 
             case("Yellow"):
-                checkThemeLink = "Yellow";
+                check_theme_link = "Yellow";
                 theme.setBackgroundColor(Color.parseColor("#FFD850"));
                 toolbar.setBackgroundColor(Color.parseColor("#FFD850"));
                 card_more_bottom.setCardBackgroundColor(Color.parseColor("#FFD850"));
                 break;
 
             case("Green"):
-                checkThemeLink = "Green";
+                check_theme_link = "Green";
                 theme.setBackgroundColor(Color.parseColor("#7AE471"));
                 toolbar.setBackgroundColor(Color.parseColor("#7AE471"));
                 card_more_bottom.setCardBackgroundColor(Color.parseColor("#7AE471"));
                 break;
 
             case ("Light Green"):
-                checkThemeLink = "Light Green";
+                check_theme_link = "Light Green";
                 theme.setBackgroundColor(Color.parseColor("#56E0C7"));
                 toolbar.setBackgroundColor(Color.parseColor("#56E0C7"));
                 card_more_bottom.setCardBackgroundColor(Color.parseColor("#56E0C7"));
                 break;
 
             case("Light Blue"):
-                checkThemeLink = "Light Blue";
+                check_theme_link = "Light Blue";
                 theme.setBackgroundColor(Color.parseColor("#6CD3FF"));
                 toolbar.setBackgroundColor(Color.parseColor("#6CD3FF"));
                 card_more_bottom.setCardBackgroundColor(Color.parseColor("#6CD3FF"));
                 break;
 
             case ("Blue"):
-                checkThemeLink = "Blue";
+                check_theme_link = "Blue";
                 theme.setBackgroundColor(Color.parseColor("#819CFF"));
                 toolbar.setBackgroundColor(Color.parseColor("#819CFF"));
                 card_more_bottom.setCardBackgroundColor(Color.parseColor("#819CFF"));
                 break;
 
             case("violet"):
-                checkThemeLink = "violet";
+                check_theme_link = "violet";
                 theme.setBackgroundColor(Color.parseColor("#DD8BFA"));
                 toolbar.setBackgroundColor(Color.parseColor("#DD8BFA"));
                 card_more_bottom.setCardBackgroundColor(Color.parseColor("#DD8BFA"));
                 break;
 
             case("Pink"):
-                checkThemeLink = "Pink";
+                check_theme_link = "Pink";
                 theme.setBackgroundColor(Color.parseColor("#FF6CA1"));
                 toolbar.setBackgroundColor(Color.parseColor("#FF6CA1"));
                 card_more_bottom.setCardBackgroundColor(Color.parseColor("#FF6CA1"));
                 break;
 
             case("Gray"):
-                checkThemeLink = "Gray";
+                check_theme_link = "Gray";
                 theme.setBackgroundColor(Color.parseColor("#C4C4C4"));
                 toolbar.setBackgroundColor(Color.parseColor("#C4C4C4"));
                 card_more_bottom.setCardBackgroundColor(Color.parseColor("#C4C4C4"));

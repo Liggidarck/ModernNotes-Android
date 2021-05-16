@@ -15,8 +15,8 @@
         android:id="@+id/text_acton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ations with notes"
-        android:fontFamily="@font/productsans_black"
+        android:text="@string/actions_with_notes"
+        android:fontFamily="@font/product_sans_black"
         android:textSize="23sp"
         android:layout_marginTop="40dp"
         android:layout_marginStart="15dp"
@@ -29,7 +29,7 @@
         android:layout_below="@+id/text_acton">
 
         <RelativeLayout
-            android:id="@+id/delet_note_layout"
+            android:id="@+id/delete_note_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -84,7 +84,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Copy content"
+                android:text="@string/copy_content"
                 android:textSize="17sp"
                 android:layout_toEndOf="@id/icon_copy_note"
                 android:layout_centerVertical="true"
@@ -115,7 +115,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Share"
+                android:text="@string/share"
                 android:textSize="17sp"
                 android:layout_toEndOf="@id/icon_share_note"
                 android:layout_centerVertical="true"
@@ -127,7 +127,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/themes_text"
-            android:fontFamily="@font/productsans_black"
+            android:fontFamily="@font/product_sans_black"
             android:textSize="23sp"
             android:layout_marginTop="5dp"
             android:layout_marginStart="15dp"
@@ -155,7 +155,7 @@
                         android:layout_centerVertical="true">
 
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/check_defualt"
+                            android:id="@+id/check_default"
                             android:layout_width="15dp"
                             android:layout_height="15dp"
                             android:elevation="3dp"
@@ -319,7 +319,7 @@
 
 
                     <RelativeLayout
-                        android:id="@+id/ligth_blue_layout"
+                        android:id="@+id/light_blue_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/green_secondary_layout"
@@ -327,7 +327,7 @@
                         android:layout_marginStart="15dp">
 
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/check_blue_ligth"
+                            android:id="@+id/check_blue_light"
                             android:layout_width="15dp"
                             android:layout_height="15dp"
                             android:elevation="3dp"
@@ -351,7 +351,7 @@
                         android:id="@+id/blue_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/ligth_blue_layout"
+                        android:layout_toEndOf="@+id/light_blue_layout"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="15dp" >
 

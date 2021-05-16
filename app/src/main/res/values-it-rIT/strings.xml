@@ -30,12 +30,12 @@
     <string name="error_empty_note">Allega prima una nota</string>
     <string name="error_empty_top_note">Le note vuote non sono allegate</string>
     <string name="error_empty_field">Questo campo non può essere vuoto</string>
-    <string name="noname_link">Collegamento senza nome</string>
+    <string name="no_name_link">Collegamento senza nome</string>
     <string name="username_copied">Nome utente copiato!</string>
     <string name="pinned_done_text">Una nota è bloccata nella schermata iniziale</string>
-    <string name="noname_note">Una nota senza nome</string>
+    <string name="no_name_note">Una nota senza nome</string>
     <string name="blank_note">Nota vuota</string>
-    <string name="empty_note_dont_save">Le note vuote non vengono salvate</string>
+    <string name="empty_note_do_not_save">Le note vuote non vengono salvate</string>
     <string name="generate_password_to_copy">Genera una password da copiare</string>
     <string name="password_copied">Password copiata</string>
     <string name="error_max">Valore errato.  Massimo 128</string>
@@ -67,6 +67,12 @@
 
     <string name="show_ads_pro_version">Mostra annunci versione Pro</string>
     <string name="disable_pro_version_ads">Disabilita gli annunci della versione pro</string>
+
+    <string name="actions_with_links">Azioni con collegamenti</string>
+    <string name="actions_with_notes">Azioni con note</string>
+    <string name="actions_with_passwords">Azioni con password</string>
+    <string name="copy_content">Copia contenuto</string>
+    <string name="share">Condividere</string>
 
     <string name="upgrade_to_pro">L\'aggiornamento a Pro</string>
     <string name="completely_disable_ads_by_purchasing_the_pro_version">Disattiva completamente gli annunci acquistando la versione pro!</string>

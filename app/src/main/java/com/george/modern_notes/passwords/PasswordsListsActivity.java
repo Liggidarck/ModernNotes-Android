@@ -10,7 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ListView;
 
@@ -25,16 +25,20 @@ import com.george.modern_notes.database.PasswordsDatabase;
 
 public class PasswordsListsActivity extends AppCompatActivity {
 
-    ListView pas_list;
-    PasswordsDatabase databaseHelper;
+    MaterialToolbar toolbar;
+    FloatingActionButton add_password;
+    View empty;
+
+    ListView passwords_list;
+    PasswordsDatabase database_helper;
     SQLiteDatabase db;
-    Cursor userCursor;
-    SimpleCursorAdapter userAdapter;
+    Cursor user_cursor;
+    SimpleCursorAdapter user_adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String theme_app = sharedPreferences.getString(getString(R.string.root_theme_app), getString(R.string.root_theme_violet));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String theme_app = preferences.getString(getString(R.string.root_theme_app), getString(R.string.root_theme_violet));
 
         assert theme_app != null;
         if(theme_app.equals(getString(R.string.root_theme_orange)))
@@ -59,57 +63,52 @@ public class PasswordsListsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_passwords_lists);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        AdView mAdView = findViewById(R.id.adView);
+        toolbar = findViewById(R.id.toolbar_passwords_list);
+        add_password = findViewById(R.id.floatingActionButton_add_password);
+        passwords_list = findViewById(R.id.list_passwords);
+        empty = findViewById(R.id.empty_password);
+
+        setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
+        toolbar.setNavigationOnClickListener(view -> startActivity(new Intent(PasswordsListsActivity.this, MainActivity.class)));
+
         MobileAds.initialize(this, initializationStatus -> {
         });
-
-        AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
+        passwords_list.setEmptyView(empty);
 
-        MaterialToolbar toolbar = findViewById(R.id.toolbar_passwords_list);
-        setSupportActionBar(toolbar);
-        toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
-
-        toolbar.setNavigationOnClickListener(view -> startActivity(new Intent(PasswordsListsActivity.this, MainActivity.class)));
-
-        FloatingActionButton add_password = findViewById(R.id.floatingActionButton_add_password);
         add_password.setOnClickListener(view -> startActivity(new Intent(PasswordsListsActivity.this, AddPasswordActivity.class)));
 
-        pas_list = findViewById(R.id.list_passwords);
-
-        pas_list.setOnItemClickListener((parent, view, position, id) -> {
+        passwords_list.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = new Intent(getApplicationContext(), AddPasswordActivity.class);
             intent.putExtra("id", id);
             startActivity(intent);
         });
 
-        databaseHelper = new PasswordsDatabase(getApplicationContext());
-
-        View empty = findViewById(R.id.empty_passw);
-        pas_list.setEmptyView(empty);
-
-
+        database_helper = new PasswordsDatabase(getApplicationContext());
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        db = databaseHelper.getReadableDatabase();
-        userCursor = db.rawQuery("select * from " + PasswordsDatabase.TABLE, null);
+        db = database_helper.getReadableDatabase();
+        user_cursor = db.rawQuery("select * from " + PasswordsDatabase.TABLE, null);
 
         String[] headers = new String[] {PasswordsDatabase.NAME_ACCOUNT, PasswordsDatabase.WEB};
 
-        userAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2, userCursor, headers,
+        user_adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2, user_cursor, headers,
                 new int[] {android.R.id.text1, android.R.id.text2}, 0);
-        pas_list.setAdapter(userAdapter);
+        passwords_list.setAdapter(user_adapter);
     }
 
     @Override
     public void onDestroy(){
         super.onDestroy();
         db.close();
-        userCursor.close();
+        user_cursor.close();
     }
 }

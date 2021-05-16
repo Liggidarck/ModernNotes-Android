@@ -17,7 +17,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,33 +43,29 @@ import java.util.Locale;
 public class AddNoteActivity extends AppCompatActivity implements BottomSheetNotes.BottomSheetListener {
 
     MaterialToolbar toolbar;
-
+    TextView date_text_view;
     EditText name_note_edit_text;
     EditText note_edit_text;
     FloatingActionButton save_button;
+    ImageView more_notes;
+    CardView card_more_bottom;
+    CoordinatorLayout coordinator_layout;
+    View theme;
 
-    NotesDatabase sqlHelper;
+    String check_theme = "Default";
+    String DATE;
+
+    NotesDatabase sql_helper;
     SQLiteDatabase db;
-    Cursor userCursor;
-    long notesId = 0;
+    Cursor user_cursor;
+    long note_id = 0;
 
     private static final String TAG = "addNote";
 
-    View theme;
-    String checkTheme = "Default";
-
-    ImageView more_notes;
-    CardView card_more_bottom;
-
-    String dateFull;
-    TextView dateView;
-
-    CoordinatorLayout coordinator_layout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String theme_app = sharedPreferences.getString(getString(R.string.root_theme_app), getString(R.string.root_theme_violet));
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String theme_app = preferences.getString(getString(R.string.root_theme_app), getString(R.string.root_theme_violet));
 
         assert theme_app != null;
         if(theme_app.equals(getString(R.string.root_theme_orange)))
@@ -96,12 +92,12 @@ public class AddNoteActivity extends AppCompatActivity implements BottomSheetNot
 
         card_more_bottom = findViewById(R.id.card_more_bottom);
         more_notes = findViewById(R.id.more_notes);
-        dateView = findViewById(R.id.date_textView);
+        date_text_view = findViewById(R.id.date_textView);
         name_note_edit_text = findViewById(R.id.name_note);
         note_edit_text = findViewById(R.id.note_text);
         save_button = findViewById(R.id.fab_save_note);
         theme = findViewById(R.id.theme_view);
-        coordinator_layout = findViewById(R.id.snak_layout_note);
+        coordinator_layout = findViewById(R.id.snackbar_layout_note);
         toolbar = findViewById(R.id.topAppBar_add_note);
 
         setSupportActionBar(toolbar);
@@ -110,53 +106,53 @@ public class AddNoteActivity extends AppCompatActivity implements BottomSheetNot
         MobileAds.initialize(this, initializationStatus -> {
         });
 
-        Date currentDate = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-        String dateText = dateFormat.format(currentDate);
-        DateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        String timeText = timeFormat.format(currentDate);
-        dateFull = getString(R.string.last_modified) + ":" + " " + dateText + " " + timeText;
-        dateView.setText(dateFull);
-
         more_notes.setOnClickListener(v -> {
             BottomSheetNotes bottomSheetNotes = new BottomSheetNotes();
 
             Bundle bundle = new Bundle();
-            bundle.putString("theme", checkTheme );
+            bundle.putString("theme", check_theme);
             bottomSheetNotes.setArguments(bundle);
 
             bottomSheetNotes.show(getSupportFragmentManager(), "BottomSheetNotes");
         });
         save_button.setOnClickListener(v -> save());
 
-        boolean save_btn_activate = sharedPreferences.getBoolean("save_button_note", true);
+        boolean save_btn_activate = preferences.getBoolean("save_button_note", true);
         if(!save_btn_activate)
             save_button.setVisibility(View.GONE);
 
-        String name_user = sharedPreferences.getString("full_name", "empty_user_name");
+        String name_user = preferences.getString(getString(R.string.root_full_name), "empty_user_name");
         assert name_user != null;
         if(name_user.equals("empty_user_name"))
             startActivity(new Intent(AddNoteActivity.this, StarterActivity.class));
 
-        sqlHelper = new NotesDatabase(this);
-        db = sqlHelper.getWritableDatabase();
+        Date currentDate = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        String dateText = dateFormat.format(currentDate);
+        DateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        String timeText = timeFormat.format(currentDate);
+        DATE = getString(R.string.last_modified) + ":" + " " + dateText + " " + timeText;
+        date_text_view.setText(DATE);
+
+        sql_helper = new NotesDatabase(this);
+        db = sql_helper.getWritableDatabase();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null)
-            notesId = extras.getLong("id");
+            note_id = extras.getLong("id");
 
-        if (notesId > 0) {
-            userCursor = db.rawQuery("select * from " + NotesDatabase.TABLE + " where " +
-                    NotesDatabase.COLUMN_ID + "=?", new String[]{String.valueOf(notesId)});
-            userCursor.moveToFirst();
+        if (note_id > 0) {
+            user_cursor = db.rawQuery("select * from " + NotesDatabase.TABLE + " where " +
+                    NotesDatabase.COLUMN_ID + "=?", new String[]{String.valueOf(note_id)});
+            user_cursor.moveToFirst();
 
-            name_note_edit_text.setText(userCursor.getString(1));
-            note_edit_text.setText(userCursor.getString(2));
-            dateView.setText(userCursor.getString(3));
-            checkTheme = userCursor.getString(4);
-            Log.e(TAG, checkTheme + " Когда получил значение");
+            name_note_edit_text.setText(user_cursor.getString(1));
+            note_edit_text.setText(user_cursor.getString(2));
+            date_text_view.setText(user_cursor.getString(3));
+            check_theme = user_cursor.getString(4);
+            Log.e(TAG, check_theme + " Когда получил значение");
 
-            switch(checkTheme) {
+            switch(check_theme) {
 
                 case("Default"):
                     theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
@@ -225,7 +221,7 @@ public class AddNoteActivity extends AppCompatActivity implements BottomSheetNot
 
             }
 
-            userCursor.close();
+            user_cursor.close();
         }
 
     }
@@ -237,16 +233,16 @@ public class AddNoteActivity extends AppCompatActivity implements BottomSheetNot
             String dateText = dateFormat.format(currentDate);
             DateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
             String timeText = timeFormat.format(currentDate);
-            dateFull = getString(R.string.last_modified) + ":" + " " + dateText + " " + timeText;
+            DATE = getString(R.string.last_modified) + ":" + " " + dateText + " " + timeText;
 
             ContentValues cv = new ContentValues();
             cv.put(NotesDatabase.COLUMN_NAME_NOTE, name_note_edit_text.getText().toString());
             cv.put(NotesDatabase.COLUMN_NOTE, note_edit_text.getText().toString());
-            cv.put(NotesDatabase.COLUMN_DATE, dateFull);
-            cv.put(NotesDatabase.COLUMN_THEME, checkTheme);
+            cv.put(NotesDatabase.COLUMN_DATE, DATE);
+            cv.put(NotesDatabase.COLUMN_THEME, check_theme);
 
-            if (notesId > 0)
-                db.update(NotesDatabase.TABLE, cv, NotesDatabase.COLUMN_ID + "=" + notesId, null);
+            if (note_id > 0)
+                db.update(NotesDatabase.TABLE, cv, NotesDatabase.COLUMN_ID + "=" + note_id, null);
             else
                 db.insert(NotesDatabase.TABLE, null, cv);
 
@@ -256,7 +252,7 @@ public class AddNoteActivity extends AppCompatActivity implements BottomSheetNot
     }
 
     public void delete(){
-        db.delete(NotesDatabase.TABLE, "_id = ?", new String[]{String.valueOf(notesId)});
+        db.delete(NotesDatabase.TABLE, "_id = ?", new String[]{String.valueOf(note_id)});
         goHome();
     }
 
@@ -315,7 +311,7 @@ public class AddNoteActivity extends AppCompatActivity implements BottomSheetNot
 
                 editor.putString("note", top_note);
                 editor.putString("name_note", name_top_note);
-                editor.putString("theme_top_note", checkTheme);
+                editor.putString("theme_top_note", check_theme);
 
                 editor.apply();
             }
@@ -324,11 +320,11 @@ public class AddNoteActivity extends AppCompatActivity implements BottomSheetNot
                 Log.e(TAG, "Имя пустое а заметка нет");
                 Snackbar.make(coordinator_layout, getText(R.string.pinned_done_text), Snackbar.LENGTH_SHORT).setAction("done", null).show();
 
-                String nameEmpty = getString(R.string.noname_note);
+                String nameEmpty = getString(R.string.no_name_note);
 
                 editor.putString("name_note", nameEmpty);
                 editor.putString("note", top_note);
-                editor.putString("theme_top_note", checkTheme);
+                editor.putString("theme_top_note", check_theme);
 
                 editor.apply();
             }
@@ -341,7 +337,7 @@ public class AddNoteActivity extends AppCompatActivity implements BottomSheetNot
 
                 editor.putString("name_note", name_top_note);
                 editor.putString("note", noteEmpty);
-                editor.putString("theme_top_note", checkTheme);
+                editor.putString("theme_top_note", check_theme);
 
                 editor.apply();
             }
@@ -360,22 +356,30 @@ public class AddNoteActivity extends AppCompatActivity implements BottomSheetNot
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
             boolean confirmDelete = preferences.getBoolean(getString(R.string.root_delete_bool), true);
 
-            if(confirmDelete) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AddNoteActivity.this);
-                builder.setTitle(getText(R.string.attention));
-                builder.setMessage(getText(R.string.confirm_delete_note));
+            String checkNameNote = name_note_edit_text.getText().toString();
+            String checkNote = note_edit_text.getText().toString();
 
-                builder.setPositiveButton(getString(android.R.string.ok), (dialog, id) -> {
+            if(checkNameNote.isEmpty() & checkNote.isEmpty()) {
+                Snackbar.make(coordinator_layout, "Пустая заметка не может быть удалена", Snackbar.LENGTH_SHORT).setAction("error", null).show();
+            } else {
+
+                if (confirmDelete) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AddNoteActivity.this);
+                    builder.setTitle(getText(R.string.attention));
+                    builder.setMessage(getText(R.string.confirm_delete_note));
+
+                    builder.setPositiveButton(getString(android.R.string.ok), (dialog, id) -> {
+                        delete();
+                        dialog.dismiss();
+                    });
+
+                    builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> dialog.dismiss());
+
+                    builder.show();
+
+                } else
                     delete();
-                    dialog.dismiss();
-                });
-
-                builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> dialog.dismiss());
-
-                builder.show();
-
-            } else
-                delete();
+            }
 
         }
 
@@ -411,77 +415,77 @@ public class AddNoteActivity extends AppCompatActivity implements BottomSheetNot
         }
 
         if(button_clicked.equals("Default")){
-            checkTheme = "Default";
+            check_theme = "Default";
             theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
             toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
             card_more_bottom.setCardBackgroundColor(Color.parseColor("#FAFAFA"));
         }
 
         if(button_clicked.equals("Red")){
-            checkTheme = "Red";
+            check_theme = "Red";
             theme.setBackgroundColor(Color.parseColor("#FF8C8C"));
             toolbar.setBackgroundColor(Color.parseColor("#FF8C8C"));
             card_more_bottom.setCardBackgroundColor(Color.parseColor("#FF8C8C"));
         }
 
         if(button_clicked.equals("Orange")){
-            checkTheme = "Orange";
+            check_theme = "Orange";
             theme.setBackgroundColor(Color.parseColor("#FFB661"));
             toolbar.setBackgroundColor(Color.parseColor("#FFB661"));
             card_more_bottom.setCardBackgroundColor(Color.parseColor("#FFB661"));
         }
 
         if(button_clicked.equals("Yellow")){
-            checkTheme = "Yellow";
+            check_theme = "Yellow";
             theme.setBackgroundColor(Color.parseColor("#FFD850"));
             toolbar.setBackgroundColor(Color.parseColor("#FFD850"));
             card_more_bottom.setCardBackgroundColor(Color.parseColor("#FFD850"));
         }
 
         if(button_clicked.equals("Green")){
-            checkTheme = "Green";
+            check_theme = "Green";
             theme.setBackgroundColor(Color.parseColor("#7AE471"));
             toolbar.setBackgroundColor(Color.parseColor("#7AE471"));
             card_more_bottom.setCardBackgroundColor(Color.parseColor("#7AE471"));
         }
 
         if(button_clicked.equals("Light Green")){
-            checkTheme = "Light Green";
+            check_theme = "Light Green";
             theme.setBackgroundColor(Color.parseColor("#56E0C7"));
             toolbar.setBackgroundColor(Color.parseColor("#56E0C7"));
             card_more_bottom.setCardBackgroundColor(Color.parseColor("#56E0C7"));
         }
 
         if(button_clicked.equals("Light Blue")){
-            checkTheme = "Light Blue";
+            check_theme = "Light Blue";
             theme.setBackgroundColor(Color.parseColor("#6CD3FF"));
             toolbar.setBackgroundColor(Color.parseColor("#6CD3FF"));
             card_more_bottom.setCardBackgroundColor(Color.parseColor("#6CD3FF"));
         }
 
         if(button_clicked.equals("Blue")) {
-            checkTheme = "Blue";
+            check_theme = "Blue";
             theme.setBackgroundColor(Color.parseColor("#819CFF"));
             toolbar.setBackgroundColor(Color.parseColor("#819CFF"));
             card_more_bottom.setCardBackgroundColor(Color.parseColor("#819CFF"));
         }
 
         if(button_clicked.equals("violet")) {
-            checkTheme = "violet";
+            check_theme = "violet";
             theme.setBackgroundColor(Color.parseColor("#DD8BFA"));
             toolbar.setBackgroundColor(Color.parseColor("#DD8BFA"));
             card_more_bottom.setCardBackgroundColor(Color.parseColor("#DD8BFA"));
         }
 
         if(button_clicked.equals("Pink")) {
-            checkTheme = "Pink";
+            check_theme = "Pink";
             theme.setBackgroundColor(Color.parseColor("#FF6CA1"));
             toolbar.setBackgroundColor(Color.parseColor("#FF6CA1"));
             card_more_bottom.setCardBackgroundColor(Color.parseColor("#FF6CA1"));
         }
 
         if(button_clicked.equals("Gray")) {
-            checkTheme = "Gray";
+            check_theme = "Gray";
             theme.setBackgroundColor(Color.parseColor("#C4C4C4"));
             toolbar.setBackgroundColor(Color.parseColor("#C4C4C4"));
             card_more_bottom.setCardBackgroundColor(Color.parseColor("#C4C4C4"));

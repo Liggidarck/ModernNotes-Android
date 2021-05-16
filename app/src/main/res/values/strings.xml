@@ -39,16 +39,16 @@
     <string name="error_empty_top_note">Blank notes are not attached</string>
     <string name="error_empty_field">This field cannot be empty</string>
 
-    <string name="noname_link">No name link</string>
+    <string name="no_name_link">No name link</string>
 
     <string name="username_copied">Username copied!</string>
 
     <string name="pinned_done_text">Note pinned to home screen</string>
 
-    <string name="noname_note">A note without a name</string>
+    <string name="no_name_note">A note without a name</string>
     <string name="blank_note">Blank note</string>
 
-    <string name="empty_note_dont_save">Empty notes are not saved</string>
+    <string name="empty_note_do_not_save">Empty notes are not saved</string>
 
     <string name="generate_password_to_copy">Generate password to copy</string>
 
@@ -106,6 +106,12 @@
     <string name="upgrade_to_pro">Upgrade to Pro</string>
     <string name="completely_disable_ads_by_purchasing_the_pro_version">Completely disable ads by purchasing the pro version!</string>
 
+    <string name="actions_with_links">Actions with links</string>
+    <string name="actions_with_notes">Actions with notes</string>
+    <string name="actions_with_passwords">Actions with passwords</string>
+    <string name="copy_content">Copy content</string>
+    <string name="share">Share</string>
+
     <string name="root_full_name" translatable="false">full_name</string>
     <string name="root_welcome_text_header" translatable="false">welcome_text_header</string>
     <string name="root_number_lines_top_note" translatable="false">number_lines_top_note</string>
@@ -119,9 +125,8 @@
 
     <string name="root_theme_orange" translatable="false">Orange</string>
     <string name="root_theme_blue" translatable="false">Blue</string>
-    <string name="root_theme_aqua_blue" translatable="false">Aqua Blue</string>
+    <string name="root_theme_aqua_blue" translatable="false">AquaBlue</string>
     <string name="root_theme_green" translatable="false">Green</string>
     <string name="root_theme_red" translatable="false">Red</string>
     <string name="root_theme_violet" translatable="false">Violet</string>
-
 </resources>

@@ -3,7 +3,7 @@ package com.george.modern_notes.common;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.Preference;
@@ -60,7 +60,7 @@ public class SettingsActivity extends AppCompatActivity {
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
-            final Preference pref_theme = findPreference("theme_app");
+            final Preference pref_theme = findPreference(getString(R.string.root_theme_app));
             assert pref_theme != null;
             pref_theme.setOnPreferenceChangeListener((preference, newValue) -> {
                 Objects.requireNonNull(getActivity()).recreate();

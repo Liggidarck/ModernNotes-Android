@@ -30,12 +30,12 @@
     <string name="error_empty_note">Сначала прикрепите заметку</string>
     <string name="error_empty_top_note">Пустые заметки не прикрепляются</string>
     <string name="error_empty_field">Это поле не может быть пустым</string>
-    <string name="noname_link">Ссылка без имени</string>
+    <string name="no_name_link">Ссылка без имени</string>
     <string name="username_copied">Имя пользователя скопировано!</string>
     <string name="pinned_done_text">Заметка закреплена на главном экране</string>
-    <string name="noname_note">Заметка без имени</string>
+    <string name="no_name_note">Заметка без имени</string>
     <string name="blank_note">Пустая заметка</string>
-    <string name="empty_note_dont_save">Пустые заметки не сохраняются</string>
+    <string name="empty_note_do_not_save">Пустые заметки не сохраняются</string>
     <string name="generate_password_to_copy">Сгенерируй пароль что бы скопировать</string>
     <string name="password_copied">Пароль скопирован</string>
     <string name="error_max">Неверное значение. Максимум 128</string>
@@ -72,6 +72,12 @@
     <string name="completely_disable_ads_by_purchasing_the_pro_version">Полностью отключите рекламу, купив про версию!</string>
 
     <string name="attention">Внимание</string>
+
+    <string name="actions_with_links">Действия с сылками</string>
+    <string name="actions_with_notes">Действия с заметками</string>
+    <string name="actions_with_passwords">Действия с паролями</string>
+    <string name="copy_content">Копировать</string>
+    <string name="share">Поделиться</string>
 
     <string name="confirm_delete_note">Вы действительно хотите удалить заметку?</string>
     <string name="confirm_delete_link">Вы действительно хотите удалить ссылку?</string>

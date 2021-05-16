@@ -7,7 +7,7 @@
     tools:context=".links.AddLinkActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/snak_layout_links"
+        android:id="@+id/snackbar_layout_links"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/card_more_bottom_link"/>
@@ -28,16 +28,16 @@
         android:layout_below="@id/topAppBar_add_link"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/save_link_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_done_white_24"
-        app:tint="@color/colorWhite"
-        app:borderWidth="0dp"
-        android:layout_marginBottom="60dp"
-        android:layout_marginEnd="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+            android:id="@+id/save_link_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_done_white_24"
+            app:tint="@color/colorWhite"
+            app:borderWidth="0dp"
+            android:layout_marginBottom="60dp"
+            android:layout_marginEnd="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true" android:contentDescription="TODO"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/link_edit_text_layout"
@@ -89,16 +89,16 @@
         android:layout_below="@id/link_name_text_layout">
 
         <EditText
-            android:id="@+id/note_link"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="top|start"
-            android:hint="@string/note_for_link"
-            android:fontFamily="@font/roboto_medium"
-            android:textSize="18sp"
-            android:background="@null"
-            android:padding="8dp"
-            android:inputType="textMultiLine" />
+                android:id="@+id/note_link"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top|start"
+                android:hint="@string/note_for_link"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="18sp"
+                android:background="@null"
+                android:padding="8dp"
+                android:inputType="textMultiLine" android:importantForAutofill="no"/>
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
