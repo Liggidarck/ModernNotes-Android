@@ -2,7 +2,6 @@ package com.george.modern_notes.notebook;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,68 +13,14 @@ import androidx.annotation.Nullable;
 import com.george.modern_notes.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class BottomSheetNotes extends BottomSheetDialogFragment {
 
     private BottomSheetListener bottomSheetListener;
-
-    private static final String TAG = "bottomSheetNotes";
-    CircleImageView check_default, check_red, check_orange, check_yellow, check_green, check_green_secondary, check_blue_light, check_blue, check_violet, check_pink, check_gray;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bottom_sheet_notes, container, false);
-
-        assert this.getArguments() != null;
-        String theme = this.getArguments().getString("theme");
-        Log.i(TAG, "val - " + theme);
-
-        check_default = view.findViewById(R.id.check_default);
-        check_red = view.findViewById(R.id.check_red);
-        check_orange = view.findViewById(R.id.check_orange);
-        check_yellow = view.findViewById(R.id.check_yellow);
-        check_green = view.findViewById(R.id.check_green);
-        check_green_secondary = view.findViewById(R.id.check_green_secondary);
-        check_blue_light = view.findViewById(R.id.check_blue_light);
-        check_blue = view.findViewById(R.id.check_blue);
-        check_violet = view.findViewById(R.id.check_violet);
-        check_pink = view.findViewById(R.id.check_pink);
-        check_gray = view.findViewById(R.id.check_gray);
-
-        if(theme.equals("Default"))
-            check_default.setVisibility(View.VISIBLE);
-
-        if(theme.equals("Red"))
-            check_red.setVisibility(View.VISIBLE);
-
-        if(theme.equals("Orange"))
-            check_orange.setVisibility(View.VISIBLE);
-
-        if(theme.equals("Yellow"))
-            check_yellow.setVisibility(View.VISIBLE);
-
-        if(theme.equals("Green"))
-            check_green.setVisibility(View.VISIBLE);
-
-        if(theme.equals("Light Green"))
-            check_green_secondary.setVisibility(View.VISIBLE);
-
-        if(theme.equals("Blue"))
-            check_blue.setVisibility(View.VISIBLE);
-
-        if(theme.equals("Light Blue"))
-            check_blue_light.setVisibility(View.VISIBLE);
-
-        if(theme.equals("violet"))
-            check_violet.setVisibility(View.VISIBLE);
-
-        if(theme.equals("Pink"))
-            check_pink.setVisibility(View.VISIBLE);
-
-        if(theme.equals("Gray"))
-            check_gray.setVisibility(View.VISIBLE);
 
         RelativeLayout del = view.findViewById(R.id.delete_note_layout);
         del.setOnClickListener(v -> {
@@ -92,72 +37,6 @@ public class BottomSheetNotes extends BottomSheetDialogFragment {
         RelativeLayout share = view.findViewById(R.id.share_content_bottom);
         share.setOnClickListener(v -> {
             bottomSheetListener.onButtonClicked("Button share clicked");
-            dismiss();
-        });
-
-        RelativeLayout default_theme = view.findViewById(R.id.white_layout);
-        default_theme.setOnClickListener(v -> {
-            bottomSheetListener.onButtonClicked("Default");
-            dismiss();
-        });
-
-        RelativeLayout red_theme = view.findViewById(R.id.red_layout);
-        red_theme.setOnClickListener(v -> {
-            bottomSheetListener.onButtonClicked("Red");
-            dismiss();
-        });
-
-        RelativeLayout orange_theme = view.findViewById(R.id.orange_layout);
-        orange_theme.setOnClickListener(v -> {
-            bottomSheetListener.onButtonClicked("Orange");
-            dismiss();
-        });
-
-        RelativeLayout yellow_theme = view.findViewById(R.id.yellow_layout);
-        yellow_theme.setOnClickListener(v -> {
-            bottomSheetListener.onButtonClicked("Yellow");
-            dismiss();
-        });
-
-        RelativeLayout green_theme = view.findViewById(R.id.green_layout);
-        green_theme.setOnClickListener(v -> {
-            bottomSheetListener.onButtonClicked("Green");
-            dismiss();
-        });
-
-        RelativeLayout green_light_layout = view.findViewById(R.id.green_secondary_layout);
-        green_light_layout.setOnClickListener(v -> {
-            bottomSheetListener.onButtonClicked("Light Green");
-            dismiss();
-        });
-
-        RelativeLayout light_blue = view.findViewById(R.id.light_blue_layout);
-        light_blue.setOnClickListener(v -> {
-            bottomSheetListener.onButtonClicked("Light Blue");
-            dismiss();
-        });
-
-        RelativeLayout blue_layout = view.findViewById(R.id.blue_layout);
-        blue_layout.setOnClickListener(v -> {
-            bottomSheetListener.onButtonClicked("Blue");
-            dismiss();
-        });
-
-        RelativeLayout violet_layout = view.findViewById(R.id.violet_layout);
-        violet_layout.setOnClickListener(v -> {
-            bottomSheetListener.onButtonClicked("violet");
-            dismiss();
-        });
-
-        RelativeLayout pink_layout = view.findViewById(R.id.pink_layout);
-        pink_layout.setOnClickListener(v -> {
-            bottomSheetListener.onButtonClicked("Pink");
-            dismiss();
-        });
-
-        RelativeLayout gray_layout = view.findViewById(R.id.gray_layout);
-        gray_layout.setOnClickListener(v -> {
-            bottomSheetListener.onButtonClicked("Gray");
             dismiss();
         });
 

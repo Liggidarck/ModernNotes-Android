@@ -15,7 +15,6 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.Bundle;
 import androidx.preference.PreferenceManager;
 import android.util.Log;
@@ -50,7 +49,6 @@ public class AddNoteActivity extends AppCompatActivity implements BottomSheetNot
     ImageView more_notes;
     CardView card_more_bottom;
     CoordinatorLayout coordinator_layout;
-    View theme;
 
     String check_theme = "Default";
     String DATE;
@@ -88,7 +86,7 @@ public class AddNoteActivity extends AppCompatActivity implements BottomSheetNot
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         card_more_bottom = findViewById(R.id.card_more_bottom);
         more_notes = findViewById(R.id.more_notes);
@@ -96,7 +94,6 @@ public class AddNoteActivity extends AppCompatActivity implements BottomSheetNot
         name_note_edit_text = findViewById(R.id.name_note);
         note_edit_text = findViewById(R.id.note_text);
         save_button = findViewById(R.id.fab_save_note);
-        theme = findViewById(R.id.theme_view);
         coordinator_layout = findViewById(R.id.snackbar_layout_note);
         toolbar = findViewById(R.id.topAppBar_add_note);
 
@@ -150,76 +147,6 @@ public class AddNoteActivity extends AppCompatActivity implements BottomSheetNot
             note_edit_text.setText(user_cursor.getString(2));
             date_text_view.setText(user_cursor.getString(3));
             check_theme = user_cursor.getString(4);
-            Log.e(TAG, check_theme + " Когда получил значение");
-
-            switch(check_theme) {
-
-                case("Default"):
-                    theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
-                    toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
-                    break;
-
-                case("Red"):
-                    theme.setBackgroundColor(Color.parseColor("#FF8C8C"));
-                    toolbar.setBackgroundColor(Color.parseColor("#FF8C8C"));
-                    card_more_bottom.setCardBackgroundColor(Color.parseColor("#FF8C8C"));
-                    break;
-
-                case("Orange"):
-                    theme.setBackgroundColor(Color.parseColor("#FFB661"));
-                    toolbar.setBackgroundColor(Color.parseColor("#FFB661"));
-                    card_more_bottom.setCardBackgroundColor(Color.parseColor("#FFB661"));
-                    break;
-
-                case("Yellow"):
-                    theme.setBackgroundColor(Color.parseColor("#FFD850"));
-                    toolbar.setBackgroundColor(Color.parseColor("#FFD850"));
-                    card_more_bottom.setCardBackgroundColor(Color.parseColor("#FFD850"));
-                    break;
-
-                case("Green"):
-                    theme.setBackgroundColor(Color.parseColor("#7AE471"));
-                    toolbar.setBackgroundColor(Color.parseColor("#7AE471"));
-                    card_more_bottom.setCardBackgroundColor(Color.parseColor("#7AE471"));
-                    break;
-
-                case("Light Green"):
-                    theme.setBackgroundColor(Color.parseColor("#56E0C7"));
-                    toolbar.setBackgroundColor(Color.parseColor("#56E0C7"));
-                    card_more_bottom.setCardBackgroundColor(Color.parseColor("#56E0C7"));
-                    break;
-
-                case("Light Blue"):
-                    theme.setBackgroundColor(Color.parseColor("#6CD3FF"));
-                    toolbar.setBackgroundColor(Color.parseColor("#6CD3FF"));
-                    card_more_bottom.setCardBackgroundColor(Color.parseColor("#6CD3FF"));
-                    break;
-
-                case("Blue"):
-                    theme.setBackgroundColor(Color.parseColor("#819CFF"));
-                    toolbar.setBackgroundColor(Color.parseColor("#819CFF"));
-                    card_more_bottom.setCardBackgroundColor(Color.parseColor("#819CFF"));
-                    break;
-
-                case("violet"):
-                    theme.setBackgroundColor(Color.parseColor("#DD8BFA"));
-                    toolbar.setBackgroundColor(Color.parseColor("#DD8BFA"));
-                    card_more_bottom.setCardBackgroundColor(Color.parseColor("#DD8BFA"));
-                    break;
-
-                case("Pink"):
-                    theme.setBackgroundColor(Color.parseColor("#FF6CA1"));
-                    toolbar.setBackgroundColor(Color.parseColor("#FF6CA1"));
-                    card_more_bottom.setCardBackgroundColor(Color.parseColor("#FF6CA1"));
-                    break;
-
-                case("Gray"):
-                    theme.setBackgroundColor(Color.parseColor("#C4C4C4"));
-                    toolbar.setBackgroundColor(Color.parseColor("#C4C4C4"));
-                    card_more_bottom.setCardBackgroundColor(Color.parseColor("#C4C4C4"));
-                    break;
-
-            }
 
             user_cursor.close();
         }
@@ -350,8 +277,6 @@ public class AddNoteActivity extends AppCompatActivity implements BottomSheetNot
 
     @Override
     public void onButtonClicked(String button_clicked) {
-        Log.i(TAG, ""+button_clicked);
-
         if(button_clicked.equals("Button delete clicked")) {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
             boolean confirmDelete = preferences.getBoolean(getString(R.string.root_delete_bool), true);
@@ -412,83 +337,6 @@ public class AddNoteActivity extends AppCompatActivity implements BottomSheetNot
                 Intent shareIntent = Intent.createChooser(sendIntent, null);
                 startActivity(shareIntent);
             }
-        }
-
-        if(button_clicked.equals("Default")){
-            check_theme = "Default";
-            theme.setBackgroundColor(Color.parseColor("#FAFAFA"));
-            toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
-            card_more_bottom.setCardBackgroundColor(Color.parseColor("#FAFAFA"));
-        }
-
-        if(button_clicked.equals("Red")){
-            check_theme = "Red";
-            theme.setBackgroundColor(Color.parseColor("#FF8C8C"));
-            toolbar.setBackgroundColor(Color.parseColor("#FF8C8C"));
-            card_more_bottom.setCardBackgroundColor(Color.parseColor("#FF8C8C"));
-        }
-
-        if(button_clicked.equals("Orange")){
-            check_theme = "Orange";
-            theme.setBackgroundColor(Color.parseColor("#FFB661"));
-            toolbar.setBackgroundColor(Color.parseColor("#FFB661"));
-            card_more_bottom.setCardBackgroundColor(Color.parseColor("#FFB661"));
-        }
-
-        if(button_clicked.equals("Yellow")){
-            check_theme = "Yellow";
-            theme.setBackgroundColor(Color.parseColor("#FFD850"));
-            toolbar.setBackgroundColor(Color.parseColor("#FFD850"));
-            card_more_bottom.setCardBackgroundColor(Color.parseColor("#FFD850"));
-        }
-
-        if(button_clicked.equals("Green")){
-            check_theme = "Green";
-            theme.setBackgroundColor(Color.parseColor("#7AE471"));
-            toolbar.setBackgroundColor(Color.parseColor("#7AE471"));
-            card_more_bottom.setCardBackgroundColor(Color.parseColor("#7AE471"));
-        }
-
-        if(button_clicked.equals("Light Green")){
-            check_theme = "Light Green";
-            theme.setBackgroundColor(Color.parseColor("#56E0C7"));
-            toolbar.setBackgroundColor(Color.parseColor("#56E0C7"));
-            card_more_bottom.setCardBackgroundColor(Color.parseColor("#56E0C7"));
-        }
-
-        if(button_clicked.equals("Light Blue")){
-            check_theme = "Light Blue";
-            theme.setBackgroundColor(Color.parseColor("#6CD3FF"));
-            toolbar.setBackgroundColor(Color.parseColor("#6CD3FF"));
-            card_more_bottom.setCardBackgroundColor(Color.parseColor("#6CD3FF"));
-        }
-
-        if(button_clicked.equals("Blue")) {
-            check_theme = "Blue";
-            theme.setBackgroundColor(Color.parseColor("#819CFF"));
-            toolbar.setBackgroundColor(Color.parseColor("#819CFF"));
-            card_more_bottom.setCardBackgroundColor(Color.parseColor("#819CFF"));
-        }
-
-        if(button_clicked.equals("violet")) {
-            check_theme = "violet";
-            theme.setBackgroundColor(Color.parseColor("#DD8BFA"));
-            toolbar.setBackgroundColor(Color.parseColor("#DD8BFA"));
-            card_more_bottom.setCardBackgroundColor(Color.parseColor("#DD8BFA"));
-        }
-
-        if(button_clicked.equals("Pink")) {
-            check_theme = "Pink";
-            theme.setBackgroundColor(Color.parseColor("#FF6CA1"));
-            toolbar.setBackgroundColor(Color.parseColor("#FF6CA1"));
-            card_more_bottom.setCardBackgroundColor(Color.parseColor("#FF6CA1"));
-        }
-
-        if(button_clicked.equals("Gray")) {
-            check_theme = "Gray";
-            theme.setBackgroundColor(Color.parseColor("#C4C4C4"));
-            toolbar.setBackgroundColor(Color.parseColor("#C4C4C4"));
-            card_more_bottom.setCardBackgroundColor(Color.parseColor("#C4C4C4"));
         }
 
     }

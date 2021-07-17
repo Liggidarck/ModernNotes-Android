@@ -21,12 +21,6 @@
         android:elevation="4dp"
         style="@style/Widget.MaterialComponents.Toolbar.Surface" />
 
-    <View
-        android:id="@+id/theme_link"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/topAppBar_add_link"/>
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/save_link_fab"
             android:layout_width="wrap_content"
@@ -37,7 +31,7 @@
             android:layout_marginBottom="60dp"
             android:layout_marginEnd="30dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true" android:contentDescription="TODO"/>
+            android:layout_alignParentEnd="true" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/link_edit_text_layout"

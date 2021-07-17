@@ -64,7 +64,7 @@ public class NotebookActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notebook);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinator);
         AdView mAdView = findViewById(R.id.adViewNotebook);
@@ -115,7 +115,8 @@ public class NotebookActivity extends AppCompatActivity {
         String[] headers = new String[] {NotesDatabase.COLUMN_NAME_NOTE,
                 NotesDatabase.COLUMN_NOTE};
 
-        user_adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2, user_cursor, headers, new int[] {android.R.id.text1, android.R.id.text2}, 0);
+        user_adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2, user_cursor,
+                headers, new int[] {android.R.id.text1, android.R.id.text2}, 0);
         notes_list.setAdapter(user_adapter);
     }
 
