@@ -1,7 +1,7 @@
 # Modern Notes
-Быстрое, современное, настраиваемое приложение для создания заметок, удобного серфинга в интернете без рекламы.
+Fast, modern, highly customizable note-taking app, easy web surfing without ads.
 
-Modern Notes Pro – удобное настраиваемое приложение для создания заметок. Записывайте идеи и планы, составляйте списки покупок в удобном формате.
-Вы можете сохранить найденную интересную статью из интернета, надежно сохранить пароль от любого аккаунта.
+Modern Notes is a handy, customizable note-taking app.  Write down ideas and plans, make shopping lists in a convenient format.
+You can save an interesting article found from the Internet, securely save the password from any account.
 
-Приложение не содержит рекламы и ненужных разрешений. Поскольку приложение не требует доступа в интернет, ваша конфиденциальность защищена.
+The application does not contain ads and unnecessary permissions.  Since the application does not require internet access, your privacy is protected.
