@@ -21,9 +21,6 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -76,7 +73,6 @@ public class GeneratorPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_generator_password);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        AdView mAdView = findViewById(R.id.adViewGenerator);
         refresh_btn = findViewById(R.id.generate_password);
         password_text_view = findViewById(R.id.password_text);
         password_length_edit_text = findViewById(R.id.lengthPassword);
@@ -89,12 +85,6 @@ public class GeneratorPasswordActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         toolbar.setNavigationOnClickListener(view -> startActivity(new Intent(GeneratorPasswordActivity.this, MainActivity.class)));
-
-        MobileAds.initialize(this, initializationStatus -> {
-        });
-
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
 
         String name_user = preferences.getString(getString(R.string.root_full_name), "empty_user_name");
         assert name_user != null;

@@ -26,7 +26,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.george.modern_notes.R;
@@ -99,9 +98,6 @@ public class AddNoteActivity extends AppCompatActivity implements BottomSheetNot
 
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> save());
-
-        MobileAds.initialize(this, initializationStatus -> {
-        });
 
         more_notes.setOnClickListener(v -> {
             BottomSheetNotes bottomSheetNotes = new BottomSheetNotes();

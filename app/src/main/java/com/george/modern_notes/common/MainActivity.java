@@ -20,9 +20,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.george.modern_notes.R;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.george.modern_notes.links.AddLinkActivity;
@@ -84,16 +81,7 @@ public class MainActivity extends AppCompatActivity {
         list_of_links = findViewById(R.id.link_card);
         passwords_list = findViewById(R.id.password_card);
         generator = findViewById(R.id.generator_card);
-
-
         ImageView image_settings = findViewById(R.id.imageSettings);
-        AdView ad_view = findViewById(R.id.adViewMain);
-
-        MobileAds.initialize(this, initializationStatus -> {
-        });
-
-        AdRequest adRequest = new AdRequest.Builder().build();
-        ad_view.loadAd(adRequest);
 
         String name_user = sharedPreferences.getString(getString(R.string.root_full_name), "empty_user_name");
         String text_header = sharedPreferences.getString(getString(R.string.root_welcome_text_header), "");

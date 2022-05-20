@@ -13,10 +13,6 @@ import androidx.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.george.modern_notes.common.MainActivity;
@@ -67,12 +63,6 @@ public class ListOfLinksActivity extends AppCompatActivity {
         fab_add_link = findViewById(R.id.add_link);
         user_list = findViewById(R.id.list_of_links);
         empty = findViewById(R.id.empty_link_layout);
-        AdView mAdView = findViewById(R.id.adViewLinks);
-
-        MobileAds.initialize(this, initializationStatus -> {
-        });
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
 
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(view -> startActivity(new Intent(ListOfLinksActivity.this, MainActivity.class)));

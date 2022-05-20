@@ -14,9 +14,6 @@ import androidx.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ListView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.george.modern_notes.common.MainActivity;
@@ -63,7 +60,6 @@ public class PasswordsListsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_passwords_lists);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        AdView mAdView = findViewById(R.id.adView);
         toolbar = findViewById(R.id.toolbar_passwords_list);
         add_password = findViewById(R.id.floatingActionButton_add_password);
         passwords_list = findViewById(R.id.list_passwords);
@@ -72,11 +68,6 @@ public class PasswordsListsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         toolbar.setNavigationOnClickListener(view -> startActivity(new Intent(PasswordsListsActivity.this, MainActivity.class)));
-
-        MobileAds.initialize(this, initializationStatus -> {
-        });
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
 
         passwords_list.setEmptyView(empty);
 

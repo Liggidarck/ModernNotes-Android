@@ -57,17 +57,4 @@
             app:tint="@color/colorWhite"
             app:borderWidth="0dp" android:contentDescription="TODO"/>
 
-
-    <com.google.android.gms.ads.AdView
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/adViewLinks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-8796490674446763/7698333563">
-    </com.google.android.gms.ads.AdView>
-
-
 </RelativeLayout>

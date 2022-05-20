@@ -15,9 +15,6 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -67,17 +64,10 @@ public class NotebookActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinator);
-        AdView mAdView = findViewById(R.id.adViewNotebook);
         toolbar = findViewById(R.id.toolbar_notebook);
         add_note = findViewById(R.id.add_note);
         notes_list = findViewById(R.id.notebook_list);
         View empty = findViewById(R.id.empty_layout);
-
-        MobileAds.initialize(this, initializationStatus -> {
-        });
-
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
 
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
